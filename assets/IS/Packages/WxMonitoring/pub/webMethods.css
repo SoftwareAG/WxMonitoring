@@ -1,44 +1,15 @@
-/*************************************************************************************************************************
- top area (top.dsp)
-
-
---------------------------------------------------------------------------------------------------------------------------
- menu.dsp#menuframe  | body#contentframe                                                                   
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
-                     |                                                                                                    
- ************************************************************************************************************************/
-
+@import url("css/sag-delite.css");
 html {
     border: none;
     border-collapse: collapse;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto',Arial,Sans-serif;
+}
+
 th, td, body, input, p, textarea, select {
-    font-family: "Arial", "Helvetica";
+    font-family: 'Roboto',Arial,Sans-serif;
     font-size: 11px;
     background-color: #fff;
 }
@@ -48,6 +19,7 @@ td, body {
 }
 
 body {
+    margin: 8px;
     padding-left: 4px;
     padding-top: 4px;
     color: black;
@@ -71,11 +43,11 @@ li {
 }
 
 li a {
-    color: #0D10FB;
+    color: #1776BF;
 }
 
 li a:hover {
-    color: blue;
+    color: #1776BF;
     text-decoration: bold;
 }
 
@@ -100,36 +72,62 @@ table {
 .keymessage, .keymessage a {
     font-weight: bold;
     color: white;
-    background-color: #C00000;
+    background-color: #D01D23;
+	padding: 0px;
+	margin:0px;
+	vertical-align: middle;
+	text-decoration: none;
+}
+
+.keymessage a:hover { 
+    background-color: #D01D23;
+	text-decoration: underline;
+}
+
+.keymessage, .keymessage div {
+    vertical-align: middle;
+    line-height: normal;
 }
 
 .keymessage {
-    border: 4px solid white;
+	padding: 0px;
+	margin:0px;
+	padding-right: 3px;
+	padding-left: 3px;
+	border: 3px solid #1776BF;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	height: 44px;
 }
 
-.message {
-    font-family: "Tahoma", "Courier", "Courier New";
+.message, .nomessage {
+    font-family: 'Roboto',Arial,Sans-serif;
     padding: 10px;
     font-weight: normal;
     text-align: left;
     letter-spacing: 1px;
-    background-color: #cae2ee;
     color: #2e2f30;
-    border: 2px solid #ccc;
+    border: 2px solid #fff;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
 
+.message {
+    background-color: #cae2ee;
+    border-color: #ccc;
+}
+
 .menusection {
     background-color: #e9e9e9;
-    color: #0c3b60;
+    color: #143b9f;
     padding-left: 5px;
     padding-right: 15px;
     height: 2.5em;
     border: 1px solid #ccc;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .breadcrumb, .breadcrumb-left, .breadcrumb-right {
@@ -184,7 +182,7 @@ ul.listitems li {
 }
 
 ul.listitems li a {
-    color: #007aa3;
+    color: #1776BF;
 }
 
 ul.listitems li a:hover {
@@ -225,8 +223,8 @@ ul .listitem {
 /* menu items */
     
 .menuitem, .menuitem-unclickable {
-    background-color: #fff;
-    color: #2e5e83;
+    background-color: #ffffff;
+    color: #1776BF;
     height: 2.5em;
     padding-left: 2em;
     padding-right: 0;
@@ -244,7 +242,7 @@ ul .listitem {
 }
 
 .menuitem a {
-    color: #2e5e83;
+    color: #1776BF;
     text-decoration: none;
     outline: 0;
 }
@@ -279,7 +277,7 @@ ul .listitem {
 
 .subheading2 {
     background-color: #e5e5e4;
-    color: #000;
+    color: #333333;
     padding: 1em;
     text-align: center;
     border-bottom: 1px solid #474747;
@@ -292,9 +290,32 @@ ul .listitem {
     border-top-right-radius: 5px;
 }
 
+.subheading2-l {
+    background-color: #e5e5e4;
+    color: #333333;
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #474747;
+    height: 2em;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.tableView th,
+.tableForm th {
+    border: 1px solid #dcdcdc;
+	font-weight : normal;
+	padding-top: 0.5em;
+    padding-bottom: 0.5em;
+	padding-left: 1em;
+}
 .subHeading, .subheading-r {
     background-color: #ddd;
-    color: #352821;
+    color: #333333;
     padding-left: 5px;
     letter-spacing: 1px;
     font-weight: bold;
@@ -302,19 +323,21 @@ ul .listitem {
 
 .subHeading {
     text-align: left;
+	color: #333333;
 }
 
 .subHeading-r {
     text-align: right;
+	color: #333333;
 }
 
 .subHeading-r a, .subHeading a {
-    color: #2D415F;
+    color: #1776BF;
     font-weight: normal;
 }
 
 .subHeading a:hover { 
-    color: #000064;
+    color: #1776BF;
 }
 
 .memgraph {
@@ -343,7 +366,6 @@ ul .listitem {
 .rowdata,
 .oddchildrow,
 .oddchildrow {
-    /* background-color: #ddefff; */
     background-color: #fff;
 }
 
@@ -361,7 +383,7 @@ ul .listitem {
 }
 
 .oddrow-l a, .evenrow-l a, .oddrowdata-l, .evenrowdata-l {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .oddcol-l {
@@ -436,7 +458,7 @@ ul .listitem {
 .rowdata a,
 .rowdata-l a,
 .tabledata a {
-    color: #007aa3;
+    color: #1776BF;
 }
 
 .oddrow a:hover,
@@ -457,10 +479,11 @@ ul .listitem {
 .rowdata-l a:hover,
 .tabledata a:hover {
     text-decoration: underline;
+	color: #1776BF;
 }
 
 .evenchildrow, .oddchildrow, .evenchildrow a, .oddchildrow a {
-    color: #08419C;
+    color: #1776BF;
     text-align: left;
     padding-left: 2px;
 }
@@ -472,7 +495,7 @@ ul .listitem {
 }
     
 .fixedwidth {
-    font-family: "Tahoma", "Courier";
+    font-family: 'Roboto',Arial,Sans-serif;
 }
 
 .grouping-positive {
@@ -491,7 +514,7 @@ ul .listitem {
     background-color: #fff;
     color: #FFFFFF;
     text-align: left;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     padding-top: 2px;
     padding-bottom: 2px;
     border-right: 1px solid #95AACD;
@@ -506,9 +529,9 @@ ul .listitem {
 }
 
 .widebuttons {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     font-weight: bold;
-    background-color: #006f97;
+    background-color: #666666;
     color: #fff;
     width: 95%;
 }
@@ -534,13 +557,6 @@ ul .listitem {
     border: none;
 }
 
-.customTable {
-    padding: 10;
-    border-spacing: 10;
-    border-collapse: collapse;
-    border: 1;
-}
-
 .tableView td,
 .tableForm td {
     border: 1px solid #dcdcdc;
@@ -563,12 +579,12 @@ ul .listitem {
 
 .tableView .field a,
 .tableForm .field a {
-    color: #007aa3;
+    color: #1776BF;
 }
 
 .tableView .field a:hover,
 .tableForm .field a:hover {
-    color: #007aa3;
+    color: #1776BF;
 }
 
 .tableView .evenrow,
@@ -618,29 +634,10 @@ ul .listitem {
 .tableForm .subheading2 .evencol,
 .tableForm .subheading2 .oddcol {
     background-color: #e5e5e4;
-    color: #000;
+    color: #333333;
     padding: 1em;
     text-align: center;
     height: 2em;
-}
-
-.tableView .subheading .datacenter{
-	background-color: #e5e5e4;
-    color: #000;
-    padding: 1em;
-    text-align: center;
-    height: 2em;
-}
-
-.tableView .keyrowdata {
-    text-align: center;
-    background-color: #e5e5e4;
-}
-
-.tableView .keyrowdata-b {
-    text-align: center;
-    background-color: #e5e5e4;
-	font-weight: bold;
 }
 
 .memoryGraph td {
@@ -661,10 +658,11 @@ ul .listitem {
     text-align: left;
 }
 
+.subheading2 th,
 .subheading2 td {
     text-align: center;
     background-color: #e5e5e4;
-    color: #323232;
+    color: #333333;
 }
 
 table.menuTable tr td.menusection-Action, 
@@ -678,7 +676,7 @@ table.menuTable tr td.menusection-Solutions,
 table.menuTable tr td.menusection-MobileGateway, 
 table.menuTable tr td.menusection-webMethods {
     background-color: #fff;
-    color: #0c3b60;
+    color: #333333;
     font-weight: normal;
     padding-left: 5px;
     padding-right: 15px;
@@ -687,7 +685,7 @@ table.menuTable tr td.menusection-webMethods {
 }
 
 table.menuTable tr td.menusection-expanded {
-    background-color: #006f97;
+    background-color: #14629F;
     color: #fff;
     font-weight: bold;
     padding-left: 5px;
@@ -706,26 +704,27 @@ table.menuTable tr td.menusection-expanded {
 }
 
 #freeMemoryBar td {
-    background-color: #8bcfed;
+    background-color: #CDE6F9;
     border: none;
 }
 
+#mTable tr td a {
+    color: #14629F;
+}
+
 table {
-/*    border: 2px dotted #33fafa; */
     border-collapse: collapse;
     padding: 0px;
 }
 
 table.tableView,
 table.tableForm {
-/*    border: 4px dashed red; */
     border-collapse: collapse;
     margin: 8px 0 0 0;
     padding: 0;
 }
 
 tr ul {
-/*    border: 3px dotted green; */
     border-collapse: collapse;
     margin: 8px 0 0 0;
     padding: 0;
@@ -733,7 +732,6 @@ tr ul {
 
 table.tableView tr td table,
 table.tableForm tr td table {
-/*    border: 2px dashed magenta; */
     border-collapse: collapse;
     margin: 8px 0 0 0;
     padding: 0;
@@ -743,7 +741,6 @@ table.tableForm tr td table {
     margin-left: auto;
     margin-right: auto;
     width: 300px;
-/*    border: 2px dashed magenta; */
     text-align: center;
 }
 
@@ -761,7 +758,7 @@ table.tableForm tr td table {
 .tableForm .heading {
     border: none;
     border-collapse: collapse;
-    background-color: #006f97;
+    background-color: #666666;
     color: #FFFFFF;
     padding: 0px 0px 0px 1em;
     text-align: left;
@@ -773,7 +770,7 @@ table.tableForm tr td table {
     -webkit-border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 body.menu {
@@ -796,7 +793,7 @@ td.memgraph {
 
 td.memgraph img {
     border: none;
-    background-color: #006f97;
+    background-color: #666666;
     padding: 2px;
     margin: 2px;
 }
@@ -838,16 +835,57 @@ body table tr td ul li {
 }
 
 body table tr td ul li a {
-    color: #007aa3;
+    color: #1776BF;
 }
 
 body table tr td ul li a:hover {
 }
 
 table.menuTable tr td.menuitem-selected {
-    background-color: #0899cc;
+    background-color: #1776BF;
 }
 
 table.menuTable tr td.menuitem-selected span a {
     color: #fff;
+}
+
+tr.fullinputwidth td > input[type='text'] {
+    display: block;
+    width: 100%;
+}
+
+table.width25 {
+    width: 25%;
+}
+
+table.width25 tr td > input[type='text'] {
+    display: block;
+    width: 100%;
+}
+
+table.width50 {
+    width: 50%;
+}
+
+table.width50 tr td > input[type='text'] {
+    display: block;
+    width: 100%;
+}
+
+table.width75 {
+    width: 75%;
+}
+
+table.width75 tr td > input[type='text'] {
+    display: block;
+    width: 100%;
+}
+
+table.width100 {
+    width: 100%;
+}
+
+table.width100 tr td > input[type='text'] {
+    display: block;
+    width: 100%;
 }

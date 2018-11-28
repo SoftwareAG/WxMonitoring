@@ -352,7 +352,7 @@
 	%rename /eventServer eventServer -copy%
 			<tr>
 				<td>
-					<table class="customTable" width="100%" border="1">
+					<table class="customTable" width="100%" border="0">
 						<tr>
 							<td valign="top">
 								<table>
@@ -403,7 +403,7 @@
 												<tr>
 													<td colspan="6" class="heading">Processes Summary- By Business Domain | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
 												</tr>
-												<tr class="subheading">
+												<tr class="subheading2">
 													<td nowrap class="datacenter">Business Domain</td>
 													<td nowrap class="datacenter">Total</td>
 													<td nowrap class="datacenter">Active</td>
@@ -518,7 +518,7 @@
 												<tr>
 													<td colspan="6" class="heading">Processes Summary- By Server | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
 												</tr>
-												<tr class="subheading">
+												<tr class="subheading2">
 													<td nowrap class="datacenter">Server ID</td>
 													<td nowrap class="datacenter">Total</td>
 													<td nowrap class="datacenter">Active</td>
@@ -685,7 +685,7 @@
 												<tr>
 													<td nowrap colspan="6" class="heading">Events Summary- By Server | From : %value fromTime encode(html)% | To : %value toTime encode(html)%</td>
 												</tr>
-												<tr class="subheading">
+												<tr class="subheading2">
 													<td nowrap class="datacenter">Server ID</td>
 													<td nowrap class="datacenter">Total</td>
 													<td nowrap class="datacenter">Fatal</td>
@@ -780,7 +780,7 @@
 												<tr>
 													<td colspan="6" class="heading">Events Summary- By Log File | From : %value fromTime encode(html)% | To : %value toTime encode(html)%</td>
 												</tr>
-												<tr class="subheading">
+												<tr class="subheading2">
 													<td nowrap class="datacenter">Log File</td>
 													<td nowrap class="datacenter">Total</td>
 													<td nowrap class="datacenter">Fatal</td>

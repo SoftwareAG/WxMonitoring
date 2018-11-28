@@ -16,4 +16,5 @@ Several features will be added to this community edition, depending on customer 
 
 ## Authors
 [Marko Goerg](mailto:Marko.Goerg@softwareag.com)
+
 [Puneet Arora](mailto:Puneet.Arora@softwareag.com)

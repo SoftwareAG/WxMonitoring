@@ -213,7 +213,7 @@
 								<tr>
 									<td class="heading" colspan="13">Processes</td>
 								</tr>
-								<tr class="subheading">
+								<tr class="subheading2">
 									<td class="subheading">Server ID</td>
 									<td class="subheading">Business Domain</td>
 									<td class="subheading">Process Name</td>

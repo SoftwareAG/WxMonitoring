@@ -125,6 +125,11 @@
                                     ::
                                     %value text%
                                 %endif%
+								%invoke wm.server.query:getCurrentUser%
+								%ifvar username%
+									:: %value  username%
+								%endif%
+								%endinvoke%
                             </TD>
                             %endinvoke%
                         </TR>

@@ -233,7 +233,7 @@
 											<tr>
 												<td class="heading" colspan="7">Exception Details</td>
 											</tr>
-											<tr class="subheading">
+											<tr class="subheading2">
 												<td class="subheading">Exception timestamp</td>
 												<td class="subheading">Exception Step ID</td>
 												<td class="subheading">Exception Message</td>
@@ -277,7 +277,7 @@
 											<tr>
 												<td class="heading" colspan="7">Actions Taken</td>
 											</tr>
-											<tr class="subheading">
+											<tr class="subheading2">
 												<td class="subheading">Taken On</td>
 												<td class="subheading">Action Taken</td>												
 												<td class="subheading">Reason</td>

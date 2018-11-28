@@ -7,7 +7,7 @@ function toggle(parent, id, imgId) {
         parent.setAttribute("manualhide", "false");
         image.src = "images/expanded.gif";
         var item = document.getElementById("elmt_" + id);
-        item.style.backgroundColor = "#006f97";
+        item.style.backgroundColor = "#14629f";
         item.style.color = "#fff";
     }
     else {
@@ -15,7 +15,7 @@ function toggle(parent, id, imgId) {
         image.src = "images/collapsed_blue.png";
         var item = document.getElementById("elmt_" + id);
         item.style.backgroundColor = "#fff";
-        item.style.color = "#0c3b60";
+        item.style.color = "#143b9f";
     }
     var elements = getElements("tr", id);
 
@@ -53,13 +53,13 @@ function setMenuItem(rootid, bgcolor, color) {
     if (selected != null) {
         setMenuItem(selected, "#fff", "#2e5e83");
     }
-    setMenuItem(id, "#0899cc", "#fff");
+    setMenuItem(id, "#1776bf", "#fff");
     return id;
   };
 
   exports.mouseOver = function(object, id, selected) {
     if (id != selected) {
-        setMenuItem(id, "#8bcfed", "#333");
+        setMenuItem(id, "#cbe6f9", "#333");
     }
     window.status = id;
   };

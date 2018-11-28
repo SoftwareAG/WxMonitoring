@@ -377,7 +377,7 @@
 						<tr>
 							<td colspan="6" class="heading">Processes Summary- Group by : %ifvar criteria equals('dateStatus')% Datewise %else% %ifvar criteria equals('hourStatus')% Hourwise %else% %ifvar criteria equals('businessDomainStatus')% Business Domain %else% %ifvar criteria equals('serverStatus')% Server %else% - %endif% %endifvar% %endifvar% %endifvar% | From : %value fromDateValue encode(html)%  %value fromTimeValue encode(html)%:00 | To : %value toDateValue encode(html)%  %value toTimeValue encode(html)%:59 </td>
 						</tr>
-						<tr class="subheading">
+						<tr class="subheading2">
 							<td nowrap class="datacenter">%ifvar criteria equals('dateStatus')% Date %else% %ifvar criteria equals('hourStatus')% Hour %else% %ifvar criteria equals('businessDomainStatus')% Business Domain %else% %ifvar criteria equals('serverStatus')% Server %else% - %endif% %endifvar% %endifvar% %endifvar% </td>
 							<td nowrap class="datacenter">Total</td>
 							<td nowrap class="datacenter">Active</td>
