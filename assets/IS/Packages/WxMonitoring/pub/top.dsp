@@ -102,7 +102,7 @@
          
         <table border=0 cellspacing=0 cellpadding=0 height=70 width=100%>
             <tr>
-                <td>
+                <td width=75%>
                     <TABLE height=14 width=100% CELLSPACING=0 cellpadding=0 BORDER=0>
                         <TR>
 
@@ -135,8 +135,15 @@
                         </TR>
                     </TABLE>
                 </td>
-            </tr>
-      
+				<TD width = "*" nowrap valign="bottom" class="topmenu">
+					
+					<A target='main' onclick='javascript:alert("WxMonitoring v0.1")'>About</A>
+					| <A target='_blank' href="docs/">Help</A>
+				   
+				</TD>
+			   </tr>
+	  
+			<!-- -->
             <tr height=100%>
 				<td nowrap valign="top">
                     <TABLE width=100% height=40 CELLSPACING=0  cellpadding=0>       
@@ -201,59 +208,14 @@
 									</tr>
 								</TABLE>
 							</td>	
-							<!--
-                            <TD nowrap valign="bottom" class="topmenu">
-			        
-				 %invoke wm.server:getSessionID% 
-				   %ifvar sessionid not  equals('null')%				  
-				   %endif%  
-				   
-                                %ifvar adapter%
-				   
-                                    <A href='javascript:window.parent.close();'>Close Window</A>
-                
-                                    %ifvar adapter equals('SAP')%
-                                        | <a  TARGET="main" href="/SAP/sapAbout_aboutPage.dsp">About</a>
-                                    %endif%
-                                    %ifvar help%
-                                        | <A target='adapter-body' onclick="launchHelp();return false;" href='#'>Help</A>
-                                    %endif%
-                               %else%
-
-									%invoke wm.server.quiesce:getCurrentMode%
-										 %ifvar isQuiesceMode equals('true')%
-											<A  TARGET="main" href='quiesce-report.dsp' onclick="return switchToQuiesceMode(document.htmlform_toggle_mode,'%value isQuiesceMode%');"  id="Qlink">Exit Quiesce Mode</A>
-										 %else%
-											<A  TARGET="main" href='quiesce-report.dsp' onclick="return switchToQuiesceMode(document.htmlform_toggle_mode,'%value isQuiesceMode%');"  id="Qlink">Enter Quiesce Mode</A>
-										 %endif%
-									
-									<script>displayMode('%value isQuiesceMode%');</script>
-									%endinvoke%
-									|
-
-                                    <A target='main' href='server-shutdown.dsp%ifvar css%?css=%value css%%endif%'>
-                                        Shut Down and Restart
-                                    </A>
-                                    |
-                                    <A target='main' href='top-logoff.dsp?sessionid=%value sessionid%'
-               onclick="return logIEout();" >Log Off</A>
-               			    |
-                                    <A target='main' href='server-environment.dsp'>About</A>
-                                    |
-                                    <A target='main' onclick="launchHelp();return false;" href='#'>Help</A>&nbsp;
-				    
-                                %endif%
-				 %end%
-                                 
-				
-                            </TD>-->
+							
                         </TR>
     
                         <TR>
                         </TR>
                     </TABLE>
                 </td>
-            </tr>
+			</tr>
         </table>
 		<form name="htmlform_toggle_mode" action="quiesce-report.dsp" method="POST">
 			<input type="hidden" name="isQuiesceMode">
