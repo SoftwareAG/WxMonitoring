@@ -1,8 +1,6 @@
 package wx.monitoring.impl;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2018-11-03 09:23:18 CET
-// -----( ON-HOST: MCPUNA01.eur.ad.sag
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -86,6 +84,56 @@ public final class util
 		IDataUtil.put( pipelineCursor_1, "diffInHours", diffInHours );
 		IDataUtil.put( pipelineCursor_1, "diffInMinutes", diffInMinutes );
 		IDataUtil.put( pipelineCursor_1, "diffInSeconds", diffInSeconds );
+		pipelineCursor_1.destroy();
+		
+			
+		// --- <<IS-END>> ---
+
+                
+	}
+
+
+
+	public static final void createRandomInt (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(createRandomInt)>> ---
+		// @sigtype java 3.5
+		// [i] field:0:required greaterThanOrEqualTo
+		// [i] field:0:required lessThanOrEqualTo
+		// [o] field:0:required randomNumber
+		// pipeline
+		IDataCursor pipelineCursor = pipeline.getCursor();
+			String	greaterThanOrEqualTo = IDataUtil.getString( pipelineCursor, "greaterThanOrEqualTo" );
+			String	lessThanOrEqualTo = IDataUtil.getString( pipelineCursor, "lessThanOrEqualTo" );
+		pipelineCursor.destroy();
+		
+		int min = 0;
+		int max = 0;
+		
+		if(greaterThanOrEqualTo!=null) {
+			
+			min = Integer.parseInt(greaterThanOrEqualTo);
+		} else {
+			min = Integer.MIN_VALUE;
+		}
+		
+		if(lessThanOrEqualTo!=null) {
+			
+			max = Integer.parseInt(lessThanOrEqualTo);
+		} else {
+			max = Integer.MAX_VALUE;
+		}
+		
+		if(min<max){
+			int temp = min;
+			min = max;
+			max = temp;
+		}
+		int randomNumber =  min + (int)(Math.random() * ((max - min) + 1));
+		// pipeline
+		IDataCursor pipelineCursor_1 = pipeline.getCursor();
+		IDataUtil.put( pipelineCursor_1, "randomNumber", String.valueOf(randomNumber) );
 		pipelineCursor_1.destroy();
 		
 			
