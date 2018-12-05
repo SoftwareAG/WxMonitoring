@@ -64,7 +64,7 @@
 				</script>
 				<tr>
 					<td colspan="6">
-					On this page you can add sample data and quickly test if the data is inserted into ElasticSearch. Please add the data that is consistent with IS server log style or wrapper log style. </br>For e.g write event in format 2018-11-29 14:24:34 MEZ [ISS.1055.3238I] "IS log Test event content". You can also generate a random event by clicking "Generate event" button.
+					On this page you can add sample data and quickly test if the data is inserted into ElasticSearch. Please add the data that is consistent with IS server log style or wrapper log style. </br>For e.g write event in format "2018-11-29 14:24:34 MEZ [ISS.1055.3238I] Test IS log" or in format "INFO   | jvm 1    | 2018/12/05 09:12:38 | Test wrapper log". </br>You can also generate a random event by clicking "Generate event" button.
 						<form name="htmlform_smoketest_event_load" action="smoke-test-events-load.dsp" method="GET">
 							<input type="hidden" name="operation">
 						<TABLE class="tableView">
@@ -73,17 +73,38 @@
 							</TR>  
 							<TR class="oddrow">
 								<TD nowrap align="left">
-									Event type
-									<select id="selEventType" name="eventType">
-										<option value="is" %ifvar eventType equals('is')% selected %endifvar% selected>IS log</option>
-										<option value="process" %ifvar eventType equals('process')% selected %endifvar%>Process log</option>
-										<option value="wrapper" %ifvar eventType equals('wrapper')% selected %endifvar% disabled>Wrapper log</option>
-									</select>
+									<TABLE class="noborders">
+										<TR>
+											<TD>
+												Event type 
+											</TD>
+											<TD>
+												<select id="selEventType" name="eventType">
+													<option value="is" %ifvar eventType equals('is')% selected %endifvar% selected>IS log</option>
+													<option value="process" %ifvar eventType equals('process')% selected %endifvar%>Process log</option>
+													<option value="wrapper" %ifvar eventType equals('wrapper')% selected %endifvar%>Wrapper log</option>
+												</select>
+											</TD>
+										</TR>
+										<TR>  
+											<TD>
+												Number of events/processes 
+											</TD>
+											<TD>
+												<select id="selNumberOfEvents" name="numberOfEvents">
+													<option value="1" %ifvar numberOfEvents -isnull% selected %else% %ifvar numberOfEvents equals('1')% selected %endifvar% %endifvar% selected>1</option>
+													<option value="10" %ifvar numberOfEvents equals('10')% selected %endifvar%>10</option>
+													<option value="50" %ifvar numberOfEvents equals('50')% selected %endifvar%>50</option>
+													<option value="100" %ifvar numberOfEvents equals('100')% selected %endifvar%>100</option>
+												</select>
+											</TD>
+										</TR>
+									</TABLE>
 								</TD> 
 								<TD nowrap align="left">  <INPUT type="submit" VALUE="Generate event" onclick="return validateForm(this.form, 'generateEvent');"></TD>
 							</TR>
 							<TR class="oddrow">
-								<TD colspan=2 >  <textarea name="eventData" rows="10" cols="70">%ifvar operation equals('generateEvent')%%value event% %else%Enter event here...%endifvar%</textarea></TD>
+								<TD colspan=2 >  <textarea name="eventData" rows="10" cols="100">%ifvar operation equals('generateEvent')%%value events% %else%Enter event here...%endifvar%</textarea></TD>
 							</TR>
 							<TR class="oddrow">
 								<TD colspan=2 class="action">  <INPUT type="submit" VALUE="Load event"></TD>
