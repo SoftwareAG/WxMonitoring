@@ -257,11 +257,9 @@
 				<tr>
 					<input type="hidden" id="totalPages" name="totalPages" value="%value totalPages%">
 					<td id="pagination" colspan="1" >
-						<a href="#"  onclick="goToFirstClick(htmlform_processes_specific);" id="goToFirst">&lt;&lt; Go to first</a> |
-						<a href="#"  onclick="onPreviousClick(htmlform_processes_specific);" id="previous">&lt;Previous</a> |
-						<a href="#"  onclick="onNextClick(htmlform_processes_specific, '%value totalPages%');" id="next">Next &gt;</a> |
-						<a href="#"  onclick="goToLastClick(htmlform_processes_specific, '%value totalPages%');" id="goToLast">Go to last &gt;&gt;</a> </br>							
-						<span id="page_info">You are currently viewing page %value requestedPageNumber% of %value totalPages%</script></span>
+						%scope param(form='htmlform_processes_specific')%
+							%include pagination.dsp%
+						%endscope%
 					</td>
 				</tr>
 				<tr>

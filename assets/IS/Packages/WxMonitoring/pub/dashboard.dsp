@@ -469,7 +469,7 @@
 													</td>
 					%ifvar ../../processBusinessDomain equals('ALL')%
 						<script>
-							AddProcesses('%value count encode(javascript)%', '%value started/count encode(javascript)%', '%value completed/count encode(javascript)%', '%value exception/count encode(javascript)%', '%value failed/count encode(javascript)%', '%value cancelled/count encode(javascript)%' );
+							AddProcesses('%value count encode(javascript)%', '%value startedBucket/count encode(javascript)%', '%value completedBucket/count encode(javascript)%', '%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%', '%value cancelledBucket/count encode(javascript)%' );
 						</script>
 					%endifvar%												</tr>
 			%endloop%

@@ -146,7 +146,7 @@
 											
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									Log File
-									<select id="selLogFile" name="logFile" >
+									<select id="selLogFile" name="logFile" style="width: 100px" >
 											%loop logFileNames%
 										<option value="%value fullName encode(htmlattr)%"  title="%value fullName encode(htmlattr)%" %ifvar ../logFile vequals(fullName)% selected %endifvar%>%value name encode(html)%</option>
 											%endloop%
@@ -258,11 +258,9 @@
 				<tr>
 					<input type="hidden" id="totalPages" name="totalPages" value="%value totalPages%">
 					<td id="pagination" colspan="1" >
-						<a href="#"  onclick="goToFirstClick(htmlform_events_general);" id="goToFirst">&lt;&lt; Go to first</a> |
-						<a href="#"  onclick="onPreviousClick(htmlform_events_general);" id="previous">&lt;Previous</a> |
-						<a href="#"  onclick="onNextClick(htmlform_events_general, '%value totalPages%');" id="next">Next &gt;</a> |
-						<a href="#"  onclick="goToLastClick(htmlform_events_general, '%value totalPages%');" id="goToLast">Go to last &gt;&gt;</a> </br>							
-						<span id="page_info">You are currently viewing page %value requestedPageNumber% of %value totalPages%</script></span>
+						 %scope param(form='htmlform_events_general')%
+							%include pagination.dsp%
+						%endscope%
 					</td>
 					<td>  </td>
 				</tr>

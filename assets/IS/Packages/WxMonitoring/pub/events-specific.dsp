@@ -397,11 +397,9 @@
 				<tr>
 					<input type="hidden" id="totalPages" name="totalPages" value="%value totalPages%">
 					<td id="pagination" colspan="1" >
-						<a href="#"  %ifvar operation equals('show_rule_affected_events')% onclick="goToFirstClick(htmlform_rule_affected_events_display);" %else% onclick="goToFirstClick(htmlform_events_specific_display);" %endifvar% id="goToFirst">&lt;&lt; Go to first</a> |
-						<a href="#"  %ifvar operation equals('show_rule_affected_events')% onclick="onPreviousClick(htmlform_rule_affected_events_display);" %else% onclick="onPreviousClick(htmlform_events_specific_display);" %endifvar%  id="previous">&lt;Previous</a> |
-						<a href="#"  %ifvar operation equals('show_rule_affected_events')% onclick="onNextClick(htmlform_rule_affected_events_display, '%value totalPages%');" %else% onclick="onNextClick(htmlform_events_specific_display, '%value totalPages%');" %endifvar% id="next">Next &gt;</a> |
-						<a href="#"  %ifvar operation equals('show_rule_affected_events')% onclick="goToLastClick(htmlform_rule_affected_events_display, '%value totalPages%');" %else% onclick="goToLastClick(htmlform_events_specific_display, '%value totalPages%');" %endifvar% id="goToLast">Go to last &gt;&gt;</a> </br>							
-						<span id="page_info">You are currently viewing page %value requestedPageNumber% of %value totalPages%</script></span>
+						%scope param(form='htmlform_events_specific_display')%
+							%include pagination.dsp%
+						%endscope%
 					</td>
 				</tr>
 			</tbody>

@@ -2,8 +2,8 @@
 
 setlocal
 
-set SAG_HOME=c:\sag910
-set LOGSTASH_HOME=C:\work\local\logstash-6.2.3
+set SAG_HOME=C:\SoftwareAG910
+set LOGSTASH_HOME=C:\SoftwareAG910\logstash-6.2.2
 set LOGSTASH_PORT=5044
 set ELASTIC_SEARCH_ADDRESS=localhost:9200
 
