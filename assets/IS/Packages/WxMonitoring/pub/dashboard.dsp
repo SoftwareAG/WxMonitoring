@@ -445,13 +445,13 @@
 													<td nowrap class="evenrowdata">
 				%ifvar exceptionBucket/count -notempty%
 														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value key encode(javascript)%', 'ALL','failed');">
-															<script> writeFailedProcessesCount('%value exception/count encode(javascript)%', '%value failedBucket/count encode(javascript)%'); </script>
+															<script> writeFailedProcessesCount('%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%'); </script>
 														</a>
 								
 				%else%
 					%ifvar failedBucket/count -notempty%
 														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value key encode(javascript)%', 'ALL','failed');">
-															<script> writeFailedProcessesCount('%value exception/count encode(javascript)%', '%value failedBucket/count encode(javascript)%'); </script>
+															<script> writeFailedProcessesCount('%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%'); </script>
 														</a>
 					%else%
 														-
