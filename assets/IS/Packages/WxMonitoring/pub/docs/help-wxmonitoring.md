@@ -122,3 +122,20 @@ Use this JSON-format to emit an message event:
 }
 }
 ```
+
+## Design
+
+### webMethods Services
+
+* wx.monitoring.services.gui.dashboard:getDashboard
+    * wx.monitoring.services.gui.events:getEventsStats
+        * wx.monitoring.services.admin:getEventsAgg
+            * wx.monitoring.impl.maps:aggSourceToAggViewList
+            * wx.monitoring.impl.persistence.handler:getESDocumentsByQuery
+            * wx.monitoring.impl.persistence.queries.events:createGetEventAggQuery
+    * wx.monitoring.services.gui.processes:getProcessesStats
+        * wx.monitoring.services.admin:getProcessesAgg
+            * wx.monitoring.impl.maps:aggSourceToAggViewList
+            * wx.monitoring.impl.persistence.handler:**getESDocumentsByQuery**
+                 * wx.monitoring.services.adapters.es:invokeElasticSearch
+        * wx.monitoring.impl.persistence.queries.processes:createGetProcessAggQuery

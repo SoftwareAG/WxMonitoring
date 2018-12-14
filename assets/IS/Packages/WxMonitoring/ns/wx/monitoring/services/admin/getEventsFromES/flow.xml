@@ -4051,13 +4051,13 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/esResponse;4;0;WxMonitoring.docs.common:ESSearchAPIResponse/hits;2;0/hits;2;1/_id;1;0" TO="/eventCanonicalList;4;1;WxMonitoring.docs.events:eventCanonical/id;1;0">
+<MAPCOPY FROM="/esResponse;4;0;wx.monitoring.docs.dbo:ESSearchAPIResponse/hits;2;0/hits;2;1/_id;1;0" TO="/eventCanonicalList;4;1;wx.monitoring.docs.dto:EventCanonical/id;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/esResponse;4;0;WxMonitoring.docs.common:ESSearchAPIResponse/hits;2;0/hits;2;1/_index;1;0" TO="/eventCanonicalList;4;1;WxMonitoring.docs.events:eventCanonical/index;1;0">
+<MAPCOPY FROM="/esResponse;4;0;wx.monitoring.docs.dbo:ESSearchAPIResponse/hits;2;0/hits;2;1/_index;1;0" TO="/eventCanonicalList;4;1;wx.monitoring.docs.dto:EventCanonical/index;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/esResponse;4;0;WxMonitoring.docs.common:ESSearchAPIResponse/hits;2;0/hits;2;1/_source;2;0" TO="/eventCanonicalList;4;1;WxMonitoring.docs.events:eventCanonical/source;4;0;WxMonitoring.docs.events:eventSource">
+<MAPCOPY FROM="/esResponse;4;0;wx.monitoring.docs.dbo:ESSearchAPIResponse/hits;2;0/hits;2;1/_source;2;0" TO="/eventCanonicalList;4;1;wx.monitoring.docs.dto:EventCanonical/source;4;0;WxMonitoring.docs.events:eventSource">
 </MAPCOPY>
 </MAP>
 
@@ -4346,7 +4346,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">WxMonitoring.docs.events:eventCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -4388,7 +4388,7 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/eventCanonicalList;4;0;WxMonitoring.docs.events:eventCanonical" TO="/eventCanonical;4;0;WxMonitoring.docs.events:eventCanonical">
+<MAPCOPY FROM="/eventCanonicalList;4;0;wx.monitoring.docs.dto:EventCanonical" TO="/eventCanonical;4;0;wx.monitoring.docs.dto:EventCanonical">
 </MAPCOPY>
 </MAP>
 
@@ -4419,7 +4419,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">WxMonitoring.docs.events:eventCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -4642,7 +4642,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">WxMonitoring.docs.events:eventCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -4712,7 +4712,7 @@
 
   <!-- nodes -->
 
-<MAPDELETE FIELD="/eventCanonical;4;0;WxMonitoring.docs.events:eventCanonical">
+<MAPDELETE FIELD="/eventCanonical;4;0;wx.monitoring.docs.dto:EventCanonical">
 </MAPDELETE>
 </MAP>
 </INVOKE>
@@ -5028,7 +5028,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">WxMonitoring.docs.events:eventCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -5090,10 +5090,10 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/eventView;4;0;WxMonitoring.docs.events:eventView" TO="/fromItem;2;0">
+<MAPCOPY FROM="/eventView;4;0;wx.monitoring.docs.view:EventView" TO="/fromItem;2;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/events;4;1;WxMonitoring.docs.events:eventView" TO="/toList;2;1">
+<MAPCOPY FROM="/events;4;1;wx.monitoring.docs.view:EventView" TO="/toList;2;1">
 </MAPCOPY>
 </MAP>
 
@@ -5364,7 +5364,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">WxMonitoring.docs.events:eventCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -5451,7 +5451,7 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/toList;2;1" TO="/events;4;1;WxMonitoring.docs.events:eventView">
+<MAPCOPY FROM="/toList;2;1" TO="/events;4;1;wx.monitoring.docs.view:EventView">
 </MAPCOPY>
 
 <MAPDELETE FIELD="/toList;2;1">
@@ -5471,13 +5471,13 @@
 
   <!-- nodes -->
 
-<MAPDELETE FIELD="/eventView;4;0;WxMonitoring.docs.events:eventView">
+<MAPDELETE FIELD="/eventView;4;0;wx.monitoring.docs.view:EventView">
 </MAPDELETE>
 
-<MAPDELETE FIELD="/eventCanonicalList;4;1;WxMonitoring.docs.events:eventCanonical">
+<MAPDELETE FIELD="/eventCanonicalList;4;1;wx.monitoring.docs.dto:EventCanonical">
 </MAPDELETE>
 
-<MAPDELETE FIELD="/esResponse;4;0;WxMonitoring.docs.common:ESSearchAPIResponse">
+<MAPDELETE FIELD="/esResponse;4;0;wx.monitoring.docs.dbo:ESSearchAPIResponse">
 </MAPDELETE>
 
 <MAPDELETE FIELD="/onError;1;0">
