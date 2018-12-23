@@ -57,7 +57,7 @@
 <!-- list page actions -->
 				
 				%ifvar operation equals('generateEvent')%
-					%invoke wx.monitoring.services.gui.smokeTest:generateSampleEvent%
+					%invoke wx.monitoring.services.gui.dataAdministration:generateSampleEvent%
 						%ifvar message%
 							<tr><td colspan="2">&nbsp;</td></tr>
 							<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
@@ -68,7 +68,7 @@
 						%endinvoke% 
 				%endifvar%
 				%ifvar operation equals('loadEvent')%
-					%invoke wx.monitoring.services.gui.smokeTest:loadSampleEvents%
+					%invoke wx.monitoring.services.gui.dataAdministration:loadSampleEvents%
 						%ifvar message%
 							<tr><td colspan="2">&nbsp;</td></tr>
 							<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>

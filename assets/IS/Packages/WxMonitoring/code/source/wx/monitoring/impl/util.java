@@ -7,12 +7,19 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.util.TimeZone;
+import org.apache.commons.io.FileUtils;
 import com.softwareag.util.IDataMap;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -89,27 +96,6 @@ public final class util
 		IDataUtil.put( pipelineCursor_1, "diffInSeconds", diffInSeconds );
 		pipelineCursor_1.destroy();
 		
-			
-		// --- <<IS-END>> ---
-
-                
-	}
-
-
-
-	public static final void closeFileReader (IData pipeline)
-        throws ServiceException
-	{
-		// --- <<IS-START(closeFileReader)>> ---
-		// @sigtype java 3.5
-		// [i] object:0:optional fileReader
-		IDataMap dm = new IDataMap(pipeline);
-		try {
-			FileReader bufIn1 = (FileReader) dm.get("fileReader");
-			bufIn1.close();
-		} catch (IOException e) {
-			throw new ServiceException(e);
-		}
 			
 		// --- <<IS-END>> ---
 
@@ -208,28 +194,6 @@ public final class util
 		String value = format.format(currentDate);  
 		IDataUtil.put(cursor, "value", value);  
 		cursor.destroy(); 
-		// --- <<IS-END>> ---
-
-                
-	}
-
-
-
-	public static final void openFileReader (IData pipeline)
-        throws ServiceException
-	{
-		// --- <<IS-START(openFileReader)>> ---
-		// @sigtype java 3.5
-		// [i] field:0:required filename
-		// [o] object:0:required fileReader
-		IDataMap dm = new IDataMap(pipeline);
-		try {
-			FileReader bufIn1 = new FileReader( dm.getAsString("filename") );
-			dm.put("fileReader", bufIn1);
-		} catch (IOException e) {
-			throw new ServiceException(e);
-		}
-			
 		// --- <<IS-END>> ---
 
                 

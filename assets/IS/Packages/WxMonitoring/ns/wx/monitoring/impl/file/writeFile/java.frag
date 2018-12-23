@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">writeFile</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">SURhdGFNYXAgZG0gPSBuZXcgSURhdGFNYXAocGlwZWxpbmUpOw0KU3RyaW5nIGZpbGVuYW1lID0g
+ZG0uZ2V0QXNTdHJpbmcoImZpbGVuYW1lIik7DQpib29sZWFuIGlzRm9yY2VEaXJlY3RvcnkgPSBC
+b29sZWFuLnBhcnNlQm9vbGVhbiggZG0uZ2V0QXNTdHJpbmcoImZvcmNlRGlyIiwgImZhbHNlIikg
+KTsNCklucHV0U3RyZWFtIGlzID0gKElucHV0U3RyZWFtKSBkbS5nZXQoInN0cmVhbSIpOw0KdHJ5
+IHsNCglGaWxlIGYxID0gbmV3IEZpbGUoZmlsZW5hbWUpOw0KCWlmIChpc0ZvcmNlRGlyZWN0b3J5
+KQ0KCQlGaWxlVXRpbHMuZm9yY2VNa2RpcihmMSk7DQoJRmlsZVV0aWxzLmNvcHlJbnB1dFN0cmVh
+bVRvRmlsZShpcywgZjEpOw0KfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsNCgl0aHJvdyBuZXcgU2Vy
+dmljZUV4Y2VwdGlvbihlLnRvU3RyaW5nKCkpOw0KfQ0KCQ==</value>
+</Values>

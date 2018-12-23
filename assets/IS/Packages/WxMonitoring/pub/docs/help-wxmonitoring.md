@@ -4,24 +4,66 @@ WxMonitoring is a ready-to-use webMethods monitoring solution based on Open Elas
 ## Overview
 If running multiple webMethods productive environments it becomes critical to keep track of exceptions in near-time and leverage operational costs. WxMonitoring is a monitoring solution based on Open Elastic Stack, that provides a independent, centralized monitoring. It samples existing IS log-files and supports queries and aggregations views. Additionally automatized rule based actions allows you to react immediately after an exception occurs. They simply send mails, raise JIRA tickets or invoke a compensating service. Rules can be easily defined on existing los messages. For business users WxMonitoring provides views and reports on current and historical process executions.
 
-## ToDo...
+# Table of Contents
+
+* [Features](#features)
+* [Release Notes](#release-notes)
+* [Getting started](#getting-started)
+* [Users Guide](#users-guide)
+* [Roadmap](#roadmap)
+* [Development Guide](#development-guide)
+* [About](#about)
 
 ## Features
 
-### Dashboard
+* Dashboard
+* Searches on Events/Processes
+* Aggreational View on Events
+* Aggreational View on Processes
+* Generate and Import Sample Data
+* Import log files
+* Purge Data
 
-### Fulltext Search
+## Release Notes
+
+### 0.2
+
+Todo ...
+
+## Getting started
+
+Todo ...
+
+## Roadmap
+
+All the following features should be implemented in future releases. 
+
+* Documentation
+    * API
+    * Product Help
+* Fulltext Search
+    * on Events
+    * on Processes
+* Refactoring Monitoring API
+* Release build automization (ANT/Gradle?-build)
+* Docker support / installation
+
+## Development Guide
+
+ToDo ...
+
+### Dashboard
 
 ### Import log files
 
 ### Purge data
 
 
-## Interfaces
+### Interfaces
 
-### Filebeat
+#### Filebeat
 
-### Logstash
+#### Logstash
 
 ```
 input {
@@ -55,9 +97,9 @@ Use this JSON-format to emit an message event:
 ```
 
 
-## Data Structures
+### Data Structures
 
-### Indexes
+#### Indexes
 
 | index | description | 
 | ------------- | ------------- |
@@ -67,7 +109,7 @@ Use this JSON-format to emit an message event:
 | wxmonitoring-processes | |
 | wxmonitoring-event-rules | |
 
-### Event 
+#### Event 
 ```
 {
 "_index": "wxmonitoring-events-original",
@@ -92,7 +134,7 @@ Use this JSON-format to emit an message event:
 }
 ```
 
-### Process 
+#### Process 
 ```
 {
 "_index": "wxmonitoring-processes",
@@ -123,9 +165,18 @@ Use this JSON-format to emit an message event:
 }
 ```
 
-## Design
+### Design
 
-### webMethods Services
+### Coding Conventions
+
+### Code Checks
+
+* dependency checks
+* usage of external services
+* coding conventions
+* ...
+
+#### webMethods Services
 
 * wx.monitoring.services.gui.dashboard:getDashboard
     * wx.monitoring.services.gui.events:getEventsStats
@@ -139,3 +190,8 @@ Use this JSON-format to emit an message event:
             * wx.monitoring.impl.persistence.handler:**getESDocumentsByQuery**
                  * wx.monitoring.services.adapters.es:invokeElasticSearch
         * wx.monitoring.impl.persistence.queries.processes:createGetProcessAggQuery
+
+## About
+
+* Marko Goerg
+* Puneet Arora

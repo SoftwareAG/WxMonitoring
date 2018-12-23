@@ -14,7 +14,9 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import com.softwareag.util.IDataMap;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -40,6 +42,7 @@ public final class importEvents
 		// --- <<IS-START(lookupLogDir)>> ---
 		// @sigtype java 3.5
 		// [i] field:0:required baseDir
+		// [i] field:0:required deepSearch {"false","true"}
 		// [o] record:1:required logFiles
 		// [o] - field:0:required env
 		// [o] - field:0:required log_identifier
@@ -49,6 +52,7 @@ public final class importEvents
 		// [o] -- field:0:required noLines
 		IDataMap dm = new IDataMap(pipeline);
 		String baseDir = dm.getAsString("baseDir");
+		boolean deepSearch = Boolean.parseBoolean( dm.getAsString("deepSearch", "true") );
 		
 		try {
 			File f1 = new File(baseDir);
@@ -58,32 +62,49 @@ public final class importEvents
 				String name = listFiles[i].getName();
 				
 				if (listFiles[i].isDirectory()) {
-					// scan recursive
-					File[] f2 = new File(f1, name).listFiles(new FilenameFilter() {
-						@Override
-						public boolean accept(File dir, String name) {
-							return (name.startsWith("server.log"));
+					List<File> scanDirs = new ArrayList<File>();
+					scanDirs.add(new File(f1, name));
+					while (!scanDirs.isEmpty()) {
+						File curDir = scanDirs.remove(0);
+						if (deepSearch) {
+							// queue all subdirectories 
+							File[] fd = curDir.listFiles(new FilenameFilter() {
+								@Override
+								public boolean accept(File dir, String name) {
+									return (new File(dir, name).isDirectory());
+								}
+							});
+							scanDirs.addAll(Arrays.asList(fd));
 						}
-					});
-					
-					if (f2 != null && f2.length > 0) {
-						IDataMap dm1 = new IDataMap();
-						dm1.put("env", name);
-						dm1.put("log_identifier", "server_log");
-						dm1.put("source", "\\IS\\server.log");
-						IData[] da1 = new IData[f2.length];
-						for (int j = 0; j < f2.length; j++) {
-							IDataMap dm2 = new IDataMap();
-							dm2.put("filename", f2[j].getCanonicalPath());
-							da1[j] = dm2.getIData();
+		
+						// scan recursive
+						File[] f2 = curDir.listFiles(new FilenameFilter() {
+							@Override
+							public boolean accept(File dir, String name) {
+								return (name.startsWith("server.log"));
+							}
+						});
+						
+						if (f2 != null && f2.length > 0) {
+							IDataMap dm1 = new IDataMap();
+							dm1.put("env", name);
+							dm1.put("log_identifier", "server_log");
+							dm1.put("source", "\\IS\\server.log");
+							IData[] da1 = new IData[f2.length];
+							for (int j = 0; j < f2.length; j++) {
+								IDataMap dm2 = new IDataMap();
+								dm2.put("filename", f2[j].getCanonicalPath());
+								da1[j] = dm2.getIData();
+							}
+							dm1.put("files", da1);
+							logFiles.add(dm1.getIData());
 						}
-						dm1.put("files", da1);
-						logFiles.add(dm1.getIData());
+		
+				//			} else if (listFiles[i].isFile()) {
+				//				dm1.put("type", "file");
 					}
-					
-			//			} else if (listFiles[i].isFile()) {
-			//				dm1.put("type", "file");
-				}
+						
+					}
 				
 			}
 			
@@ -111,12 +132,12 @@ public final class importEvents
 		// [i] object:0:optional fileReader
 		// [i] object:0:optional bufReader
 		// [i] field:0:optional nextLine
-		// [i] field:0:optional noLine
+		// [i] field:0:optional noLines
 		// [o] object:0:optional bufReader
 		// [o] field:0:required isEOF {"false","true"}
 		// [o] field:0:required messageML
 		// [o] field:0:optional nextLine
-		// [o] field:0:optional noLine
+		// [o] field:0:optional noLines
 		IDataMap dm = new IDataMap(pipeline);
 		try {
 			BufferedReader bufIn1 = null;

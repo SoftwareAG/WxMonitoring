@@ -136,10 +136,10 @@
                     </TABLE>
                 </td>
 				<TD width = "*" nowrap valign="bottom" class="topmenu">
-					
-					<A target='main' onclick='javascript:alert("WxMonitoring v0.1")'>About</A>
+					%invoke wx.monitoring.impl.config:getPackageInfo%
+					<A target='main' onclick='javascript:alert("Welcome to WxMonitoring v%value version%")'>About</A>
 					| <A target='_blank' href="docs/">Help</A>
-				   
+					%endinvoke%
 				</TD>
 			   </tr>
 	  
