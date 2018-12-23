@@ -28,11 +28,80 @@ If running multiple webMethods productive environments it becomes critical to ke
 
 ### 0.2
 
-Todo ...
+New features in 0.2:
+
+* Import Log Files
+![Import Log Files](img/ImportLogFiles.png)
+* Purge Data
+![Purge Data](img/PurgeData.png)
+* Fix Dashboard
+
 
 ## Getting started
 
-Todo ...
+![System Architecture](img/architecture.png)
+
+In this document “Log Environment“ refers to your webMethods environment that contain logs that are to be monitored. “Monitoring Environment” refers to a separate environment which will run WxMonitoring.
+
+For simplification both log and monitoring environment can be installed on the same webMethods installation (e.g. in development). It is recommended to use separate monitoring environment for your Test/QA and Production stages.
+
+WxMonitoring has been developed and tested with 9.10. It should work with webMethods 9.10+.
+
+### Prerequisite:
+
+WxMonitoring requires the installation of the following products
+* **Logstash** (version: 6.2.x) is installed on “Monitoring Environment”. 
+    Logstash installation guide : https://www.elastic.co/guide/en/logstash/current/installing-logstash.html
+* **Elasticsearch** (version: 6.2.x) is installed on Monitoring Environment 
+    Setting up ElasticSearch : https://www.elastic.co/guide/en/elastic-stack/6.2/installing-elastic-stack.html
+* **webMethods 9.10+ Integration Server** / all concerned Log Environments, and Monitoring Environment
+    Download WxMonitoring from Labcase https://labcase.softwareag.com/projects/wxmonitoring or TechCommunity
+* **Filebeat** (at least version: 6.2.x) is installed on “Log Environment” server. 
+    Filebeat installation guide : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html
+
+### Monitoring Environment
+1. Start Elasticsearch server
+    * (e.g.) run %ES_HOME%/bin/elasticsearch.bat
+1. Start Integration Server
+    * (e.g.) run %SAG_HOME%/profiles/IS_default/bin/startup.bat
+1. Install IS package WxMonitoring
+1. Test installation
+    * Open http://localhost:5555/WxMonitoring/
+      You should see an empty search result page
+    * Open http://localhost:9200/_cat/indices?v
+      You should see indexes wxmonitoring-processes, wxmonitoring-events-original, wxmonitoring-events-xxxx.xx.xx, wxmonitoring-event-rules
+1. Start Logstash
+    * The following instruction describes how to start Logstash from command line. Please see below instructions how to start as a service (recommended in test/qa and prod environments)
+    * Navigate to "...\packages\BG_Monitoring\pub\elk\logstash" directory
+    * Edit file “startLogstash.cmd” and update correct paths for following variables
+      SAG_HOME: path for software ag home folder (e.g. c:\SoftwareAG)
+      LOGSTASH_HOME: path to logstash home folder (for e.g. C:\SoftwareAG\logstash-6.2.2)
+      LOGSTASH_PORT: “5044” (default port - only change if needed)
+      ELASTIC_SEARCH_ADDRESS: “localhost:9200” (default address - only change if needed)
+    * Run “startLogstash.cmd”
+    * Before proceeding, please verify logstash has successfully started by navigating to logstash logs (%LOGSTASH_HOME%/logs/logstash-plain) and verify following log has been recorded: 
+      "[INFO ][org.logstash.beats.Server] Starting server on port: 5044"
+
+### Log Environment
+1. (opt.) Copy following files from WxMonitoring\pub\elk\filebeat to anywhere in log environment server.
+   * startFilebeat.cmd
+   * wxmonitoring_filebeat.yml
+1. Starting Filebeat
+   * The following instruction describes how to start Filebeat from command line. Please see below instructions how to start as a service (recommended in test/qa and prod environments)
+   * Edit file “startFilebeat.cmd” and update correct paths for following variables
+     SAG_HOME: path for software ag home folder (e.g. c:\SoftwareAG)
+     FILEBEAT_HOME: write path to filebeat home folder (e.g. C:\SoftwareAG\filebeat-6.2.2)
+     SERVER_ID: write name of this log environment (should be same as provided in the monitoring environment global variable MONITORED_SERVER_LIST, e.g. dev1)
+     LOGSTASH_HOST: address URL of Logstash on monitoring environment (e.g. 127.0.0.1 or localhost)
+     LOGSTASH_PORT: verify logstash port is correct (e.g. 5044)
+     LOGFILE_PATH= write path of the log file that is to be monitored (e.g. C:\LOG_COLLECTION\sample_process_server.log)
+1. Run “startFilebeat.cmd
+
+### Test Installation
+1. Navigate to IS_Server_base_url/wxmonitoring from browser and verify logs availability.
+1. Test Elastic Search http://localhost:9200/_cat/indices?v 
+1. See log files for Filebeat / LogStash
+
 
 ## Roadmap
 

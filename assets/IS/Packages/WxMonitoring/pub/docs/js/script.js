@@ -29,6 +29,7 @@ showdown.setFlavor('github');
 var myconverter = new showdown.Converter({
     tables: true, 
     strikethrough: true,
+    tasklists: true,
     extensions: [...bindings]
 })
 
