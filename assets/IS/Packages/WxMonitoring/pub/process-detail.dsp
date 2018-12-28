@@ -51,6 +51,8 @@
 			var url = "processes-general.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&processStatus=" + previousPageState.processStatus + "&server=" + previousPageState.server + "&businessDomain=" + previousPageState.businessDomain + "&sortBy=" + previousPageState.sortBy +"&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
 		}else if(previousPageState.currentPageName=="processes-specific.dsp"){
 			var url = "processes-specific.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&processStatus=" + previousPageState.processStatus + "&server=" + previousPageState.server + "&businessDomain=" + previousPageState.businessDomain + "&sortBy=" + previousPageState.sortBy + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber + "&criteria=" + previousPageState.criteria;	
+		} else if(currentPageState.previousPageName == "import-data-manage.dsp"){
+			var url = "import-data-manage.dsp?entity=" + previousPageState.entity + "&filterCriteria=" + previousPageState.filterCriteria + "&timeRange=" + previousPageState.timeRange + "&filterImportedData=" + previousPageState.filterImportedData;	
 		}
 		var res = encodeURI(url);
 		
@@ -126,6 +128,8 @@
 									document.write("Return to general");
 									} else if(currentPageState.previousPageName == "processes-specific.dsp"){
 									document.write("Return to specific events");
+								}  else if(currentPageState.previousPageName == "import-data-manage.dsp"){
+									document.write("Return to manage imported data");
 								} else {
 									document.write("Return");
 								}

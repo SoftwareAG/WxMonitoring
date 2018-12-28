@@ -6,25 +6,35 @@
 	<SCRIPT SRC="webMethods.js.txt"></SCRIPT>
 	<SCRIPT SRC="common-navigation.js"></SCRIPT>
 	<script language="JavaScript">
-		function handleDataDeleteClick(FORM, eventID, eventIndex){
+		function handleDataDeleteClick(FORM, dataID, dataIndex){
 
-			FORM.eventID.value = eventID;
-			FORM.eventIndex.value = eventIndex;
+			if (!confirm ("OK to delete?")) {
+                return false;
+            }
+			FORM.ruleID.value = dataID;
+            FORM.dataIndex.value = dataIndex;  
 			FORM.submit();
 
 			return true;
 		}
 		
-		function handleEventDetailClick(FORM, dataID, eventIndex){
-
-			FORM.eventID.value = eventID;
-			FORM.eventIndex.value = eventIndex;
+		function handleDataDetailClick(FORM, entity, dataID, dataIndex){
+			
+			if(entity=="event"){
+				FORM.eventID.value = dataID;
+				FORM.eventIndex.value = dataIndex;  
+			}else if(entity=="process"){
+				FORM.processID.value = dataID;
+			} else {
+				return false;
+			}
+			
 			FORM.submit();
 
 			return true;
 		}
 		
-		function createPageState(entity, filterCriteria, timeRange) {
+		function createPageState(entity, filterCriteria, timeRange, filterImportedData) {
 			//filterCriteria = name of server id if entity value is "events" otherwise it is name of Business Domain
 			var stateJSONObject = {};
 			stateJSONObject.currentPageName = "import-data-manage.dsp";
@@ -32,6 +42,8 @@
 			stateJSONObject.entity = entity;
 			stateJSONObject.filterCriteria = filterCriteria;
 			stateJSONObject.timeRange = timeRange;
+			stateJSONObject.filterImportedData = filterImportedData;
+			
 			
 			return stateJSONObject;
 		}
@@ -107,21 +119,29 @@
 			
 
 		<script>
-			var stateJSONObject = createPageState('%value /entity encode(javascript)%','%value /filterCriteria encode(javascript)%','%value /timeRange encode(javascript)%');
+			var stateJSONObject = createPageState('%value /entity encode(javascript)%','%value /filterCriteria encode(javascript)%','%value /timeRange encode(javascript)%', '%value /filterImportedData encode(javascript)%');
 			
 			var startNewNavigationSequence = true;
-			savePageState("import-data-manage.dsp", stateJSONObject, startNewNavigationSequence);				
+			savePageState("import-data-manage.dsp", stateJSONObject, startNewNavigationSequence,);				
 		</script>
 <!-- list page actions -->
 				<TR>
 					<TD colspan="6">
-						<FORM name="htmlform_event_details" action="event-detail.dsp" method="POST">
-							<INPUT type="hidden" name="eventID">
-							<INPUT type="hidden" name="eventIndex">
-						</FORM>
-						<FORM name="htmlform_process_details" action="process-detail.dsp" method="POST">
-							<INPUT type="hidden" name="processID">
-						</FORM>
+						%ifvar entity equals('events')%
+							<form name="htmlform_event_details" action="event-detail.dsp" method="POST">
+								<input type="hidden" name="eventID">
+								<input type="hidden" name="eventIndex">
+							</form>	
+						%else%
+							<form name="htmlform_process_details" action="process-detail.dsp" method="POST">
+								<input type="hidden" name="processID">
+							</form>
+						%endifvar%
+						<form name="htmlform_data_delete" action="import-data-manage.dsp" method="POST">
+							<input type="hidden" name="operation">
+							<input type="hidden" name="dataID">
+							<input type="hidden" name="dataIndex">
+						</form>	
 						<TABLE style="border-collapse: separate; border-spacing: 10px;"> 
 							<TR> 
 								<TD>
@@ -204,18 +224,21 @@
 													</select>
 												</td>
 												<td nowrap class="oddrow"> 
-													<INPUT type="submit" VALUE="View Data" onClick="return populateForm(document.htmlform_imported_data_display, '', 'perform_action');">
+													<INPUT type="submit" VALUE="View Data">
 												</td>
 											</tr>
 										</table>
 									</form>
 									&nbsp;
 								</TD>
-								<TD>
+								<TD></br>
 									<form name="htmlform_imported_data_action" action="import-data-manage.dsp" method="POST">
-										<INPUT type="hidden" name="operation">
-										</br>
-										
+										<INPUT type="hidden" name="operation" value="perform_action">
+										<INPUT type="hidden" name="entity" value="%value entity encode(htmlattr)%">
+										<INPUT type="hidden" name="filterCriteria" value="%value filterCriteria encode(htmlattr)%">
+										<INPUT type="hidden" name="requestedPageNumber" value="%value requestedPageNumber encode(htmlattr)%">
+										<INPUT type="hidden" name="timeRange" value="%value timeRange encode(htmlattr)%">
+										<INPUT type="hidden" name="filterImportedData" value="%value filterImportedData encode(htmlattr)%">
 										<table border="1" class="tableView">
 												
 											<tr>
@@ -230,8 +253,8 @@
 															</TD>
 															<TD>
 																<select id="selAction" name="action" required>
-																	<option selected value="delData">Delete Data</option>
-																	<option disabled value="exportData">Export Data to File</option>
+																	<option selected value="delData">Delete data</option>
+																	<option disabled value="exportData">Export data to file</option>
 																</select>
 															</TD>
 														</TR>
@@ -240,12 +263,11 @@
 																*action will be performed for all selected data
 															</TD>
 														</TR>
-														
 													</TABLE>
 												</TD>
 
 												<td nowrap class="oddrow"> 
-													<INPUT type="submit" VALUE="Perform Action" disabled onClick="return populateForm(document.htmlform_imported_data_display, '', 'perform_action');">
+													<INPUT type="submit" VALUE="Perform Action" disabled onClick="return populateForm(document.htmlform_imported_data_action, 'perform_action');">
 												</td>
 											</tr>
 										</table>
@@ -264,20 +286,19 @@
 							%ifvar entity equals('events')%
 								<tbody>
 								<tr>
-									<td class="heading" colspan="8">Imported Events</td>
+									<td class="heading" colspan="9">Imported Events</td>
 								</tr>
 								<tr class="subheading2">
-									<td class="oddrow">Event Timestamp</td>
-									<td class="oddrow">Server ID</td>
-									<td class="oddrow">Event Code</td>
-									<td class="oddrow">Severity</td>
-									<td class="oddrow">Event Information</td>
-									<td class="oddrow">Event ESID (for dev purpose only)</td>
-									<td class="oddrow">Log File</td>
-									<td class="oddrow">More Info</td>
+									<td class="subheading">Event Timestamp</td>
+									<td class="subheading">Server ID</td>
+									<td class="subheading">Event Code</td>
+									<td class="subheading">Severity</td>
+									<td class="subheading">Event Information</td>
+									<td class="subheading">Event ESID (for dev purpose only)</td>
+									<td class="subheading">Log File</td>
+									<td class="subheading">More Info</td>
+									<td class="subheading">Delete Event Log?</td>
 								</tr>
-
-
 									%ifvar data%
 										%loop data%
 								<tr class="field">
@@ -288,9 +309,14 @@
 									<td >%value eventInformation%</td>
 									<td >%value eventESID%</td>
 									<td >%value sourceFileFullName%</td>
-									<td>
-										<a href="#" disabled onclick="handleEventDetailClick(document.htmlform_event_details, '%value eventESID%', '%value eventESIndex%');" id="moreInfo">
+									<td class="evenrowdata">
+										<a href="#" onclick="handleDataDetailClick(document.htmlform_event_details, 'event', '%value eventESID%', '%value eventESIndex%');" id="moreInfo">
 											<img src="images/ifcdot.gif" border="no">
+										</a> 
+									</td>
+									<td class="evenrowdata">
+										<a href="#" disabled onclick="handleDataDeleteClickk(document.htmlform_imported_data_display, 'event', '%value eventESID%', '%value eventESIndex%');" id="deleteData">
+											<img src="images/delete.gif" border="no">
 										</a> 
 									</td>
 								</tr>
@@ -318,6 +344,7 @@
 										<td class="subheading">Last Updated</td>
 										<td class="subheading">Exception Message</td>
 										<td class="subheading">More Info</td>
+										<td class="subheading">Delete Process Log?</td>
 									</tr>
 									
 										%ifvar data%
@@ -332,11 +359,16 @@
 										<td >%ifvar duration% %ifvar duration/days -notempty% %ifvar duration/days equals('0')% %else% %value duration/days% days %endifvar% %endifvar% %ifvar duration/hours -notempty% %ifvar duration/hours equals('0')% %else% %value duration/hours% hrs %endifvar% %endifvar% %ifvar duration/minutes -notempty% %ifvar duration/minutes equals('0')% %else% %value duration/minutes% mins %endifvar% %endifvar% %ifvar duration/seconds -notempty% %ifvar duration/seconds equals('0')% ~0 sec %else% %value duration/seconds% sec %endifvar% %endifvar% %else% - %endifvar%</td>
 										<td >%value lastUpdated%</td>
 										<td >%value exceptions[0]/exceptionMessage%</td>
-										<td>
-											<a href="#"  onclick="handleProcessDetailClick(document.htmlform_process_detail, '%value processESID%');" id="moreInfo">
+										<td class="evenrowdata">
+											<a href="#"  onclick="handleDataDetailClick(document.htmlform_process_details, 'process', '%value processESID%');" id="moreInfo">
 												<img src="images/ifcdot.gif" border="no">
 											</a> 
 										</td>
+										<td class="evenrowdata">
+										<a href="#" disabled onclick="handleDataDeleteClickk(document.htmlform_process_details, 'process', '%value processESID%');" id="deleteData">
+											<img src="images/delete.gif" border="no">
+										</a> 
+									</td>
 									</tr>
 											%endloop%
 										%else%
@@ -361,7 +393,6 @@
 			</tbody>
 		</table>          
          
-	</div>
-							
+	</div>					
 </BODY>
 </HTML>

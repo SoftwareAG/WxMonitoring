@@ -49,7 +49,12 @@
 		cleanNavigationSequence();
 		if(previousPageState.currentPageName=="events-general.dsp"){
 			var url = "events-general.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&severity=" + previousPageState.severity + "&server=" + previousPageState.server + "&logFile=" + previousPageState.logFile + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
-		}else{
+		} else if(currentPageState.previousPageName == "events-specific.dsp"){
+			var url = "events-specific.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&severity=" + previousPageState.severity + "&server=" + previousPageState.server + "&logFile=" + previousPageState.logFile + "&compareSeverityExactly=" + previousPageState.compareSeverityExactly  + "&filterEventsWithNoAction=" + previousPageState.filterEventsWithNoAction + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
+		
+		} else if(currentPageState.previousPageName == "import-data-manage.dsp"){
+			var url = "import-data-manage.dsp?entity=" + previousPageState.entity + "&filterCriteria=" + previousPageState.filterCriteria + "&timeRange=" + previousPageState.timeRange + "&filterImportedData=" + previousPageState.filterImportedData;	
+		} else{
 			var url = "events-specific.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&severity=" + previousPageState.severity + "&server=" + previousPageState.server + "&logFile=" + previousPageState.logFile + "&compareSeverityExactly=" + previousPageState.compareSeverityExactly  + "&filterEventsWithNoAction=" + previousPageState.filterEventsWithNoAction + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;	
 		}
 		var res = encodeURI(url);
@@ -120,9 +125,11 @@
 								var currentPageState = getPageState("event-detail.dsp");
 								if(currentPageState.previousPageName == "events-general.dsp") { 
 									document.write("Return to general");
-									} else if(currentPageState.previousPageName == "events-specific.dsp"){
+								} else if(currentPageState.previousPageName == "events-specific.dsp"){
 									document.write("Return to specific events");
-								} else {
+								} else if(currentPageState.previousPageName == "import-data-manage.dsp"){
+									document.write("Return to manage imported data");
+								}else {
 									document.write("Return to general");
 								}
 							</script>
