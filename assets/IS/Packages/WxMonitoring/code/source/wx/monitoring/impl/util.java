@@ -1,6 +1,8 @@
 package wx.monitoring.impl;
 
 // -----( IS Java Code Template v1.2
+// -----( CREATED: 2018-12-26 16:26:17 CET
+// -----( ON-HOST: MCPUNA01.eur.ad.sag
 
 import com.wm.data.*;
 import com.wm.util.Values;
