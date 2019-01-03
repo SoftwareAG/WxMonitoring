@@ -1,5 +1,9 @@
 ## Development Guide
 
+Still under construction ...
+
+TODO !!
+
 This development guide gathers several topics around software development lifecycle. Therefore both content and topics may change over time and releases.
 
 ### Design Principles
