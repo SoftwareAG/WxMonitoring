@@ -10,11 +10,17 @@
 New features in 0.2:
 
 * Import Log Files
-![Import Log Files](img/ImportLogFiles.png)
+
+    ![Import Log Files](img/ImportLogFiles.png)
+
 * Purge Data
-![Purge Data](img/PurgeData.png)
+
+    ![Purge Data](img/PurgeData.png)
+
 * Online Help 
-![Online Help](img/help.png)
+
+    ![Online Help](img/help.png)
+
 * Fixes Dashboard
 * Internal Service Refactorings
 
