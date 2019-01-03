@@ -50,5 +50,12 @@ function displayMD(page, elementID) {
 
 }
 
-// test
-displayMD('help-wxmonitoring.md', 'targetDiv')
+// add content to html page
+// TODO: build menu more dynamically
+displayMD('overview.md', 'nl-overview')
+displayMD('release-notes.md', 'nl-release-notes')
+displayMD('getting-started.md', 'nl-getting-started')
+displayMD('users-guide.md', 'nl-users-guide')
+displayMD('roadmap.md', 'nl-roadmap')
+displayMD('development-guide.md', 'nl-development-guide')
+displayMD('about.md', 'nl-about')
