@@ -2,8 +2,18 @@
 
 | Release Date | Version | description (main feature)  | 
 | -------------| ------- | --------------- |
+| 2019-xx-xx   | 0.3     |  |
 | 2019-01-03   | 0.2     | import log data |
 | 2018-11-23   | 0.1     | initial release |
+
+### 0.3 (latest)
+
+New features in 0.3:
+
+* fixes in documentation (user guide / configuration, e.g. globale variables)
+* raise default logstash timeout 
+* ...
+
 
 ### 0.2 (latest)
 

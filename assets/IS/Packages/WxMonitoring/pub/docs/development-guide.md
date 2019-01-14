@@ -43,45 +43,6 @@ This development guide gathers several topics around software development lifecy
 
 ### Purge data
 
-
-### Interfaces
-
-#### Filebeat
-
-#### Logstash
-
-```go
-input {
-  beats {
-    port => "${LOGSTASH_PORT:5044}"
-  }
-  http {
-    port => "${LOGSTASH_HTTP_IMPORT_PORT:5045}"
-  }
-}
-```
-
-#### Beats
-
-Logstash is listing on port :5044 to receive Beats log events.
-
-#### Http
-
-For debugging and importing events directly Logstash is listing on port :5045 to receive log events via REST.
-
-Use this JSON-format to emit an message event:
-```json
-{
-"message":"2018-12-11 11:33:59 MEZ [ISS.0134.0058E] JMS Trigger test.wx.smoketest.services.edademo...",
-"log_identifier":"server_log",
-"source":"\\IS1\\server.log",
-"fields":{
-    "env":"esbtest"
-}
-}
-```
-
-
 ### Data Structures
 
 #### Indexes

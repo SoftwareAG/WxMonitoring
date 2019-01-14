@@ -41,8 +41,10 @@ Start Servers
     * You should see an empty search result page
 1. Open http://localhost:9200/_cat/indices?v
     * You should see indexes - `wxmonitoring-processes`, `wxmonitoring-events-original`, `wxmonitoring-events-xxxx.xx.xx`, `wxmonitoring-event-rules` - have been created
+1. Copy files from `...\packages\WxMonitoring\pub\elk\logstash` to anywhere in monitoring server (e.g. `C:\Softwareag\3rdparty\logstash\bin`).
+   * `startLogstash.cmd`
+   * `WxMonitoring.conf`
 1. Start Logstash
-    * Navigate to `...\packages\WxMonitoring\pub\elk\logstash` directory
     * Edit file `startLogstash.cmd` and update correct paths for following variables
           `SAG_HOME`: path for software ag home folder (e.g. `c:\SoftwareAG`)
           `LOGSTASH_HOME`: path to logstash home folder (for e.g. `C:\SoftwareAG\logstash-6.2.2`)
@@ -68,9 +70,9 @@ Install the following 3rd party products on your local machine. (Skip this if al
 > **Filebeat** (version: 6.2.x)
 > use [Installing Filebeat][install-filebeat]
 
-1. Copy files from `...\packages\WxMonitoring\pub\elk\filebeat` to anywhere in log environment server.
+1. Copy files from `...\packages\WxMonitoring\pub\elk\filebeat` to anywhere in log environment server (e.g. `C:\Softwareag\3rdparty\filebeat\bin`).
    * `startFilebeat.cmd`
-   * `wxmonitoring_filebeat.yml`
+   * `WxMonitoring.yml`
 1. Start Filebeat
    * Edit file `startFilebeat.cmd` and update correct paths for following variables
           `SAG_HOME`: path for software ag home folder (e.g. `c:\SoftwareAG`)

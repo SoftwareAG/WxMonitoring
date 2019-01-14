@@ -21,8 +21,8 @@ For standalone installation you can simply import log files. This helps you to a
 * Online Documentation
 
 ## Jump Start
-Please download and use latest version (current: 0.2)
-* [Download](dist/WxMonitoring-dist-0.2.zip) distribution package and unzip
+Please download and use latest version (current: 0.3)
+* [Download](dist/WxMonitoring-dist-0.3.zip) distribution package and unzip
 * To getting started just see [Installation Guide](assets/IS/Packages/WxMonitoring/pub/docs/getting-started.md)
 
 Further documentations

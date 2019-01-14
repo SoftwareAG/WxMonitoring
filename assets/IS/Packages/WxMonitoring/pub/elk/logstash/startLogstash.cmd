@@ -13,6 +13,6 @@ set LOGSTASH_CONFIG=%~dp0WxMonitoring.conf
 
 rem **** END ****
 
-%LOGSTASH_HOME%\bin\logstash.bat --pipeline.id WxMonitoring -w 1 -f %LOGSTASH_CONFIG%
+%LOGSTASH_HOME%\bin\logstash.bat --pipeline.id WxMonitoring -w 1 -f %LOGSTASH_CONFIG% --config.reload.automatic
 
 endlocal	
