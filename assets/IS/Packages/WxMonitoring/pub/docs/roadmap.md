@@ -10,6 +10,9 @@ All the following features should be implemented in future releases (neither ord
 * Fulltext Search
     * on Events
     * on Processes
+* Security Settings
+    * HTTPS
+    * User/Password
 * Health Check (Last Received Message, Ping on LogStash?)
 * Refactoring Monitoring API
 * Release build automization (ANT/Gradle?-build)
