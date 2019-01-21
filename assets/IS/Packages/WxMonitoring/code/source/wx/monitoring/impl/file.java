@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -79,6 +80,34 @@ public final class file
 			throw new ServiceException(e.toString());
 		}
 			
+		// --- <<IS-END>> ---
+
+                
+	}
+
+
+
+	public static final void listFiles (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(listFiles)>> ---
+		// @sigtype java 3.5
+		// [i] field:0:required directory
+		// [o] field:1:required templates
+		IDataMap dm = new IDataMap(pipeline);
+		try {
+			File dir = new File( dm.getAsString("directory", "."));
+			if (dir.isDirectory()) {
+				String[] list = dir.list(new FilenameFilter() {
+					public boolean accept(File dir, String name) {
+						return name.toLowerCase().contains("esq");
+					}
+				});
+				dm.put("files", list);
+			}
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
 		// --- <<IS-END>> ---
 
                 

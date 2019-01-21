@@ -1,0 +1,25 @@
+GET wxmonitoring-processes/_search
+{
+  "size": 0, 
+  "query": {
+    "bool": {
+			"must": [ 				{
+					"range": {
+						"last_updated_utc": {
+							"gte": "2013-09-14 17:21:35",
+							"lte": "2018-12-13 19:21:35"
+						}
+					}
+				}
+] 
+		}
+	},
+  "aggs": {
+    "level_one_bucket": {
+      "terms": {
+        "field": "business_domain",
+        "size": 1000,
+         "order" : { "_key" : "asc" }
+      }
+    }
+  }}

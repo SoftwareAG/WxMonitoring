@@ -1,0 +1,15 @@
+GET wxmonitoring-*/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": { "process_env": "dev1"}
+        },
+        {
+          "match": { "event_env": "dev1"}
+        }
+      ]
+    }
+  }
+}

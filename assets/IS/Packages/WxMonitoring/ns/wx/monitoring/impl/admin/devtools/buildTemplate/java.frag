@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">buildTemplate</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">SURhdGFNYXAgZG0gPSBuZXcgSURhdGFNYXAocGlwZWxpbmUpOw0KdHJ5IHsNCglJRGF0YU1hcCBk
+bTEgPSBuZXcgSURhdGFNYXAoKTsNCglCdWZmZXJlZFJlYWRlciBidWZJbiA9IG5ldyBCdWZmZXJl
+ZFJlYWRlcigoUmVhZGVyKSBkbS5nZXQoInJlYWRlciIpKTsNCglTdHJpbmcgbGluZTAgPSBidWZJ
+bi5yZWFkTGluZSgpOw0KCU1hdGNoZXIgbWF0ID0gUGF0dGVybi5jb21waWxlKCJeKFxcUyspXFxz
+KyhbXi9dKykvPy4rJCIpLm1hdGNoZXIobGluZTApOw0KCWlmIChtYXQuZmluZCgpKSB7DQoJCWRt
+MS5wdXQoIm1ldGhvZCIsIG1hdC5ncm91cCgxKSApOyAvL3Rva2Vuc1sxXSk7DQoJCWRtMS5wdXQo
+ImluZGV4IiwgbWF0Lmdyb3VwKDIpKTsNCgl9DQoJDQoJU3RyaW5nIHJlcXVlc3RCb2R5ID0gb3Jn
+LmFwYWNoZS5jb21tb25zLmlvLklPVXRpbHMudG9TdHJpbmcoYnVmSW4pOw0KCWRtMS5wdXQoInJl
+cXVlc3RCb2R5IiwgcmVxdWVzdEJvZHkpOyANCglkbS5wdXQoInRlbXBsYXRlIiwgZG0xLmdldElE
+YXRhKCkpOw0KDQp9IGNhdGNoIChFeGNlcHRpb24gZSkgew0KCXRocm93IG5ldyBTZXJ2aWNlRXhj
+ZXB0aW9uKGUpOw0KfQ0KDQoJ</value>
+</Values>

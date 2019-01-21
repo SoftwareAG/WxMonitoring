@@ -112,7 +112,7 @@ tbody tr td{
   <!-- add showdown https://github.com/showdownjs/showdown -->
   <script src="js/showdown.min.js"></script>
 
-  <!-- customizations, e.g. make menu -->
+  <!-- customizations, e.g. build content -->
   <script src="js/script.js"></script>
 
 </body>
