@@ -124,6 +124,24 @@ This development guide gathers several topics around software development lifecy
 
 #### webMethods Services
 
+* wx.monitoring.__services.gui__.processes:getProcesses
+    * [docs] wx.monitoring.docs.view:ProcessView
+    * wx.monitoring.__services.query__.process:getProcesses
+        * _wx.monitoring.impl.__persistence.queries__.processes:create*[AggQuery|Query]_
+        * wx.monitoring.__impl.persistence.handler:getESDocumentsByQuery__
+            * wx.monitoring.__impl.adapters.es:invokeElasticSearch__
+        * _wx.monitoring.__impl.maps__:processCanonicalToprocessView_
+
+* wx.monitoring.services.gui.processes:getProcessesStats
+    * wx.monitoring.services.query.aggregation:getProcessesAgg
+        * [docs] wx.monitoring.docs.dbo:LevelOneAgg
+        * [docs] wx.monitoring.docs.dbo:LevelTwoAgg
+        * [docs] wx.monitoring.docs.dbo:AggBucket
+        * wx.monitoring.impl.persistence.queries.processes:createGetProcessAggQuery
+        * wx.monitoring.__impl.persistence.handler:getESDocumentsByQuery__
+        * wx.monitoring.impl.maps:aggSourceToAggViewList
+
+
 * wx.monitoring.services.gui.dashboard:getDashboard
     * wx.monitoring.services.gui.events:getEventsStats
         * wx.monitoring.services.admin:getEventsAgg
@@ -136,3 +154,202 @@ This development guide gathers several topics around software development lifecy
             * wx.monitoring.impl.persistence.handler:**getESDocumentsByQuery**
                  * wx.monitoring.services.adapters.es:invokeElasticSearch
         * wx.monitoring.impl.persistence.queries.processes:createGetProcessAggQuery
+
+
+### Elastic Search Query
+
+#### Querying
+
+#### Aggregation
+
+Aggreation can be 
+* performed on index
+* filtered by timerange (from-to), field-value
+* grouped by 1 or 2 dimensions
+
+##### Sample Request (group by date - date histogram)
+
+```json
+{
+	"size": 0, 
+    "query": {
+		"bool": {
+			"must": [{
+					"range": {
+						"last_updated_utc": {
+							"gte": "2017-01-21 23:00:00",
+							"lte": "2019-02-01 14:47:59"
+						    }
+					    }   
+				    },
+                    {
+                    "match": {
+                        "business_domain": "RbProcessSAPArchivingApprovalModel"
+                        }
+                    }
+            ]
+		}
+	},
+  "aggs": {
+    "level_one_bucket": {
+      "date_histogram": {
+        "field": "last_updated_utc",
+        "interval": "day"
+      }, "aggs": {
+        "level_two_bucket": {
+          "terms": {
+            "field": "current_status",
+            "size": 10
+          }
+        }
+      }
+    }
+  }}
+```
+
+##### Sample Request (group by field - terms)
+
+```json
+...
+  "aggs": {
+    "level_one_bucket": {
+      "terms": {
+        "field": "process_env.keyword",
+        "size": 1000,
+         "order" : { "_key" : "asc" }
+      },
+      "aggs": {
+        "level_two_bucket": {
+          "terms": {
+            "field": "current_status",
+            "size": 1000
+          }
+        }
+      }
+    }
+  }
+```
+
+##### Sample Request (simple one level only)
+
+```json
+  "aggs": {
+    "level_one_bucket": {
+      "terms": {
+        "field": "business_domain",
+        "size": 1000,
+         "order" : { "_key" : "asc" }
+      }
+    }
+  }}
+```
+
+
+##### Sample Response (date histogram)
+
+```json
+{
+  "took" : 2,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 102,
+    "max_score" : 0.0,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "level_one_bucket" : {
+      "buckets" : [ {
+        "key_as_string" : "2017-04-13 00:00:00",
+        "key" : 1492041600000,
+        "doc_count" : 19,
+        "level_two_bucket" : {
+          "doc_count_error_upper_bound" : 0,
+          "sum_other_doc_count" : 0,
+          "buckets" : [ {
+            "key" : "failed",
+            "doc_count" : 15
+          }, {
+            "key" : "completed",
+            "doc_count" : 4
+          } ]
+        }
+      }, {
+        "key_as_string" : "2017-04-14 00:00:00",
+        "key" : 1492128000000,
+        "doc_count" : 0,
+        "level_two_bucket" : {
+          "doc_count_error_upper_bound" : 0,
+          "sum_other_doc_count" : 0,
+          "buckets" : [ ]
+        }
+      }, {
+...
+      }, {
+        "key_as_string" : "2018-12-03 00:00:00",
+        "key" : 1543795200000,
+        "doc_count" : 2,
+        "level_two_bucket" : {
+          "doc_count_error_upper_bound" : 0,
+          "sum_other_doc_count" : 0,
+          "buckets" : [ {
+            "key" : "completed",
+            "doc_count" : 1
+          }, {
+            "key" : "failed",
+            "doc_count" : 1
+          } ]
+        }
+      } ]
+    }
+  }
+}
+```
+
+##### Sample Response (date histogram)
+
+```json
+...
+  "aggregations" : {
+    "level_one_bucket" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [ {
+        "key" : "dev1",
+        "doc_count" : 4,
+        "level_two_bucket" : {
+          "doc_count_error_upper_bound" : 0,
+          "sum_other_doc_count" : 0,
+          "buckets" : [ {
+            "key" : "completed",
+            "doc_count" : 2
+          }, {
+            "key" : "failed",
+            "doc_count" : 2
+          } ]
+        }
+      }, {
+        "key" : "import_server2",
+        "doc_count" : 152,
+        "level_two_bucket" : {
+          "doc_count_error_upper_bound" : 0,
+          "sum_other_doc_count" : 0,
+          "buckets" : [ {
+            "key" : "completed",
+            "doc_count" : 96
+          }, {
+            "key" : "failed",
+            "doc_count" : 34
+          }, {
+            "key" : "started",
+            "doc_count" : 22
+          } ]
+        }
+      }, {
+...
+```

@@ -66,9 +66,26 @@
 				<input type="hidden" name="refreshSource">
 			</form>
 			<tr>
-				<td class="breadcrumb" colspan="2">Dashboard</td>
+				<td class="breadcrumb" colspan="2">
+					<table width="100%">
+						<tr>
+							<td>
+								<div align="left">
+									Dashboard
+								</div>
+							</td>
+							<td>
+								<div align="right">
+									<img src="images/%value serverLight/es encode(html)%-ball.gif">Elastic Search</img>
+									<img src="images/%value serverLight/logstash encode(html)%-ball.gif">Logstash</img>
+								</div>
+							</td>
+						</tr>
+					</table>
+		
+				</td>
 			</tr>
-			
+
 %invoke wx.monitoring.services.gui.common:getAllData%
 %endinvoke%
 			

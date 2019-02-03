@@ -2,6 +2,8 @@
 
 All the following features should be implemented in future releases (neither ordered nor prioritized yet). 
 
+* Code refactoring
+    * wx.monitoring.impl.maps:aggSourceToAggViewList !!!
 * Documentation
     * API
     * Product Help

@@ -302,6 +302,7 @@
 													<select id="selGroupBy" name="criteria">
 														<option value="dateStatus" %ifvar criteria% %ifvar criteria equals('dateStatus')%  selected %endifvar% %else% selected %endifvar%>Datewise</option>
 														<option value="hourStatus" %ifvar criteria equals('hourStatus')%  selected %endifvar%>Hourwise</option>
+														<option value="monthStatus" %ifvar criteria equals('monthStatus')%  selected %endifvar%>Monthwise</option>
 														<option value="serverStatus" %ifvar criteria equals('serverStatus')%  selected %endifvar%>Server</option>
 														<option value="businessDomainStatus" %ifvar criteria equals('businessDomainStatus')%  selected %endifvar%>Business Domain</option>
 													</select>
@@ -390,16 +391,24 @@
 						<tr>
 							<td nowrap class="keyrowdata"> %ifvar ../criteria equals('businessDomainStatus')% %value key% %else% %value key% %endifvar% </td>
 							<td nowrap class="evenrowdata">
+								%ifvar count equals('0')%
+								-
+								%else%
 								<a href="javascript:document.htmlform_process_Stats_specific.submit();" onClick="return populateForm(document.htmlform_process_Stats_specific, 'displaySpecific', '%value key encode(javascript)%', 'ALL');">
 									%value count encode(html)%
 								</a> 
+								%endifvar%
 							</td>
 							<td nowrap class="evenrowdata">
 								
 								%ifvar startedBucket/count -notempty%
+								%ifvar startedBucket/count equals('0')%
+								-
+								%else%
 								<a href="javascript:document.htmlform_process_Stats_specific.submit();" onClick="return populateForm(document.htmlform_process_Stats_specific, 'displaySpecific', '%value key encode(javascript)%', 'started');">
 									%value startedBucket/count encode(html)%
 								</a>
+								%endifvar%
 								%else%
 									-
 								%endifvar%
@@ -407,27 +416,39 @@
 							<td nowrap class="evenrowdata">
 								
 								%ifvar completedBucket/count -notempty%
+								%ifvar completedBucket/count equals('0')%
+								-
+								%else%
 								<a href="javascript:document.htmlform_process_Stats_specific.submit();" onClick="return populateForm(document.htmlform_process_Stats_specific, 'displaySpecific', '%value key encode(javascript)%', 'completed');">
 									%value completedBucket/count encode(html)%
 								</a>
+								%endifvar%
 								%else%
 									-
 								%endifvar%
 							</td>
 							<td nowrap class="evenrowdata">
 								%ifvar failedAndExceptionBucket/count -notempty%
+								%ifvar failedAndExceptionBucket/count equals('0')%
+								-
+								%else%
 								<a href="javascript:document.htmlform_process_Stats_specific.submit();" onClick="return populateForm(document.htmlform_process_Stats_specific,'displaySpecific', '%value key encode(javascript)%', 'failed');">
 									%value failedAndExceptionBucket/count encode(html)%
 								</a>
+								%endifvar%
 								%else%
 									-
 								%endifvar%
 							</td>
 							<td nowrap class="evenrowdata">
 								%ifvar cancelledBucket/count -notempty%
+								%ifvar cancelledBucket/count equals('0')%
+								-
+								%else%
 								<a href="javascript:document.htmlform_process_Stats_specific.submit();" onClick="return populateForm(document.htmlform_process_Stats_specific,'displaySpecific', '%value key encode(javascript)%', 'cancelled');">
 									%value cancelledBucket/count encode(html)%
 								</a>
+								%endifvar%
 								%else%
 									-
 								%endifvar%

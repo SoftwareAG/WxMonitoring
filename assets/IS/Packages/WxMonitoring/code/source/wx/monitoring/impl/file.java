@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,7 +94,7 @@ public final class file
 		// --- <<IS-START(listFiles)>> ---
 		// @sigtype java 3.5
 		// [i] field:0:required directory
-		// [o] field:1:required templates
+		// [o] field:1:required files
 		IDataMap dm = new IDataMap(pipeline);
 		try {
 			File dir = new File( dm.getAsString("directory", "."));

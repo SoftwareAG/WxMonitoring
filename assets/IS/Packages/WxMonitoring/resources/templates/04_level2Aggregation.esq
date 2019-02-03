@@ -1,0 +1,32 @@
+GET wxmonitoring-processes/_search
+{
+	"size": 0, 
+    "query": {
+		"bool": {
+			"must": [ 				{
+					"range": {
+						"last_updated_utc": {
+							"gte": "2017-01-19 23:00:00",
+							"lte": "2019-01-30 21:16:59"
+						}
+					}
+				}
+]
+		}
+	},
+  "aggs": {
+    "bucket": {
+      "date_histogram": {
+        "field": "last_updated_utc",
+        "interval": "day"
+      },
+      "aggs": {
+        "bucket": {
+          "terms": {
+            "field": "current_status",
+            "size": 10
+          }
+        }
+      }
+    }
+  }}
