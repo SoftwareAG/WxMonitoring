@@ -126,7 +126,7 @@
 														Business Domain
 														<select id="selBusinessDomain" name="processBusinessDomain">	
 %loop businessDomains%
-															<option value="%value fullName encode(htmlattr)%" %ifvar /businessDomain vequals(fullName)%selected %endifvar%>%value beautifiedName encode(html)%</option>
+															<option value="%value key encode(htmlattr)%" %ifvar /businessDomain vequals(key)%selected %endifvar%>%value name encode(html)%</option>
 %endloop%
 															<option value="ALL" %ifvar /businessDomain% %ifvar /businessDomain equals('ALL')% selected %endifvar% %else% selected %endifvar%>All</option>
 														</select>
@@ -397,7 +397,7 @@
 															Server
 															<select id="selServer" name="eventServer" >	
 %loop serverNames%
-	%rename serverName currentServerName -copy%
+	%rename key currentServerName -copy%
 	%rename ../eventServer eventServer -copy%
 																<option value="%value currentServerName encode(htmlattr)%" %ifvar eventServer vequals(currentServerName)% selected %endifvar%>%value currentServerName encode(html)%</option>
 																

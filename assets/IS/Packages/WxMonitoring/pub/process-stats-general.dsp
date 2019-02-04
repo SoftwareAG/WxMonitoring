@@ -288,7 +288,7 @@
 													<TD>
 														<select id="selBusinessDomain" name="businessDomain" >	
 %loop businessDomains%
-															<option value="%value fullName encode(htmlattr)%" %ifvar /businessDomain vequals(fullName)%selected %endifvar%>%value beautifiedName encode(html)%</option>
+															<option value="%value key encode(htmlattr)%" %ifvar /businessDomain vequals(key)%selected %endifvar%>%value name encode(html)%</option>
 %endloop%
 															<option value="ALL" %ifvar /businessDomain% %ifvar /businessDomain equals('ALL')% selected %endifvar% %else% selected %endifvar%>All</option>
 														</select>

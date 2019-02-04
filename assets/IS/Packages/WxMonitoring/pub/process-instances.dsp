@@ -127,7 +127,7 @@
 											<TD>
 												<select id="selServer" name="server" >
 														%loop serverNames%
-													<option value="%value serverName encode(htmlattr)%" %ifvar ../server vequals(serverName)% selected %endifvar%>%value serverName encode(html)%</option>
+													<option value="%value key encode(htmlattr)%" %ifvar ../server vequals(key)% selected %endifvar%>%value name encode(html)%</option>
 														%endloop%
 													<option value="ALL" %ifvar server equals('ALL')% selected %endifvar%>All</option>
 												</select>
@@ -162,7 +162,7 @@
 											<TD>
 												<select id="selBusinessDomain" name="businessDomain" >
 											%loop businessDomains%
-													<option value="%value fullName encode(htmlattr)%" %ifvar ../businessDomain vequals(fullName)%selected %endifvar%>%value beautifiedName encode(html)%</option>
+													<option value="%value key encode(htmlattr)%" %ifvar ../businessDomain vequals(key)%selected %endifvar%>%value name encode(html)%</option>
 											%endloop%
 												<option value="ALL" %ifvar businessDomain equals('ALL')%selected %endifvar%>All</option>
 												</select>

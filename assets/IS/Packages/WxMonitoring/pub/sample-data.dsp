@@ -199,7 +199,7 @@
 %invoke wx.monitoring.services.gui.common:getAllServerNames%
 									<select id="selServerid" name="serverid">
 %loop serverNames%
-										<option value="%value serverName encode(htmlattr)%" %ifvar ../server vequals(serverName)% selected %endifvar%>%value serverName encode(html)%</option>
+										<option value="%value key encode(htmlattr)%" %ifvar ../server vequals(key)% selected %endifvar%>%value name encode(html)%</option>
 %endloop%
 									</select>
 %endinvoke%											

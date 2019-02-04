@@ -56,7 +56,7 @@
                   <value name="node_subtype">unknown</value>
                   <value name="node_comment"></value>
                   <record name="node_hints" javaclass="com.wm.util.Values">
-                    <value name="field_usereditable">false</value>
+                    <value name="field_usereditable">true</value>
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
@@ -67,6 +67,7 @@
                   <value name="field_opt">true</value>
                   <array name="field_options" type="value" depth="1">
                     <value>last_updated_utc</value>
+                    <value>event_timestamp_utc</value>
                   </array>
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
@@ -346,7 +347,47 @@
   </record>
   <value name="node_comment">All aggreational queries should be built using this service. 
 
-This garantuees a single point of query string definitions. If somethings changes (ES query syntax, addtional parameters, etc.) it should be changed only in this service.</value>
+This garantuees a single point of query string definitions. If somethings changes (ES query syntax, addtional parameters, etc.) it should be changed only in this service.
+
+This service builds aggregation query expressions like this:
+
+{
+	"size": 0, 
+    "query": {
+		"bool": {
+			"must": [ 				{
+					"range": {
+						"last_updated_utc": {
+							"gte": "2017-01-19 23:00:00",
+							"lte": "2019-01-30 21:16:59"
+						}
+					}
+				},
+	{
+          "match": {
+            "event_env.keyword": "%server%"
+          }
+        }
+]
+		}
+	},
+  "aggs": {
+    "bucket": {
+      "date_histogram": {
+        "field": "last_updated_utc",
+        "interval": "day"
+      },
+      "aggs": {
+        "bucket": {
+          "terms": {
+            "field": "current_status",
+            "size": 10
+          }
+        }
+      }
+    }
+  }}
+</value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

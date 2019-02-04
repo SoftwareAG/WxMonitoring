@@ -139,7 +139,7 @@
 
 									<select id="selServer" name="server" >
 											%loop serverNames%
-										<option value="%value serverName encode(htmlattr)%" %ifvar ../server vequals(serverName)% selected %endifvar%>%value serverName encode(html)%</option>
+										<option value="%value key encode(htmlattr)%" %ifvar ../server vequals(key)% selected %endifvar%>%value name encode(html)%</option>
 											%endloop%
 										<option value="ALL" %ifvar server equals('ALL')% selected %endifvar%>All</option>
 									</select>
@@ -148,7 +148,7 @@
 									Log File
 									<select id="selLogFile" name="logFile" style="width: 100px" >
 											%loop logFileNames%
-										<option value="%value fullName encode(htmlattr)%"  title="%value fullName encode(htmlattr)%" %ifvar ../logFile vequals(fullName)% selected %endifvar%>%value name encode(html)%</option>
+										<option value="%value key encode(htmlattr)%"  title="%value key encode(htmlattr)%" %ifvar ../logFile vequals(key)% selected %endifvar%>%value name encode(html)%</option>
 											%endloop%
 										<option value="ALL" %ifvar logFile equals('ALL')% selected %endifvar%>All</option>
 									</select>

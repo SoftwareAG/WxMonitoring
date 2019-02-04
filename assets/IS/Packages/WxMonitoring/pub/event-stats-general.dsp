@@ -198,7 +198,7 @@
 													<TD>
 														<select id="selServer" name="server" >	
 %loop serverNames%
-															<option value="%value serverName encode(htmlattr)%" %ifvar /server vequals(serverName)%selected %endifvar%>%value serverName encode(html)%</option>
+															<option value="%value key encode(htmlattr)%" %ifvar /server vequals(key)%selected %endifvar%>%value name encode(html)%</option>
 %endloop%
 															<option value="ALL" %ifvar /server% %ifvar /server equals('ALL')% selected %endifvar% %else% selected %endifvar%>All</option>
 														</select>
@@ -211,6 +211,7 @@
 												<TD>
 													<select id="selGroupBy" name="criteria">
 														<option value="dateSev" %ifvar criteria% %ifvar criteria equals('dateSev')%  selected %endifvar% %else% selected %endifvar%>Datewise</option>
+														<option value="monthSev" %ifvar criteria% %ifvar criteria equals('monthSev')%  selected %endifvar% %else% selected %endifvar%>Monthwise</option>
 														<option value="logfileSev" %ifvar criteria equals('logfileSev')%  selected %endifvar%>Log File</option>
 														<option value="serverSev" %ifvar criteria equals('serverSev')%  selected %endifvar%>Server</option>
 													</select>

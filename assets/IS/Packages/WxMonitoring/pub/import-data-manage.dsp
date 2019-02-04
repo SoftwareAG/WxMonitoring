@@ -150,14 +150,14 @@
 										<select id="selBusinessDomain" name="processBusinessDomain" style="visibility:hidden;">	
 											
 											%loop businessDomains%
-												<option value="%value fullName encode(htmlattr)%" %ifvar /filterCriteria vequals(fullName)%selected %endifvar%>%value beautifiedName encode(html)%</option>
+												<option value="%value key encode(htmlattr)%" %ifvar /filterCriteria vequals(key)%selected %endifvar%>%value name encode(html)%</option>
 											%endloop%
 										<option value="ALL" %ifvar /filterCriteria% %ifvar /filterCriteria equals('ALL')% selected %endifvar% %else% selected %endifvar%>All</option>
 										</select>
 										
 										<select id="selServer" name="eventServer" style="visibility:hidden;">	
 											%loop serverNames%
-												%rename serverName currentServerName -copy%
+												%rename key currentServerName -copy%
 												%rename /filterCriteria eventServer -copy%
 												<option value="%value currentServerName encode(htmlattr)%" %ifvar eventServer vequals(currentServerName)% selected %endifvar%>%value currentServerName encode(html)%</option>
 											%endloop%
