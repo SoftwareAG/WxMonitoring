@@ -1,6 +1,6 @@
 ## Development Guide
 
-Hallo Bitmarck !!!
+Hallo Marko !!
 
 Still under construction ...
 
