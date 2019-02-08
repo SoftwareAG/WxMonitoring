@@ -16,3 +16,115 @@ pre {
       -o-tab-size : 2;
          tab-size : 2;
 }
+table.movingTable {
+	counter-reset: rowNumber;
+	border-collapse: collapse;
+    margin: 8px 0 0 0;
+    padding: 0;
+}
+
+.movingTable td {
+    border: 1px solid #dcdcdc;
+    height: 2em;
+    padding-top: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    text-align: left;
+}
+
+table.movingTable .rowCounter{
+    counter-increment: rowNumber;
+}
+
+.movingTable .heading{
+	border: none;
+    border-collapse: collapse;
+    background-color: #006f97;
+    color: #FFFFFF;
+    padding: 0px 0px 0px 1em;
+    text-align: left;
+    font-weight: bold;
+    height: 2.5em;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    letter-spacing: 2px;
+}
+
+.movingTable .subheading .datacenter{
+	background-color: #e5e5e4;
+    color: #000;
+    padding: 1em;
+    text-align: center;
+    height: 2em;
+}
+
+.movingTable .evenrowdata {
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+}
+
+table.movingTable tr.rowCounter td:last-child::after {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+	padding-left: 1em;
+    padding-right: 1em;
+}
+
+#invisible{
+ visibility:hidden;
+}
+
+table.invisibleTable {
+	border-collapse: collapse;
+    margin: 8px 0 0 0;
+    padding: 0;
+	visibility:hidden;
+}
+
+.invisibleTable td {
+    border: 1px solid #dcdcdc;
+    height: 2em;
+    padding-top: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    text-align: left;
+}
+
+.invisibleTable .heading{
+	border: none;
+    border-collapse: collapse;
+    background-color: #006f97;
+    color: #FFFFFF;
+    padding: 0px 0px 0px 1em;
+    text-align: left;
+    font-weight: bold;
+    height: 2.5em;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    letter-spacing: 2px;
+}
+
+.invisibleTable .subheading .datacenter{
+	background-color: #e5e5e4;
+    color: #000;
+    padding: 1em;
+    text-align: center;
+    height: 2em;
+}
+
+.invisibleTable .evenrowdata {
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+}
+
+table.invisibleTable tr.rowCounter td:last-child::after {
+    min-width: 1em;
+    margin-right: 0.5em;
+	padding-left: 1em;
+    padding-right: 1em;
+}

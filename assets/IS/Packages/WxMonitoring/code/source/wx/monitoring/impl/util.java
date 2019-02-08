@@ -1,8 +1,6 @@
 package wx.monitoring.impl;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2018-12-26 16:26:17 CET
-// -----( ON-HOST: MCPUNA01.eur.ad.sag
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -163,15 +161,32 @@ public final class util
 		// @sigtype java 3.5
 		// [i] field:0:required inString
 		// [i] field:0:required currentPattern
+		// [i] field:0:required currentTimezone
 		// [i] field:0:required newPattern
-		// [i] field:0:required timezone
+		// [i] field:0:required newTimezone
 		// [o] field:0:required value
-		IDataCursor cursor = pipeline.getCursor();  
-		String inString = IDataUtil.getString( cursor, "inString" );  
-		String currentPattern = IDataUtil.getString( cursor, "currentPattern" );  
-		String newPattern = IDataUtil.getString( cursor, "newPattern" );  
-		String timezone = IDataUtil.getString( cursor, "timezone" );  
-		SimpleDateFormat format = new SimpleDateFormat( currentPattern );  
+		// pipeline
+		IDataCursor pipelineCursor = pipeline.getCursor();
+			String	inString = IDataUtil.getString( pipelineCursor, "inString" );
+			String	currentPattern = IDataUtil.getString( pipelineCursor, "currentPattern" );
+			String	currentTimezone = IDataUtil.getString( pipelineCursor, "currentTimezone" );
+			String	newPattern = IDataUtil.getString( pipelineCursor, "newPattern" );
+			String	newTimezone = IDataUtil.getString( pipelineCursor, "newTimezone" );
+		pipelineCursor.destroy();
+		 
+		SimpleDateFormat format = new SimpleDateFormat( currentPattern ); 
+		
+		try  
+		{ 
+			format.setTimeZone(TimeZone.getTimeZone(currentTimezone));
+			
+		}  
+		catch( Throwable t )  
+		{  
+			format.setTimeZone(TimeZone.getDefault());
+			
+		} 
+		
 		format.setLenient(false);  
 		Date currentDate;  
 		try  
@@ -179,23 +194,24 @@ public final class util
 		    currentDate = format.parse(inString ); 
 		}  
 		catch( Throwable t )  
-		{  
-		    cursor.destroy();  
+		{    
 		    throw new ServiceException(t);  
 		}  
 		format = new SimpleDateFormat(newPattern);  
 		try  
 		{  
-			format.setTimeZone(TimeZone.getTimeZone(timezone));   
+			format.setTimeZone(TimeZone.getTimeZone(newTimezone));
 		}  
 		catch( Throwable t )  
 		{  
 			format.setTimeZone(TimeZone.getDefault());
 		} 
-		 
-		String value = format.format(currentDate);  
-		IDataUtil.put(cursor, "value", value);  
-		cursor.destroy(); 
+		
+		String value = format.format(currentDate); 
+		// pipeline
+		IDataCursor pipelineCursor_1 = pipeline.getCursor();
+		IDataUtil.put( pipelineCursor_1, "value", value );
+		pipelineCursor_1.destroy();
 		// --- <<IS-END>> ---
 
                 

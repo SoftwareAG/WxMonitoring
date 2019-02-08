@@ -105,9 +105,8 @@
                 <td width=75%>
                     <TABLE height=14 width=100% CELLSPACING=0 cellpadding=0 BORDER=0>
                         <TR>
-
                             %invoke wm.server.query:getServerInstanceName%
-
+							%endinvoke%
 							<td class="saglogo">
 								%ifvar productname equals('Integration Agent')%
 								<img src="images/ia_logo.png" /><br/>
@@ -131,7 +130,6 @@
 								%endif%
 								%endinvoke%
                             </TD>
-                            %endinvoke%
                         </TR>
                     </TABLE>
                 </td>

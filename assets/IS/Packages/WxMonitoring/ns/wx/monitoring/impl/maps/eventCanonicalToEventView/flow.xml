@@ -150,7 +150,7 @@
 </MAPCOPY>
 </MAP>
 
-<MAP TIMEOUT="" MODE="STANDALONE">
+<MAP TIMEOUT="" MODE="STANDALONE" DISABLED="true">
   <COMMENT>add &#34; UTC&#34;</COMMENT>
   <MAPTARGET>
 
@@ -166,50 +166,6 @@
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="is_public">false</value>
-        <value name="field_name">eventCanonical</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">eventView</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">timeStr</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
     </array>
     <value name="modifiable">true</value>
   </record>
@@ -270,7 +226,7 @@
 
   <!-- nodes -->
 
-<MAPINVOKE SERVICE="pub.string:concat" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+<MAPINVOKE SERVICE="pub.string:concat" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true" INVOKE-ORDER="0">
 
   <!-- nodes -->
 
@@ -313,7 +269,7 @@
 </MAP>
 
 <INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:dateTimeFormat" VALIDATE-IN="$none" VALIDATE-OUT="$none">
-  <COMMENT>from utc to local</COMMENT>
+  <COMMENT>eventTimestamp from utc to local</COMMENT>
 
   <!-- nodes -->
 
@@ -380,6 +336,25 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">currentTimezone</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">newPattern</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
@@ -399,7 +374,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">timezone</value>
+        <value name="field_name">newTimezone</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
@@ -460,17 +435,6 @@
         <value name="modifiable">true</value>
         <value name="rec_ref">wx.monitoring.docs.view:EventView</value>
       </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">timeStr</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
     </array>
     <value name="modifiable">true</value>
   </record>
@@ -507,11 +471,14 @@
 </DATA>
 </MAPSET>
 
+<MAPCOPY FROM="/eventView;4;0;wx.monitoring.docs.view:EventView/eventTimestamp;1;0" TO="/inString;1;0">
+</MAPCOPY>
+
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentPattern;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">yyyy-MM-dd HH:mm:ss z</value>
+  <value name="xml">yyyy-MM-dd HH:mm:ss</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
     <value name="node_subtype">unknown</value>
@@ -535,8 +502,33 @@
 </DATA>
 </MAPSET>
 
-<MAPCOPY FROM="/timeStr;1;0" TO="/inString;1;0">
-</MAPCOPY>
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentTimezone;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">UTC</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="is_public">false</value>
+    <value name="field_name">currentTimezone</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <array name="field_options" type="value" depth="1">
+    </array>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
 </MAP>
 
 <MAP MODE="OUTPUT">
@@ -580,6 +572,17 @@
         <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
+        <value name="field_name">currentTimezone</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
         <value name="field_name">newPattern</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
@@ -608,6 +611,17 @@
         <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">timeStr</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
@@ -619,17 +633,6 @@
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
         <value name="rec_ref">wx.monitoring.docs.view:EventView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">timeStr</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -713,6 +716,9 @@
 
 <MAPCOPY FROM="/value;1;0" TO="/eventView;4;0;wx.monitoring.docs.view:EventView/eventTimestamp;1;0">
 </MAPCOPY>
+
+<MAPDELETE FIELD="/currentTimezone;1;0">
+</MAPDELETE>
 </MAP>
 </INVOKE>
 
@@ -735,7 +741,7 @@
 
   <!-- nodes -->
 
-<MAP TIMEOUT="" MODE="STANDALONE">
+<MAP TIMEOUT="" MODE="STANDALONE" DISABLED="true">
   <COMMENT>add &#34; UTC&#34;</COMMENT>
   <MAPTARGET>
 
@@ -751,50 +757,6 @@
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="is_public">false</value>
-        <value name="field_name">eventCanonical</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">eventView</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:eventView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">actionTimeStr</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
     </array>
     <value name="modifiable">true</value>
   </record>
@@ -845,7 +807,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:eventView</value>
+        <value name="rec_ref">wx.monitoring.docs.view:EventView</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
@@ -866,7 +828,7 @@
 
   <!-- nodes -->
 
-<MAPINVOKE SERVICE="pub.string:concat" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+<MAPINVOKE SERVICE="pub.string:concat" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true" INVOKE-ORDER="0">
 
   <!-- nodes -->
 
@@ -976,6 +938,25 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">currentTimezone</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">newPattern</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
@@ -995,7 +976,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">timezone</value>
+        <value name="field_name">newTimezone</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
@@ -1054,18 +1035,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:eventView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">actionTimeStr</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
+        <value name="rec_ref">wx.monitoring.docs.view:EventView</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
@@ -1114,11 +1084,42 @@
 </DATA>
 </MAPSET>
 
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentTimezone;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">UTC</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="is_public">false</value>
+    <value name="field_name">currentTimezone</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <array name="field_options" type="value" depth="1">
+    </array>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPCOPY FROM="/eventView;4;0;wx.monitoring.docs.view:EventView/actions;2;0/actionTimestamp;1;0" TO="/inString;1;0">
+</MAPCOPY>
+
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentPattern;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">yyyy-MM-dd HH:mm:ss z</value>
+  <value name="xml">yyyy-MM-dd HH:mm:ss</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
     <value name="node_subtype">unknown</value>
@@ -1141,9 +1142,6 @@
 </Values>
 </DATA>
 </MAPSET>
-
-<MAPCOPY FROM="/actionTimeStr;1;0" TO="/inString;1;0">
-</MAPCOPY>
 </MAP>
 
 <MAP MODE="OUTPUT">
@@ -1187,6 +1185,17 @@
         <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
+        <value name="field_name">currentTimezone</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
         <value name="field_name">newPattern</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
@@ -1215,19 +1224,6 @@
         <value name="rec_ref">wx.monitoring.docs.dto:EventCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">eventView</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:eventView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
@@ -1248,6 +1244,19 @@
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">eventView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:EventView</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -1334,6 +1343,9 @@
 
 <MAPCOPY FROM="/value;1;0" TO="/eventView;4;0;wx.monitoring.docs.view:EventView/actions;2;0/actionTimestamp;1;0">
 </MAPCOPY>
+
+<MAPDELETE FIELD="/currentTimezone;1;0">
+</MAPDELETE>
 </MAP>
 </INVOKE>
 </SEQUENCE>
