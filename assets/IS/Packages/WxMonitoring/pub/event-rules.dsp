@@ -9,14 +9,9 @@
   <SCRIPT SRC="common-navigation.js"></SCRIPT>
   <script language="JavaScript">
     <!--add jscript here-->
-    function populateForm(form , ruleID, eventPattern ,oper)
+    function populateForm(form , ruleID, eventPattern ,oper,ruleRank)
     {
-        if('edit' == oper){
-			form.operation.value = "edit";
-			form.ruleID.value = ruleID;
-			form.eventPattern.value = eventPattern;
-		}
-		else if('add' == oper){
+        if('add' == oper){
 			form.operation.value = "add";
 			var oTable = document.getElementById('ruleTable');
 
@@ -24,9 +19,8 @@
 			var rowLength = oTable.rows.length;
 			var noOfRules = rowLength-2;
 			var nextRank = noOfRules+1;
-			form.ruleRank.value = nextRank;
-		}
-        if('delete' == oper)
+			form.nextPossibleRuleRank.value = nextRank;
+		} else if('delete' == oper)
         {
             if (!confirm ("OK to delete '"+eventPattern+"'?")) {
                 return false;
@@ -34,8 +28,9 @@
 			form.ruleID.value = ruleID;
             form.operation.value = 'rule_del';    
         } else if('view' == oper){
-			form.operation.value = "view";
+			form.operation.value = "display";
 			form.ruleID.value = ruleID;
+			form.ruleRank.value = ruleRank;
 		}
 
         return true
@@ -109,7 +104,7 @@
 
 		   //gets cells of current row
 			var oCells = oTable.rows.item(i).cells;
-			var cellVal = oCells.item(8).innerHTML;
+			var cellVal = oCells.item(7).innerHTML; // 7th column is ruleID
 			cellVal = trimStr(cellVal)+";";
 			ruleIDList +=cellVal;
 		   //gets amount of cells of current row
@@ -121,7 +116,7 @@
 		      /* var cellVal = oCells.item(j).innerHTML; */
 		   //}
 		}
-		form.ruleIDList.value=ruleIDList;
+		form.ruleIDPriorityList.value=ruleIDList;
 		form.operation.value = "savePriority";
 		return true;
 	}
@@ -148,7 +143,7 @@
         </tr>
 		
 		%ifvar action%
-			%invoke wx.monitoring.services.gui.events:handleEventRuleDspAction%
+			%invoke wx.monitoring.services.gui.events:handleEventRulesDspAction%
 			%ifvar message%
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
@@ -179,7 +174,7 @@
 						<li class="listitem"><a disabled href="javascript:document.htmlform_rule_priority.submit();" onClick="return changeRulePriority(document.htmlform_rule_priority);">Save</a> </li>
 						<li class="listitem"><a disabled href="event-rules.dsp">Cancel</a></li>
 					%else%
-	                    <li class="listitem"><a disabled href="javascript:document.htmlform_rule_add.submit();" onClick="return populateForm(document.htmlform_rule_add, '' ,'','add');">Add&nbsp;Rule&nbsp;</a></li>
+	                    <li class="listitem"><a href="javascript:document.htmlform_rule_add.submit();" onClick="return populateForm(document.htmlform_rule_add, '' ,'','add','');">Add&nbsp;Rule&nbsp;</a></li>
 						<li class="listitem"><a href="event-rules.dsp?operation=editPriority">Change Rule Priority</a> </li>
 					%endifvar%
                 </ul>
@@ -205,7 +200,7 @@
 						%loop eventRules%
 							<tr class="rowCounter">
 								<td nowrap class="evenrowdata">
-									<a  href="javascript:document.htmlform_rule_view.submit();" onClick="return populateForm(document.htmlform_rule_view, '%value id encode(javascript)%' ,'%value eventPattern encode(javascript)%','view');">
+									<a  href="javascript:document.htmlform_rule_view.submit();" onClick="return populateForm(document.htmlform_rule_view, '%value id encode(javascript)%' ,'','view', '%value ruleRank encode(javascript)%');">
 									   %value eventPattern encode(html)%
 									</a>   
 								</td>
@@ -213,10 +208,10 @@
 									%ifvar useRegex equals('true')% Yes %else% No %endifvar%                                               
 								</td> 
 								<td nowrap class="evenrowdata">
-									%ifvar severityThresholdOperator equals('gte')%&#62;&#61;%else%%ifvar severityThresholdOperator equals('lte')%&#60;&#61;%else% &#61;%endifvar%%endifvar% %value severityThreshold encode(html)%    
+									%ifvar severity/severityThresholdOperator equals('gte')%&#62;&#61;%else%%ifvar severity/severityThresholdOperator equals('lte')%&#60;&#61;%else% &#61;%endifvar%%endifvar% %value severity/severityThreshold encode(html)%    
 								</td>
 								<td nowrap class="evenrowdata">
-									%value actionType encode(html)%
+									%value action/actionDisplayName encode(html)%
 								</td>
 								<td nowrap class="evenrowdata">
 									%ifvar isActive equals('true')% <img src="images/green_check.png" width="13" height="13" border="0">Yes</a> %else% No %endifvar%
@@ -245,20 +240,23 @@
 			</td>
         </tr>
     </table>
-	<form name="htmlform_rule_view" action="monitoring-rule.dsp" method="POST">
+	<form name="htmlform_rule_view" action="event-rule-addedit.dsp" method="POST">
         <input type="hidden" name="operation">
         <input type="hidden" name="ruleID">
+		<input type="hidden" name="ruleRank">
     </form>
-    <form name="htmlform_rule_delete" action="monitoring-rules.dsp" method="POST">
+    <form name="htmlform_rule_delete" action="event-rules.dsp" method="POST">
         <input type="hidden" name="operation">
+		<input type="hidden" name="action" value="deleteEventRule">
         <input type="hidden" name="ruleID">
     </form>
-	<form name="htmlform_rule_priority" action="monitoring-rules.dsp" method="POST">
+	<form name="htmlform_rule_priority" action="event-rules.dsp" method="POST">
         <input type="hidden" name="operation">
-        <input type="hidden" name="ruleIDList">
+		<input type="hidden" name="action" value="updateRulesPriority">
+        <input type="hidden" name="ruleIDPriorityList">
     </form>
-	<form name="htmlform_rule_add" action="monitoring-rules-addedit.dsp" method="POST">
-        <input type="hidden" name="operation">
+	<form name="htmlform_rule_add" action="event-rule-addedit.dsp" method="POST">
+        <input type="hidden" name="operation" value="add">
         <input type="hidden" name="ruleRank">
     </form>
   </body>   
