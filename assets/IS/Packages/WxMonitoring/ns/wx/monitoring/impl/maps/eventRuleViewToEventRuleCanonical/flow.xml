@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
+  <COMMENT></COMMENT>
 
   <!-- nodes -->
 
@@ -1049,6 +1050,12 @@
 
 <MAPCOPY FROM="/value;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/last_edited_on_utc;1;0">
 </MAPCOPY>
+
+<MAPDELETE FIELD="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView">
+</MAPDELETE>
+
+<MAPDELETE FIELD="/newTimezone;1;0">
+</MAPDELETE>
 </MAP>
 </INVOKE>
 </FLOW>

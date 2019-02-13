@@ -10,6 +10,7 @@
 
     function validate(thisform,oper)
     {	
+		//alert(thisform.ruleRank.value);
 		var rulePattern = thisform.eventPattern.value
 		if(0 == rulePattern.length)
 		{
@@ -60,10 +61,11 @@
 		if(0 < thisform.adminJIRAUsername.value.length){
 			thisform.adminJIRAUsername.value = trimStr(thisform.adminJIRAUsername.value);
 		}*/
-		if(oper=="insert_rule"){
+		if(oper=="insert"){
 			thisform.action.value= 'insertRule';
 			thisform.operation.value= 'display';
-		} else if(oper=="update_rule") {
+		} else if(oper=="update") {
+			//alert(thisform.ruleRank.value);
 			thisform.action.value= 'updateRule';
 			thisform.operation.value= 'display';
 		}
@@ -156,31 +158,39 @@
          
 		 %ifvar action%
 			%invoke wx.monitoring.services.gui.events:handleEventRuleAddeditDspAction%
-			%ifvar message%
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
-			%endif%
-			%onerror%
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
 			%endinvoke%
+			%ifvar message%
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td class="message" colspan="2">%value message encode(html)%
+			%ifvar errorMessage%
+						: <i>%value errorMessage encode(html)%</i>
+			%endif%
 			%ifvar status%
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan="2">%value status encode(html)%</td></tr>
+						: <i>%value status encode(html)%</i>
+			%endif%
+					</td>
+				</tr>
 			%endif%						
 		%endifvar%
 		
 		%ifvar operation equals('add')%
 		%else%
 			%invoke wx.monitoring.services.gui.events:getEventRuleByID%
-					%ifvar message%
-						<tr><td colspan="2">&nbsp;</td></tr>
-						<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
-					%endif%
-					%onerror%
-						<tr><td colspan="2">&nbsp;</td></tr>
-						<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
 			%endinvoke%
+				%ifvar message%
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr>
+						<td class="message" colspan="2">%value message encode(html)%
+				%ifvar errorMessage%
+							: <i>%value errorMessage encode(html)%</i>
+				%endif%
+				%ifvar status%
+							: <i>%value status encode(html)%</i>
+				%endif%
+						</td>
+					</tr>
+				%endif%	
 		%endifvar%
 		<script>
 			var stateJSONObject = createPageState('%value /ruleID encode(javascript)%','%value /ruleRank encode(javascript)%');
@@ -198,7 +208,7 @@
 							<li class="listitem"><a href="event-rule-addedit.dsp?operation=display&ruleID=%value ruleID encode(url)%">Cancel</a></li>
 							%else%
 								<li class="listitem"><a href="javascript:document.htmlform_event_rules.submit();" onClick="return onReturnClick();">Return to Rules</a></li>
-								<li class="listitem"><a href="event-rule-addedit.dsp?operation=edit&ruleID=%value ruleID encode(url)%">Edit Rule</a></li>
+								<li class="listitem"><a href="event-rule-addedit.dsp?operation=edit&ruleID=%value ruleID encode(url)%&ruleRank=%value ruleRank encode(url)%">Edit Rule</a></li>
 								<li class="listitem"><a href=# onClick="return populateForm(document.htmlform_rule_affected_events_display, '%value ruleID encode(javascript)%', 'show_rule_affected_events');">Show Events Affected By This Rule</a></li>
 						%endifvar%
 					%endifvar%
@@ -210,12 +220,13 @@
             <form name="htmlform_rule_addedit" action="event-rule-addedit.dsp" method="POST">
                 <input type="hidden" name="operation">
 				%ifvar operation equals('add')%
-					<input type="hidden" name="ruleRank" value = "%value ruleRank encode(htmlattr)%">
+					<input type="hidden" name="ruleRank" value = "%value /ruleRank encode(htmlattr)%">
 					<input type="hidden" name="action">
 					%else%
 					<input type="hidden" name="ruleID" value = "%value ruleID encode(htmlattr)%">
-					<input type="hidden" name="ruleRank" value = "%value ruleRank encode(htmlattr)%">
+					<input type="hidden" name="ruleRank" value = "%value /ruleRank encode(htmlattr)%">
 					<input type="hidden" name="action">
+					<input type="hidden" name="createdOn" value = "%value rule/createdOn encode(htmlattr)%">
 				%endifvar%
                         <table class="tableView" width="25">
                             <tr>
@@ -237,17 +248,17 @@
 							<tr>
                                 <td class="subheading">Severity Threshold</td>    
                                 <td class="oddrow-l">
-									<select id="selSeverityOperator" name="severityThresholdOperator" required>
-										<option %ifvar rule/severityThresholdOperator equals('gte')%selected %endifvar% value="gte" %ifvar operation equals('display')% disabled %else% required %endifvar%> >= </option> 
-										<option %ifvar rule/severityThresholdOperator% %ifvar rule/severityThresholdOperator equals('eq')%selected %endifvar% %else% selected %endifvar% value="eq" %ifvar operation equals('display')% disabled %else% required %endifvar%> = </option> 
-										<option %ifvar rule/severityThresholdOperator equals('lte')%selected %endifvar% value="lte" %ifvar operation equals('display')% disabled %else% required %endifvar%> <= </option> 
+									<select id="selSeverityOperator" name="severityThresholdOperator" title="Trigger rule if event severity matches severity threshold limit" required>
+										<option %ifvar rule/severity/severityThresholdOperator equals('gte')%selected %endifvar% value="gte" %ifvar operation equals('display')% disabled %else% required %endifvar%> >= </option> 
+										<option %ifvar rule/severity/severityThresholdOperator% %ifvar rule/severity/severityThresholdOperator equals('eq')%selected %endifvar% %else% selected %endifvar% value="eq" %ifvar operation equals('display')% disabled %else% required %endifvar%> = </option> 
+										<option %ifvar rule/severity/severityThresholdOperator equals('lte')%selected %endifvar% value="lte" %ifvar operation equals('display')% disabled %else% required %endifvar%> <= </option> 
 									</select>  
 									
-									<select id="selSeverity" name="severity" required>
-										<option %ifvar rule/severityThreshold equals('FATAL')%selected %endifvar% value="FATAL" %ifvar operation equals('display')% disabled %else% required %endifvar% >Fatal </option>
-										<option %ifvar rule/severityThreshold equals('ERROR')%selected %endifvar% value="ERROR" %ifvar operation equals('display')% disabled %else% required %endifvar%>Error</option>
-										<option %ifvar rule/severityThreshold equals('WARNING')%selected %endifvar% value="WARNING" %ifvar operation equals('display')% disabled %else% required %endifvar%>Warning</option>
-										<option %ifvar rule/severityThresholdOperator% %ifvar rule/severityThreshold equals('INFO')%selected %endifvar% %else% selected %endifvar% value="INFO" %ifvar operation equals('display')% disabled %else% required %endifvar%>Info</option>
+									<select id="selSeverity" name="severityThreshold" required>
+										<option %ifvar rule/severity/severityThreshold equals('FATAL')%selected %endifvar% value="FATAL" %ifvar operation equals('display')% disabled %else% required %endifvar% >FATAL </option>
+										<option %ifvar rule/severity/severityThreshold equals('ERROR')%selected %endifvar% value="ERROR" %ifvar operation equals('display')% disabled %else% required %endifvar%>ERROR</option>
+										<option %ifvar rule/severity/severityThreshold equals('WARNING')%selected %endifvar% value="WARNING" %ifvar operation equals('display')% disabled %else% required %endifvar%>WARNING</option>
+										<option %ifvar rule/severity/severityThreshold% %ifvar rule/severity/severityThreshold equals('INFO')%selected %endifvar% %else% selected %endifvar% value="INFO" %ifvar operation equals('display')% disabled %else% required %endifvar%>INFO</option>
 									</select>                                 
                                 </td>
                             </tr>
@@ -262,13 +273,16 @@
 							<tr id="action_serviceNameRow" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Service Name</td>
                                 <td class="oddrow-l" >
-									<input type="text" name="serviceName" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/serviceToInvoke%'>
+									<input type="text" placeholder="for e.g. wx.monitoring.impl.actionHandler:sendEmail" name="serviceToInvoke" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/serviceToInvoke%'>
                                 </td>
                             </tr>
 							<tr id="action_inputParam" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Input Parameter</td>
                                 <td class="oddrow-l" >
-									<textarea id="inputParam" rows="2" cols="40" name="inputParam" title="If more than one parameter is required, write parameters as JSON and handle it accordingly in the invoked service" %ifvar operation equals('display')% disabled %endifvar% >%value rule/action/inputParam% </textarea>
+									<textarea placeholder="{
+  &quot;param1&quot; : &quot;value1&quot;,
+  &quot;param2&quot; : &quot;value2&quot;
+}" id="inputParam" rows="2" cols="40" name="inputParam" title="If more than one parameter is required, write parameters as JSON and handle it accordingly in the invoked service" %ifvar operation equals('display')% disabled %endifvar%>%value rule/action/inputParam%</textarea>
                                 </td>
                             </tr>
 							
@@ -283,7 +297,7 @@
 							%else%
                             <tr>
                                 <td class="action" colspan=3>
-									<input type="submit" name="submit" value="Save Changes" %ifvar operation equals('add')% onclick="return validate(this.form,'insert_rule');" %else% onclick="return validate(this.form,'update_rule');" %endifvar%>
+									<input type="submit" name="submit" value="Save Changes" %ifvar operation equals('add')% onclick="return validate(this.form,'insert');" %else% onclick="return validate(this.form,'update');" %endifvar%>
                                 </td>
 							</tr>
 							%endifvar%

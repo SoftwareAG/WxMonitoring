@@ -16,10 +16,14 @@
 			var oTable = document.getElementById('ruleTable');
 
 			//gets rows of table
+
 			var rowLength = oTable.rows.length;
-			var noOfRules = rowLength-2;
+			if(oTable.rows[2].id=="noResultBanner"){
+				rowLength = 2;
+			}
+			var noOfRules = rowLength-2; //-2 to remove header
 			var nextRank = noOfRules+1;
-			form.nextPossibleRuleRank.value = nextRank;
+			form.ruleRank.value = nextRank;
 		} else if('delete' == oper)
         {
             if (!confirm ("OK to delete '"+eventPattern+"'?")) {
@@ -33,7 +37,7 @@
 			form.ruleRank.value = ruleRank;
 		}
 
-        return true
+        return true;
     }
 	
 	function get_previoussibling(n)
@@ -104,7 +108,7 @@
 
 		   //gets cells of current row
 			var oCells = oTable.rows.item(i).cells;
-			var cellVal = oCells.item(7).innerHTML; // 7th column is ruleID
+			var cellVal = oCells.item(6).innerHTML; // 7th column is ruleID
 			cellVal = trimStr(cellVal)+";";
 			ruleIDList +=cellVal;
 		   //gets amount of cells of current row
@@ -116,8 +120,9 @@
 		      /* var cellVal = oCells.item(j).innerHTML; */
 		   //}
 		}
+
 		form.ruleIDPriorityList.value=ruleIDList;
-		form.operation.value = "savePriority";
+		form.operation.value = "display";
 		return true;
 	}
 	
@@ -144,29 +149,37 @@
 		
 		%ifvar action%
 			%invoke wx.monitoring.services.gui.events:handleEventRulesDspAction%
+			%endinvoke%	
 			%ifvar message%
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td class="message" colspan="2">%value message encode(html)%
+			%ifvar errorMessage%
+						: <i>%value errorMessage encode(html)%</i>
 			%endif%
-			%onerror%
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
-			%endinvoke%
 			%ifvar status%
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan="2">%value status encode(html)%</td></tr>
-			%endif%						
+						: <i>%value status encode(html)%</i>
+			%endif%
+					</td>
+				</tr>
+			%endif%		
 		%endifvar%
 		
 		%invoke wx.monitoring.services.gui.events:getEventRules%
-                %ifvar message%
-                    <tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
-                %endif%
-                %onerror%
-                    <tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
-         %endinvoke%
+		%endinvoke%
+			%ifvar message%
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td class="message" colspan="2">%value message encode(html)%
+			%ifvar errorMessage%
+						: <i>%value errorMessage encode(html)%</i>
+			%endif%
+			%ifvar status%
+						: <i>%value status encode(html)%</i>
+			%endif%
+					</td>
+				</tr>
+			%endif%	         
         <tr>
             <td colspan="2">
                 <ul style="none" class="listitems">
@@ -175,7 +188,7 @@
 						<li class="listitem"><a disabled href="event-rules.dsp">Cancel</a></li>
 					%else%
 	                    <li class="listitem"><a href="javascript:document.htmlform_rule_add.submit();" onClick="return populateForm(document.htmlform_rule_add, '' ,'','add','');">Add&nbsp;Rule&nbsp;</a></li>
-						<li class="listitem"><a href="event-rules.dsp?operation=editPriority">Change Rule Priority</a> </li>
+						<li class="listitem"><a href="event-rules.dsp?operation=editPriority">Change Rules Priority</a> </li>
 					%endifvar%
                 </ul>
             </td>
@@ -232,13 +245,19 @@
 							</tr>
 						%endloop%
 					%else%
-						<tr class="field" align="left">
+						<tr id="noResultBanner" class="field" align="left">
 							<TD colspan=6 class="oddrowdata-l">---------------------------------- no results ----------------------------------</TD>
 						</tr>
 					%endifvar%
 				</table>
 			</td>
         </tr>
+		<tr>
+			<td colspan=1>
+				<br>
+				Rules will be executed in the order displayed. To update rule priority click "Change Rule Priority" link on top of the page.
+			</td>
+		</tr>
     </table>
 	<form name="htmlform_rule_view" action="event-rule-addedit.dsp" method="POST">
         <input type="hidden" name="operation">
