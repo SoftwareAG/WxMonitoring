@@ -125,24 +125,19 @@
 	}
 	
 	function handleActionTypeClick(actionTypeRadio) {
-		
+		action_triggerFrequency
 		var actionTypeValue = actionTypeRadio.value;
 		var actionServiceNameRow = document.getElementById("action_serviceNameRow");
-		//var actionServiceNameCol1 = document.getElementById("action_serviceNameColumn1");
-		var actionServiceNameCol2 = document.getElementById("action_serviceNameColumn2");
 		var actionInputParamRow = document.getElementById("action_inputParam");
+		var actionTriggerFrequencyRow = document.getElementById("action_triggerFrequency");
 		if(actionTypeValue=="none"){
-			actionServiceNameRow.style.display ="none";
-			//actionServiceNameCol1.style.display ="none";
-			//actionServiceNameCol2.style.display ="none";
-			
+			actionServiceNameRow.style.display ="none";			
 			actionInputParamRow.style.display ="none";
+			actionTriggerFrequencyRow.style.display ="none";
 		} else{
 			actionServiceNameRow.style.display ="";
-			//actionServiceNameCol1.style.display ="";
-			//actionServiceNameCol2.style.display ="";
-			
 			actionInputParamRow.style.display ="";
+			actionTriggerFrequencyRow.style.display ="";
 		}
 	}
 
@@ -228,7 +223,7 @@
 					<input type="hidden" name="action">
 					<input type="hidden" name="createdOn" value = "%value rule/createdOn encode(htmlattr)%">
 				%endifvar%
-                        <table class="tableView" width="25">
+                        <table class="tableView">
                             <tr>
                                 <td class="heading" colspan="2">Monitoring Rule</td>
                             </tr>
@@ -283,6 +278,14 @@
   &quot;param1&quot; : &quot;value1&quot;,
   &quot;param2&quot; : &quot;value2&quot;
 }" id="inputParam" rows="2" cols="40" name="inputParam" title="If more than one parameter is required, write parameters as JSON and handle it accordingly in the invoked service" %ifvar operation equals('display')% disabled %endifvar%>%value rule/action/inputParam%</textarea>
+                                </td>
+                            </tr>
+							
+							<tr id="action_triggerFrequency" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Action Trigger Frequency</td>
+                                <td class="oddrow-l" >
+									<input type="radio" name="triggerActionForEachMatchingEvent" value="true" %ifvar rule/triggerActionForEachMatchingEvent equals('true')% checked="checked"  %endifvar% %ifvar operation equals('display')% disabled %else%  required %endifvar%> Trigger individual action for each matching event<br>
+									<input type="radio" name="triggerActionForEachMatchingEvent" value="false" %ifvar rule/triggerActionForEachMatchingEvent% %ifvar rule/triggerActionForEachMatchingEvent equals('false')% checked="checked"  %endifvar%  %else% checked="checked" %endifvar% %ifvar operation equals('display')% disabled %else% required %endifvar%> Trigger common action for all matching events
                                 </td>
                             </tr>
 							

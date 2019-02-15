@@ -216,5 +216,40 @@ public final class util
 
                 
 	}
+
+
+
+	public static final void matchStrings (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(matchStrings)>> ---
+		// @sigtype java 3.5
+		// [i] field:0:required parentString
+		// [i] field:0:required substring
+		// [i] field:0:required useRegex {"true","false"}
+		// [o] field:0:required matches {"true","false"}
+		
+		// pipeline
+		IDataCursor pipelineCursor = pipeline.getCursor();
+			String	parentString = IDataUtil.getString( pipelineCursor, "parentString" );
+			String	substring = IDataUtil.getString( pipelineCursor, "substring" );
+			String	useRegex = IDataUtil.getString( pipelineCursor, "useRegex" );
+		pipelineCursor.destroy();
+		boolean matches = false;
+		if(useRegex=="true"){
+			matches = parentString.matches(substring);
+		}else{
+			matches = parentString.matches("(.*)"+substring+"(.*)");
+		}
+		
+		
+		// pipeline
+		IDataCursor pipelineCursor_1 = pipeline.getCursor();
+		IDataUtil.put( pipelineCursor_1, "matches", String.valueOf(matches) );
+		pipelineCursor_1.destroy();
+		// --- <<IS-END>> ---
+
+                
+	}
 }
 
