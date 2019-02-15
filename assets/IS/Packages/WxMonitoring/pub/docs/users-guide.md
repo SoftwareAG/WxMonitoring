@@ -8,6 +8,7 @@ TODO !!
 
 1. Features
     1. [Dashboard](#Dashboard)
+    1. Event Rules
     1. Import Log Files
     1. Purge Data
     1. Online Help
@@ -20,6 +21,25 @@ TODO !!
     1. Filebeat
 
 ### Dashboard
+
+### Event Rules
+An important part of log monitoring is to be able to perform certain actions if a specific event occurs. For example an admin might want to be notified (via e-mail or via JIRA ticket creation) whenever a server logs an error event or he might simply want to ignore an event if it is of severity warning or info.
+For this purpose WxMonitoring provides an event monitoring scheduler service that is created when WxMonitoring package is loaded by IS. In principle this service matches the recent events against the active rules. 
+
+![Import Event Rules](img/EventRules.png)
+
+For events that match more than one rule, only the rule with highest priority is triggered. Rules are displayed in the UI according to priority with first rule being the highest priority rule. However, priority of the rules can be changed and set according to admin preference.
+
+![Import Event Rules](img/EventRules_priority.png)
+
+#### Setting Up a Rule
+
+Rules can be added or edited as shown in the figure below.
+
+![Import Event Rules](img/EventRules_edit.png)
+
+#### Rule Execution
+WxMonitoring package when loaded creates a schedular service called monitorEvents. This service is responsible to evaluate all events that occurred since the schedular last run. The events are evaluated based on event pattern set in rule and severity threshold described in the rule. If the event matches the rule then it performs the action which is to either "ignore event" or "invoke action handler service". The action handler service which is part of the WxMonitoring customer specific extension then has the liberty of performing any action based on the event type. For e.g Customer may implement a service to send an email to admin or create a JIRA ticket or call some other handler service. This action handler service implemented in customer extension must follow a strict WxMonitoring input interface which is created to provide event information and rule information that could be helpful in further implementation of the handler.
 
 #### Import Log Files
 
