@@ -6,6 +6,16 @@
 	<SCRIPT SRC="webMethods.js.txt"></SCRIPT>
 	<SCRIPT SRC="common-navigation.js"></SCRIPT>
 	<script language="JavaScript">
+		
+		function validate(form, totalPages){
+			
+			if(form.requestedPageNumber.value > totalPages){
+				return false;
+			}
+
+			return true;
+		}
+		
 		function handleEventDetailClick(form, eventID, eventIndex){
 
 			form.eventID.value = eventID;
@@ -199,7 +209,7 @@
 										</TR>
 									</TABLE>
 								</TD>
-								<TD class="oddrow">  <INPUT type="submit" VALUE="Refresh"></TD>
+								<TD class="oddrow">  <INPUT type="submit" VALUE="Refresh" onclick="return validate(this.form, '%value totalPages%');"></TD>
 							</TR>
 			
 			

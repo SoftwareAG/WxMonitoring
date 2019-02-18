@@ -230,7 +230,7 @@
                             <tr>
                                 <td class="subheading">Event Pattern</td>    
                                 <td class="oddrow-l">
-									<textarea id="eventPattern" rows="4" cols="40" name="eventPattern" %ifvar operation equals('display')% disabled %else% required %endifvar% >%value rule/eventPattern% </textarea>
+									<textarea id="eventPattern" rows="4" cols="40" name="eventPattern" %ifvar operation equals('display')% disabled %else% required %endifvar% >%value rule/eventPattern%</textarea>
                                 </td>
                             </tr>
 							<tr>

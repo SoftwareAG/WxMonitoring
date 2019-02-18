@@ -187,7 +187,7 @@
 											<tr>
 												<td class="oddrow">Auto Evaluation Status</td>    
 												<td class="oddrow-l">
-													%ifvar event/isEvaluated equals('true')%  This event has been evaluated against existing active rules.
+													%ifvar event/lastEvaluated -notempty%  This event has been evaluated against existing active rules.
 													%else% This event is NOT yet evaluated against existing active rules
 													%endifvar%
 												</td>
@@ -204,22 +204,23 @@
 												<td class="heading" colspan="7">Actions Details</td>
 											</tr>
 											<tr class="subheading2">
-												<td class="oddrow">Taken On</td>
-												<td class="oddrow">Action Taken</td>
-												<td class="oddrow">Reason</td>
 												<td class="oddrow">Rule ID</td>
+												<td class="oddrow">Action Timestamp</td>
+												<td class="oddrow">Action Type</td>
+												<td class="oddrow">Service Invoked</td>
+												<td class="oddrow">Input Parameter</td>
 											</tr>
-											%ifvar event/isActionTaken equals('true')%	
-												%loop event/actions%
+											%ifvar event/actions%		
+											%loop event/actions%
 											<tr class="field">
-												<td>%value taken_on%</td>
-												<td >%value action%</td>
-												<td >%value reason%</td>
-												<td >%ifvar rule equals('UI')% UI %else% <a href="javascript:document.htmlform_rule_view.submit();" onClick="return populateForm(document.htmlform_rule_view, '%value rule encode(javascript)%', 'view_rule');">
-												   %value rule encode(html)%
-                                                </a>%endifvar%</td>
+												<td>%value ruleID%</td>
+												<td >%value actionTimestamp%</td>
+												<td >%value actionType%</td>
+												<td >%ifvar serviceToInvoke -notempty%%value serviceToInvoke% %else% - %endifvar%</td>
+												<td >%ifvar inputParam -notempty%%value inputParam%%else% - %endifvar%</td>
 											</tr>
 												%endloop%
+											
 											%else%
 											<tr class="field" align="left">
 												<TD colspan=7 class="oddrowdata-l">---------------------------------- no results ----------------------------------</TD>
