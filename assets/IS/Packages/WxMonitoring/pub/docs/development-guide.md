@@ -1,7 +1,5 @@
 ## Development Guide
 
-Hallo Marko !!
-
 Still under construction ...
 
 TODO !!

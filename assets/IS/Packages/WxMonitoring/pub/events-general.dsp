@@ -234,7 +234,7 @@
 									<td class="oddrow">Event Information</td>
 									<td class="oddrow">Event ESID (for dev purpose only)</td>
 									<td class="oddrow">Log File</td>
-									<td class="oddrow">More Info</td>
+									<td class="oddrow" title="highlighted if not evaluated yet">More Info *</td>
 								</tr>
 
 
@@ -248,7 +248,16 @@
 									<td >%value eventInformation%</td>
 									<td >%value eventESID%</td>
 									<td >%value sourceFileFullName%</td>
-									<td>
+									
+									<td 
+										%ifvar lastEvaluated -notempty% 
+											%ifvar actions -notnull%
+												style="background-color: #CDE6F9;" 
+											%endifvar%
+										%else% 
+											style="background-color: #FFEF1C4D;" 
+										%endifvar%
+									>
 										<a href="#"  onclick="handleEventDetailClick(document.htmlform_event_details, '%value eventESID%', '%value eventESIndex%');" id="moreInfo">
 											<img src="images/ifcdot.gif" border="no">
 										</a> 

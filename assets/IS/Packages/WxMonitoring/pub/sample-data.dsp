@@ -59,7 +59,7 @@
 
 <!-- page name (breadcrumb) -->
 				<tr>
-					<td class="breadcrumb" colspan="2">Data Administration &gt; Sample Data</td>
+					<td class="breadcrumb" colspan="2">Administration &gt; Import Data</td>
 				</tr>
 
 <!-- links -->

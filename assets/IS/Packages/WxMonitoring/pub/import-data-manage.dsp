@@ -97,7 +97,7 @@
 			<tbody>
 				<TR>
 <!-- page name (breadcrumb) -->
-					<TD class="breadcrumb" colspan="2">Data Administration &gt; Manage Imported Data</TD>
+					<TD class="breadcrumb" colspan="2">Administration &gt; Manage Imported Data</TD>
 				</TR>
 		
 		

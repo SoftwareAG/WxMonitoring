@@ -2,8 +2,7 @@
 
 All the following features should be implemented in future releases (neither ordered nor prioritized yet). 
 
-* Code refactoring
-    * wx.monitoring.impl.maps:aggSourceToAggViewList !!!
+* Import Process Events directly from PRT
 * Documentation
     * API
     * Product Help
@@ -12,7 +11,6 @@ All the following features should be implemented in future releases (neither ord
 * Fulltext Search
     * on Events
     * on Processes
-* Developer Search (native ES search)
 * Security Settings
     * HTTPS
     * User/Password

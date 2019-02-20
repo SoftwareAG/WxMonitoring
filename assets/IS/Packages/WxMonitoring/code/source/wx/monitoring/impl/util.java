@@ -7,13 +7,18 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import com.wm.lang.ns.NSName;
+import com.wm.app.b2b.server.BaseService;
+import com.wm.app.b2b.server.ns.Namespace;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -54,10 +59,10 @@ public final class util
 		// [o] field:0:required diffInSeconds
 		// pipeline
 		IDataCursor pipelineCursor = pipeline.getCursor();
-			String	startDate = IDataUtil.getString( pipelineCursor, "startDate" );
-			String	startDateFormat = IDataUtil.getString( pipelineCursor, "startDateFormat" );
-			String	endDate = IDataUtil.getString( pipelineCursor, "endDate" );
-			String	endDateFormat = IDataUtil.getString( pipelineCursor, "endDateFormat" );
+		String	startDate = IDataUtil.getString( pipelineCursor, "startDate" );
+		String	startDateFormat = IDataUtil.getString( pipelineCursor, "startDateFormat" );
+		String	endDate = IDataUtil.getString( pipelineCursor, "endDate" );
+		String	endDateFormat = IDataUtil.getString( pipelineCursor, "endDateFormat" );
 		pipelineCursor.destroy();
 		
 		SimpleDateFormat startDateformat = new SimpleDateFormat( startDateFormat );  
@@ -212,6 +217,80 @@ public final class util
 		IDataCursor pipelineCursor_1 = pipeline.getCursor();
 		IDataUtil.put( pipelineCursor_1, "value", value );
 		pipelineCursor_1.destroy();
+		// --- <<IS-END>> ---
+
+                
+	}
+
+
+
+	public static final void filterServices (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(filterServices)>> ---
+		// @sigtype java 3.5
+		// [i] field:0:optional filter
+		// [i] field:1:required names
+		// [o] field:1:required names
+		IDataMap dm = new IDataMap(pipeline);
+		
+		String filter = dm.getAsString("filter");
+		if (filter == null || filter.length() == 0)
+			return;
+		String[] f = filter.split(",");
+		String[] namesIn = dm.getAsStringArray("names"); 
+		
+		List<String> list1 = new ArrayList<String>();
+		for (int i = 0; i < namesIn.length;i++) {
+			boolean hit = false;
+			for (int j = 0; !hit && j < f.length; j++)
+				hit = namesIn[i].startsWith(f[j]);
+					
+			if (hit) 
+				list1.add(namesIn[i]);
+		}
+		IData[] tmp = new IData[list1.size()];
+		tmp = list1.toArray(tmp);
+		dm.put("names", tmp);
+			
+		// --- <<IS-END>> ---
+
+                
+	}
+
+
+
+	public static final void getServiceComment (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(getServiceComment)>> ---
+		// @sigtype java 3.5
+		// [i] field:0:required service
+		// [o] field:0:required comment
+		IDataMap dm = new IDataMap(pipeline);
+		String svcname = dm.getAsString("service");
+		 
+		BaseService service = Namespace.getService(NSName.create(svcname));
+		dm.put("comment", service.getComment());
+			
+		// --- <<IS-END>> ---
+
+                
+	}
+
+
+
+	public static final void longToDate (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(longToDate)>> ---
+		// @sigtype java 3.5
+		// [i] field:0:required timeAsLong
+		// [o] field:0:required dateString
+		IDataMap dm = new IDataMap(pipeline);
+		// just a one liner
+		dm.put("dateString", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format( new Date(Long.parseLong(dm.getAsString("timeAsLong")))));
+			
 		// --- <<IS-END>> ---
 
                 

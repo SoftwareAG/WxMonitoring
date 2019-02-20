@@ -12,6 +12,10 @@ New features in 0.3:
 
 * fixes in documentation (user guide / configuration, e.g. globale variables)
 * raise default logstash timeout 
+* Code refactoring
+    * wx.monitoring.impl.maps:aggSourceToAggViewList !!!
+* support monthly process reports
+* Developer Search (native ES search)
 * ...
 
 

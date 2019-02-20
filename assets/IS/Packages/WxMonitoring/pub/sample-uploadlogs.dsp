@@ -57,7 +57,7 @@
 
 <!-- page name (breadcrumb) -->
 				<tr>
-					<td class="breadcrumb" colspan="2">Data Administration &gt; Sample Data > Upload Log Files</td>
+					<td class="breadcrumb" colspan="2">Administration &gt; Import Data > Upload Log Files</td>
 				</tr>
 
 <!-- links -->
@@ -65,7 +65,7 @@
 					<td colspan="2">
 						<ul>
 							<li class="listitem">
-								<a href="sample-data.dsp">Return to Sample Data</a>
+								<a href="sample-data.dsp">Return to Import Data</a>
 							</li>
 						</ul>
 					</td>

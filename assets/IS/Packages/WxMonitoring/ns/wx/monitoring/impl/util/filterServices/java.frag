@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">filterServices</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">SURhdGFNYXAgZG0gPSBuZXcgSURhdGFNYXAocGlwZWxpbmUpOw0KDQpTdHJpbmcgZmlsdGVyID0g
+ZG0uZ2V0QXNTdHJpbmcoImZpbHRlciIpOw0KaWYgKGZpbHRlciA9PSBudWxsIHx8IGZpbHRlci5s
+ZW5ndGgoKSA9PSAwKQ0KCXJldHVybjsNClN0cmluZ1tdIGYgPSBmaWx0ZXIuc3BsaXQoIiwiKTsN
+ClN0cmluZ1tdIG5hbWVzSW4gPSBkbS5nZXRBc1N0cmluZ0FycmF5KCJuYW1lcyIpOyANCg0KTGlz
+dDxTdHJpbmc+IGxpc3QxID0gbmV3IEFycmF5TGlzdDxTdHJpbmc+KCk7DQpmb3IgKGludCBpID0g
+MDsgaSA8IG5hbWVzSW4ubGVuZ3RoO2krKykgew0KCWJvb2xlYW4gaGl0ID0gZmFsc2U7DQoJZm9y
+IChpbnQgaiA9IDA7ICFoaXQgJiYgaiA8IGYubGVuZ3RoOyBqKyspDQoJCWhpdCA9IG5hbWVzSW5b
+aV0uc3RhcnRzV2l0aChmW2pdKTsNCgkJCQ0KCWlmIChoaXQpIA0KCQlsaXN0MS5hZGQobmFtZXNJ
+bltpXSk7DQp9DQpJRGF0YVtdIHRtcCA9IG5ldyBJRGF0YVtsaXN0MS5zaXplKCldOw0KdG1wID0g
+bGlzdDEudG9BcnJheSh0bXApOw0KZG0ucHV0KCJuYW1lcyIsIHRtcCk7DQoJ</value>
+</Values>
