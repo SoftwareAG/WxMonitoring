@@ -47,8 +47,8 @@
 		var previousPageState =  getPageState(currentPageState.previousPageName);
 		cleanNavigationSequence();
 		
-		if(previousPageState.currentPageName=="processes-general.dsp"){
-			var url = "processes-general.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&processStatus=" + previousPageState.processStatus + "&server=" + previousPageState.server + "&businessDomain=" + previousPageState.businessDomain + "&sortBy=" + previousPageState.sortBy +"&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
+		if(previousPageState.currentPageName=="process-instances.dsp"){
+			var url = "process-instances.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&processStatus=" + previousPageState.processStatus + "&server=" + previousPageState.server + "&businessDomain=" + previousPageState.businessDomain + "&sortBy=" + previousPageState.sortBy +"&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
 		}else if(previousPageState.currentPageName=="processes-specific.dsp"){
 			var url = "processes-specific.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&processStatus=" + previousPageState.processStatus + "&server=" + previousPageState.server + "&businessDomain=" + previousPageState.businessDomain + "&sortBy=" + previousPageState.sortBy + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber + "&criteria=" + previousPageState.criteria;	
 		} else if(currentPageState.previousPageName == "import-data-manage.dsp"){
@@ -64,7 +64,7 @@
     <table width="100%">
         <tr>
 			<td class="breadcrumb" colspan="2"> 
-				Processes &gt; General &gt; More Info
+				Processes &gt; Instances &gt; More Info
             </td>
         </tr>
 			 %ifvar operation equals('goToMWSProcess')%
@@ -124,7 +124,7 @@
 							<script>  
 								var currentPageState = getPageState("process-detail.dsp");
 								
-								if(currentPageState.previousPageName == "processes-general.dsp") { 
+								if(currentPageState.previousPageName == "process-instances.dsp") { 
 									document.write("Return to general");
 									} else if(currentPageState.previousPageName == "processes-specific.dsp"){
 									document.write("Return to specific events");
@@ -301,7 +301,7 @@
 							</tr> 
 							%endifvar%
 							<tr><td colspan="2">&nbsp;</td></tr>							
-                            <tr>
+                            <tr style="display:none">
                                 <td class="action" colspan=3>
 									<table width="70%" class="tableView" id="head" name="head">
 										<tbody>

@@ -230,7 +230,7 @@
 									</table>
 								</td>
 							</tr>                                    
-                            <tr>
+                            <tr style="display:none">
                                 <td class="action" colspan=3>
 									<table class="tableView" id="head" name="head">
 										<tbody>
