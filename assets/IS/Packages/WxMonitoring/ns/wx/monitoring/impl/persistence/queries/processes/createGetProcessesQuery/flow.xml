@@ -1666,29 +1666,21 @@
 <MAPCOPY FROM="/matchFields;2;1" TO="/toList;2;1">
 </MAPCOPY>
 
-<MAPCOPY FROM="/server;1;0" TO="/fromItem;2;0/value;1;0">
+<MAPCOPY FROM="/processStatus;1;0" TO="/fromItem;2;0/value;1;0">
 </MAPCOPY>
 
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/fromItem;2;0/fieldName;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">process_env</value>
+  <value name="xml">current_status</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
     <value name="node_subtype">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
     <value name="is_public">false</value>
     <value name="field_name">fieldName</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
-    <array name="field_options" type="value" depth="1">
-    </array>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -6251,6 +6243,9 @@
 </MAPCOPY>
 
 <MAPCOPY FROM="/sortExp;1;1" TO="/filter;4;0;wx.monitoring.docs.dbo:ESQueryFilter/sortExp;1;1">
+</MAPCOPY>
+
+<MAPCOPY FROM="/terms;2;1" TO="/filter;4;0;wx.monitoring.docs.dbo:ESQueryFilter/terms;2;1">
 </MAPCOPY>
 </MAP>
 
