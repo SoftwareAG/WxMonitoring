@@ -25,10 +25,11 @@
 			return true;
 		}
 		
-		function createPageState(fromDateValue, fromTimeValue, toDateValue, toTimeValue, severity, server, logFile, displayOrder, resultsPerPage, requestedPageNumber) {
+		function createPageState(eventTimeRange, fromDateValue, fromTimeValue, toDateValue, toTimeValue, severity, server, logFile, displayOrder, resultsPerPage, requestedPageNumber) {
 			var stateJSONObject = {};
 			stateJSONObject.currentPageName = "events-general.dsp";
 			stateJSONObject.previousPageName = "";
+			stateJSONObject.eventTimeRange = eventTimeRange;
 			stateJSONObject.fromDateValue = fromDateValue;
 			stateJSONObject.fromTimeValue = fromTimeValue;
 			stateJSONObject.toDateValue = toDateValue;
@@ -42,6 +43,29 @@
 			
 			return stateJSONObject;
 		}
+
+		function toggleCtrl_TimeRange() {
+			var selTimeRange = document.getElementById("selEventTimeRange");
+			var dtFromDate = document.getElementById("dtFromDate");
+			var dtToDate = document.getElementById("dtToDate");
+			var tmFromTime = document.getElementById("tmFromTime");
+			var tmToTime = document.getElementById("tmToTime");
+
+			if (selTimeRange.value == 'Custom') {
+				// enable all custom ctrls 
+				dtFromDate.removeAttribute('readonly');
+				dtToDate.removeAttribute('readonly');
+				tmFromTime.removeAttribute('readonly');
+				tmToTime.removeAttribute('readonly');
+			} else {
+				// set all custom ctrls readonly
+				dtFromDate.setAttribute('readonly', 'readonly');
+				dtToDate.setAttribute('readonly', 'readonly');
+				tmFromTime.setAttribute('readonly', 'readonly');
+				tmToTime.setAttribute('readonly', 'readonly');
+			}
+		}
+
 	</script>
 </head>
 <BODY>
@@ -75,7 +99,7 @@
 						<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
 				%endinvoke% 
 				<script>
-					var stateJSONObject = createPageState('%value /fromDateValue encode(javascript)%','%value /fromTimeValue encode(javascript)%','%value /toDateValue encode(javascript)%','%value /toTimeValue encode(javascript)%', '%value /severity encode(javascript)%', '%value /server encode(javascript)%', '%value /logFile encode(javascript)%', '%value /displayOrder encode(javascript)%', '%value /resultsPerPage encode(javascript)%', '%value /requestedPageNumber encode(javascript)%');
+					var stateJSONObject = createPageState('%value eventTimeRange encode(javascript)%', '%value /fromDateValue encode(javascript)%','%value /fromTimeValue encode(javascript)%','%value /toDateValue encode(javascript)%','%value /toTimeValue encode(javascript)%', '%value /severity encode(javascript)%', '%value /server encode(javascript)%', '%value /logFile encode(javascript)%', '%value /displayOrder encode(javascript)%', '%value /resultsPerPage encode(javascript)%', '%value /requestedPageNumber encode(javascript)%');
 					
 					var startNewNavigationSequence = true;
 					savePageState("events-general.dsp", stateJSONObject, startNewNavigationSequence);				
@@ -99,25 +123,26 @@
 									<TABLE class="noborders">
 										<TR>
 											<TD>
+												Time Range
+											</TD>
+											<TD>
+												<select id="selEventTimeRange" name="eventTimeRange" onchange="toggleCtrl_TimeRange()">
+													<option value="today" %ifvar eventTimeRange% %ifvar eventTimeRange equals('today')%selected %endifvar% %else% selected %endifvar%>Today</option>
+													<option value="lastSevenDays" %ifvar eventTimeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
+													<option value="lastFifteenDays" %ifvar eventTimeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
+													<option value="lastThirtyDays" %ifvar eventTimeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
+													<option value="ALL" %ifvar eventTimeRange equals('ALL')%selected %endifvar%>ALL</option>
+													<option value="Custom" %ifvar eventTimeRange equals('Custom')%selected %endifvar%>Custom</option>
+												</select>
+											</TD>
+										</TR>
+										<TR>
+											<TD>
 												Start date
 											</TD>
 											<TD>
 												<input id="dtFromDate" type="date" name="fromDateValue" value="%value fromDateValue%"/>
 											</TD>
-										</TR>
-										<TR>  
-											<TD>
-												Start time
-											</TD>
-											<TD>
-												<input id="tmFromTime" type="time" name="fromTimeValue" pattern="[0-9]{2}:[0-9]{2}" value="%value fromTimeValue%"/>
-											</TD>
-										</TR>
-									</TABLE>
-								</TD>
-								<TD class="oddrow" nowrap>
-									<TABLE class="noborders">
-										<TR>
 											<TD>
 												End date
 											</TD>
@@ -127,6 +152,12 @@
 										</TR>
 										<TR>  
 											<TD>
+												Start time
+											</TD>
+											<TD>
+												<input id="tmFromTime" type="time" name="fromTimeValue" pattern="[0-9]{2}:[0-9]{2}" value="%value fromTimeValue%"/>
+											</TD>
+											<TD>
 												End time
 											</TD>
 											<TD>
@@ -135,34 +166,57 @@
 										</TR>
 									</TABLE>
 								</TD>
+								<TD class="oddrow" nowrap>
+									<TABLE class="noborders">
+										<TR>
+											<td>
+												Severity Threshold
+											</td>
+										</TR>
+										<TR>  
+											<td>
+												<select id="selSeverity" name="severity">
+													<option value="FATAL" %ifvar severity equals('FATAL')% selected %endifvar%>Fatal</option>
+													<option value="ERROR" %ifvar severity equals('ERROR')% selected %endifvar%> >Error</option>
+													<option value="WARNING" %ifvar severity equals('WARNING')% selected %endifvar%>>Warning</option>
+													<option value="INFO" %ifvar severity equals('INFO')% selected %endifvar%>>Info</option>
+													<option value="ALL" %ifvar severity equals('ALL')% selected %endifvar%>All</option>
+												</select>
+											</td>
+										</TR>
+									</TABLE>
+								</TD>
 								<TD nowrap align="left">
-									Severity Threshold
-									<select id="selSeverity" name="severity" >
-										<option value="FATAL" %ifvar severity equals('FATAL')% selected %endifvar%>Fatal</option>
-										<option value="ERROR" %ifvar severity equals('ERROR')% selected %endifvar%> >Error</option>
-										<option value="WARNING" %ifvar severity equals('WARNING')% selected %endifvar%>>Warning</option>
-										<option value="INFO" %ifvar severity equals('INFO')% selected %endifvar%>>Info</option>
-										<option value="ALL" %ifvar severity equals('ALL')% selected %endifvar%>All</option>
-									</select>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									Server
-
-									<select id="selServer" name="server" >
-											%loop serverNames%
-										<option value="%value key encode(htmlattr)%" %ifvar ../server vequals(key)% selected %endifvar%>%value name encode(html)%</option>
-											%endloop%
-										<option value="ALL" %ifvar server equals('ALL')% selected %endifvar%>All</option>
-									</select>
-											
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									Log File
-									<select id="selLogFile" name="logFile" style="width: 100px" >
-											%loop logFileNames%
-										<option value="%value key encode(htmlattr)%"  title="%value key encode(htmlattr)%" %ifvar ../logFile vequals(key)% selected %endifvar%>%value name encode(html)%</option>
-											%endloop%
-										<option value="ALL" %ifvar logFile equals('ALL')% selected %endifvar%>All</option>
-									</select>
-
+									<table class="noborders">
+										<tbody>
+											<tr>
+												<td>
+													Server
+												</td>
+												<td>
+													<select id="selServer" name="server" >
+															%loop serverNames%
+														<option value="%value key encode(htmlattr)%" %ifvar ../server vequals(key)% selected %endifvar%>%value name encode(html)%</option>
+															%endloop%
+														<option value="ALL" %ifvar server equals('ALL')% selected %endifvar%>All</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													Log File
+												</td>
+												<td>
+													<select id="selLogFile" name="logFile" style="width: 100px" >
+															%loop logFileNames%
+														<option value="%value key encode(htmlattr)%"  title="%value key encode(htmlattr)%" %ifvar ../logFile vequals(key)% selected %endifvar%>%value name encode(html)%</option>
+															%endloop%
+														<option value="ALL" %ifvar logFile equals('ALL')% selected %endifvar%>All</option>
+													</select>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</TD> 
 								<TD class="oddrow" nowrap>
 									<TABLE class="noborders">
@@ -249,7 +303,7 @@
 									<td >%value eventESID%</td>
 									<td >%value sourceFileFullName%</td>
 									
-									<td 
+									<td class="oddrowdata"
 										%ifvar lastEvaluated -notempty% 
 											%ifvar actions -notnull%
 												style="background-color: #CDE6F9;" 
@@ -287,7 +341,11 @@
 		</table>          
          
 	</div>
-					
-				
+	
+	<!-- POST load page -->
+	<script language="JavaScript">
+		toggleCtrl_TimeRange()
+	</script>
+
 </BODY>
 </HTML>

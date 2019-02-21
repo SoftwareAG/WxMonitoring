@@ -187,7 +187,7 @@
 											<tr>
 												<td class="oddrow">Auto Evaluation Status</td>    
 												<td class="oddrow-l">
-													%ifvar event/lastEvaluated -notempty%  This event has been evaluated against existing active rules.
+													%ifvar event/lastEvaluated -notempty%  This event has been evaluated against existing active rules on %value event/lastEvaluated %.
 													%else% This event is NOT yet evaluated against existing active rules
 													%endifvar%
 												</td>

@@ -1,4 +1,4 @@
-package wx.monitoring.services;
+package test.wx.monitoring.services;
 
 // -----( IS Java Code Template v1.2
 
@@ -11,16 +11,16 @@ import com.wm.lang.ns.NSService;
 import com.softwareag.util.IDataMap;
 // --- <<IS-END-IMPORTS>> ---
 
-public final class action
+public final class misc
 
 {
 	// ---( internal utility methods )---
 
-	final static action _instance = new action();
+	final static misc _instance = new misc();
 
-	static action _newInstance() { return new action(); }
+	static misc _newInstance() { return new misc(); }
 
-	static action _cast(Object o) { return (action)o; }
+	static misc _cast(Object o) { return (misc)o; }
 
 	// ---( server methods )---
 
