@@ -936,7 +936,12 @@
 </MAPDELETE>
 </MAP>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.persistence.handler:bulkUpdatesESDocuments" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<BRANCH TIMEOUT="" SWITCH="/bulkUpdateQueryExpr">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<INVOKE NAME="/.+/" TIMEOUT="" SERVICE="wx.monitoring.impl.persistence.handler:bulkUpdatesESDocuments" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -1210,6 +1215,7 @@
 </MAPDELETE>
 </MAP>
 </INVOKE>
+</BRANCH>
 
 <BRANCH TIMEOUT="" SWITCH="/onError">
   <COMMENT></COMMENT>
