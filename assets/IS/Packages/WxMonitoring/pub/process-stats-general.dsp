@@ -376,10 +376,10 @@
 				<td valign="top" width="100%">
 					<table class="tableView" width="80%">
 						<tr>
-							<td colspan="6" class="heading">Processes Summary- Group by : %ifvar criteria equals('dateStatus')% Datewise %else% %ifvar criteria equals('hourStatus')% Hourwise %else% %ifvar criteria equals('businessDomainStatus')% Business Domain %else% %ifvar criteria equals('serverStatus')% Server %else% - %endif% %endifvar% %endifvar% %endifvar% | From : %value fromDateValue encode(html)%  %value fromTimeValue encode(html)%:00 | To : %value toDateValue encode(html)%  %value toTimeValue encode(html)%:59 </td>
+							<td colspan="6" class="heading">Processes Summary- Group by : %ifvar criteria equals('dateStatus')% Datewise %else% %ifvar criteria equals('hourStatus')% Hourwise %else% %ifvar criteria equals('businessDomainStatus')% Business Domain %else% %ifvar criteria equals('serverStatus')% Server %else% %ifvar criteria equals('monthStatus')% Month %else% - %endifvar% %endif% %endifvar% %endifvar% %endifvar% | From : %value fromDateValue encode(html)%  %value fromTimeValue encode(html)%:00 | To : %value toDateValue encode(html)%  %value toTimeValue encode(html)%:59 </td>
 						</tr>
 						<tr class="subheading2">
-							<td nowrap class="datacenter">%ifvar criteria equals('dateStatus')% Date %else% %ifvar criteria equals('hourStatus')% Hour %else% %ifvar criteria equals('businessDomainStatus')% Business Domain %else% %ifvar criteria equals('serverStatus')% Server %else% - %endif% %endifvar% %endifvar% %endifvar% </td>
+							<td nowrap class="datacenter">%ifvar criteria equals('dateStatus')% Date %else% %ifvar criteria equals('hourStatus')% Hour %else% %ifvar criteria equals('businessDomainStatus')% Business Domain %else% %ifvar criteria equals('serverStatus')% Server %else% %ifvar criteria equals('monthStatus')% Month %else% - %endifvar% %endif% %endifvar% %endifvar% %endifvar% </td>
 							<td nowrap class="datacenter">Total</td>
 							<td nowrap class="datacenter">Active</td>
 							<td nowrap class="datacenter">Completed</td>
@@ -389,7 +389,7 @@
 					%ifvar processesStats%
 						%loop processesStats%
 						<tr>
-							<td nowrap class="keyrowdata"> %ifvar ../criteria equals('businessDomainStatus')% %value key% %else% %value key% %endifvar% </td>
+							<td nowrap class="evenrowdata"> %ifvar ../criteria equals('businessDomainStatus')% %value key% %else% %value key% %endifvar% </td>
 							<td nowrap class="evenrowdata">
 								%ifvar count equals('0')%
 								-
@@ -459,7 +459,7 @@
 						</tr>
 						%endloop%
 						<tr>
-							<td nowrap class="keyrowdata-b">ALL</td>
+							<td nowrap class="evenrowdata">ALL</td>
 							<td nowrap class="evenrowdata">
 								<a id="allTotalView" href="javascript:document.htmlform_process_Stats_specific.submit();" onClick="return populateForm(document.htmlform_process_Stats_specific, 'displaySpecific', 'ALL', 'ALL');">
 									<script> writeAttributeValue("allTotal"); </script>
