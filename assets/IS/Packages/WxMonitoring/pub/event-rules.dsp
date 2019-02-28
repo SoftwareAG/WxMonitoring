@@ -204,6 +204,7 @@
 						<td class="subheading">Rule Pattern</td>
 						<td class="subheading">Use Regex</td>
 						<td class="subheading">Severity Threshold</td>
+						<td class="subheading">Action Type</td>
 						<td class="subheading">Action</td>
 						<td class="subheading">Enabled</td>
 						<td class="subheading">%ifvar operation equals('editPriority')%Priority%else%Delete Rule%endifvar%</td>
@@ -222,6 +223,9 @@
 								</td> 
 								<td nowrap class="evenrowdata">
 									%ifvar severity/severityThresholdOperator equals('gte')%&#62;&#61;%else%%ifvar severity/severityThresholdOperator equals('lte')%&#60;&#61;%else% &#61;%endifvar%%endifvar% %value severity/severityThreshold encode(html)%    
+								</td>
+								<td nowrap class="evenrowdata">
+									%value action/type encode(html)%
 								</td>
 								<td nowrap class="evenrowdata">
 									%value action/actionDisplayName encode(html)%

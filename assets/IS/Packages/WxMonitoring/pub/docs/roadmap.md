@@ -27,3 +27,4 @@ All the following features should be implemented in future releases (neither ord
 Minor changes
 
 * Support Service Documentation
+* Perform event action invokation asynchronously

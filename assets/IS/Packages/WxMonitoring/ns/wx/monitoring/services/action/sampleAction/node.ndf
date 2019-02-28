@@ -5,8 +5,15 @@
   <value name="svc_subtype">default</value>
   <value name="svc_sigtype">java 3.5</value>
   <value name="svc_spec">wx.monitoring.services.action:IEventAction</value>
-  <value name="node_comment">@actionType(jira)
-@actionImplPrio(10)</value>
+  <value name="node_comment">// please use annotation to define action implementation
+
+// actiontype: service | jira | email | ... - defines the type of your action. You can choose an action type in an event rule
+@actionType(service)
+
+// actionImplPrio: 0-10 - defines priority of implementation (0 - less priority, 10 - high priority)
+@actionImplPrio(1)
+
+This is just a sample action. It logs a message.</value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

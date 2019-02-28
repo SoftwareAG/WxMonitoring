@@ -353,3 +353,60 @@ Aggreation can be
       }, {
 ...
 ```
+
+### Event Rules Execution
+
+* Incoming event data will be evaluated as scheduled. See Administration -> Rules Scheduler
+
+    ![Admin_RulesScheduler](img/Admin_RulesScheduler.png)
+
+* Evaluation is performed by `wx.monitoring.impl.events:handleIncomingEvents`
+* if event rule matches incoming event, event action will be executed (see service `wx.monitoring.impl.events:performEventAction`)
+
+
+### Event Actions
+
+#### Overview
+
+Event Actions are services that will be invoked if event rule fires. Event Actions owns a *type* and a *service namespace*. If an event rule fires, it gets the highest prioritized action implementation for defined type (e.g. jira) at run time. This action will be invoked synchronously. 
+
+All Event Action types and implementation will be cached (uses EHCache, only in memory).
+
+#### Extent Event Action
+
+Event Action can easily be customized:
+
+* Create a new (Flow) Service
+* implement specification `wx.monitoring.services.action:IEventAction`
+
+    ![EventAction-Specification](img/EventAction_specification.png)
+
+* add annotations to define action type and priorisation
+
+    ![EventAction-Annotation](img/EventAction_annotations.png)
+
+An Event Action is automatically found via service dependencies.
+
+#### API
+
+* Specification
+    * `wx.monitoring.services.action:IEventAction` - defines Event Action Services
+* Services
+    * `wx.monitoring.services.action:registerAction` - register all Events Actions into cache
+* Internal
+    * `wx.monitoring.impl.action:getActionsByType` - get all event action implementation services from cache
+    * `wx.monitoring.impl.action:getActionTypes` - get all action types (from cache)
+    * `wx.monitoring.impl.action:getAllActionImplementations` - detect all implementation of IEventAction (in IS runtime) and group them by type
+    * `wx.monitoring.impl.config:getCacheInfo` - get cache settings (cache manager/cache)
+* DocType
+    * `wx.monitoring.docs.dto:ActionInfo` - defines event action implementation
+
+### Used IS Features
+
+WxMonitoring uses IS core features and provides some supporting services
+
+* Global Variables
+* Scheduler
+* EHCache
+* Remote Server
+* DSP Pages
