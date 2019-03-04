@@ -197,7 +197,7 @@
 											<tr>
 												<td class="subheading">Process Duration</td>    
 												<td class="oddrow-l">
-													%ifvar process/duration% %ifvar process/duration/days -notempty% %ifvar process/duration/days equals('0')% %else% %value process/duration/days% days %endifvar% %endifvar% %ifvar process/duration/hours -notempty% %ifvar process/duration/hours equals('0')% %else% %value process/duration/hours% hrs %endifvar% %endifvar% %ifvar process/duration/minutes -notempty% %ifvar process/duration/minutes equals('0')% %else% %value process/duration/minutes% mins %endifvar% %endifvar% %ifvar process/duration/seconds -notempty% %ifvar process/duration/seconds equals('0')% ~0 sec %else% aaa%value process/duration/seconds% sec %endifvar% %endifvar% %else% - %endifvar%
+													%ifvar process/duration% %ifvar process/duration/days -notempty% %ifvar process/duration/days equals('0')% %else% %value process/duration/days% days %endifvar% %endifvar% %ifvar process/duration/hours -notempty% %ifvar process/duration/hours equals('0')% %else% %value process/duration/hours% hrs %endifvar% %endifvar% %ifvar process/duration/minutes -notempty% %ifvar process/duration/minutes equals('0')% %else% %value process/duration/minutes% mins %endifvar% %endifvar% %ifvar process/duration/seconds -notempty% %ifvar process/duration/seconds equals('0')% ~0 sec %else% %value process/duration/seconds% sec %endifvar% %endifvar% %else% - %endifvar%
 												</td>
 											</tr>
 											%ifvar process/failedTimestamp%
