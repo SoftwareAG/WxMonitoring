@@ -108,7 +108,7 @@
 
 		   //gets cells of current row
 			var oCells = oTable.rows.item(i).cells;
-			var cellVal = oCells.item(6).innerHTML; // 7th column is ruleID
+			var cellVal = oCells.item(7).innerHTML; // 8th column is ruleID
 			cellVal = trimStr(cellVal)+";";
 			ruleIDList +=cellVal;
 		   //gets amount of cells of current row
@@ -120,7 +120,7 @@
 		      /* var cellVal = oCells.item(j).innerHTML; */
 		   //}
 		}
-
+		
 		form.ruleIDPriorityList.value=ruleIDList;
 		form.operation.value = "display";
 		return true;
@@ -182,10 +182,10 @@
 			%endif%	         
         <tr>
             <td colspan="2">
-                <ul style="none" class="listitems">
+                <ul class="listitems">
 					%ifvar operation equals('editPriority')%
-						<li class="listitem"><a disabled href="javascript:document.htmlform_rule_priority.submit();" onClick="return changeRulePriority(document.htmlform_rule_priority);">Save</a> </li>
-						<li class="listitem"><a disabled href="event-rules.dsp">Cancel</a></li>
+						<li class="listitem"><a href="javascript:document.htmlform_rule_priority.submit();" onClick="return changeRulePriority(document.htmlform_rule_priority);">Save</a> </li>
+						<li class="listitem"><a href="event-rules.dsp">Cancel</a></li>
 					%else%
 	                    <li class="listitem"><a href="javascript:document.htmlform_rule_add.submit();" onClick="return populateForm(document.htmlform_rule_add, '' ,'','add','');">Add&nbsp;Rule&nbsp;</a></li>
 						<li class="listitem"><a href="event-rules.dsp?operation=editPriority">Change Rules Priority</a> </li>
