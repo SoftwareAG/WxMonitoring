@@ -454,7 +454,7 @@
 								%endifvar%
 							</td>
 							<script>
-								AddProcesses('%value count encode(javascript)%', '%value startedBucket/count encode(javascript)%', '%value completedBucket/count encode(javascript)%', '%value exceptionBucket/count encode(javascript)%', '%value failedAndExceptionBucket/count encode(javascript)%', '%value cancelledBucket/count encode(javascript)%' );
+								AddProcesses('%value count encode(javascript)%', '%value startedBucket/count encode(javascript)%', '%value completedBucket/count encode(javascript)%', '%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%', '%value cancelledBucket/count encode(javascript)%' );
 							</script>
 						</tr>
 						%endloop%

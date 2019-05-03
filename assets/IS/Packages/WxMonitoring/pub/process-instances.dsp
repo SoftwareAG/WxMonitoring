@@ -349,7 +349,7 @@
 								</td>
 								<td>%value lastUpdated%</td>
 								<td>%value exceptions[0]/exceptionMessage%</td>
-								<td>
+								<td class="oddrowdata">
 									<a href="#"
 										onclick="handleProcessDetailClick(document.htmlform_process_detail, '%value processESID%');"
 										id="moreInfo">

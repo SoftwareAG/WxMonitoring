@@ -65,7 +65,7 @@
 						<td class="subheading">Last Run</td>
 						<td class="subheading">Next Run</td>
 						<td class="subheading">Interval</td>
-						<td class="subheading">Status</td>
+						<td class="subheading">Current Status</td>
 					</tr>
 					%ifvar scheduler%
 						%loop scheduler%
@@ -93,7 +93,7 @@
 										<img src="images/green_check.png" width="13" height="13" border="0">
 										<a href="javascript:submitAction('setStatus','%value id encode(html)%','suspend')" onclick="return confirm('Are you sure you want to suspend scheduler?');">Active</a> 
 									%else% 
-										<a href="javascript:submitAction('setStatus','%value id encode(html)%','active')">Suspend</a> 
+										<a href="javascript:submitAction('setStatus','%value id encode(html)%','active')">Suspended</a> 
 									%endifvar%
 								</td>
 							</tr>

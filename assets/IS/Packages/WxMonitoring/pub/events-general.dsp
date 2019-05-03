@@ -309,7 +309,7 @@
 												style="background-color: #CDE6F9;" 
 											%endifvar%
 										%else% 
-											style="background-color: #FFEF1C4D;" 
+											style="background-color:#fffaba;" 
 										%endifvar%
 									>
 										<a href="#"  onclick="handleEventDetailClick(document.htmlform_event_details, '%value eventESID%', '%value eventESIndex%');" id="moreInfo">
