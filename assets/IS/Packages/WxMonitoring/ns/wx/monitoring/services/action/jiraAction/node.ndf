@@ -4,16 +4,45 @@
   <value name="svc_type">flow</value>
   <value name="svc_subtype">default</value>
   <value name="svc_sigtype">java 3.5</value>
-  <value name="svc_spec">wx.monitoring.services.action:IEventAction</value>
+  <record name="svc_sig" javaclass="com.wm.util.Values">
+    <record name="sig_in" javaclass="com.wm.util.Values">
+      <value name="node_type">record</value>
+      <value name="node_subtype">unknown</value>
+      <value name="is_public">false</value>
+      <value name="field_type">record</value>
+      <value name="field_dim">0</value>
+      <value name="wrapper_type">IData</value>
+      <value name="nillable">true</value>
+      <value name="form_qualified">false</value>
+      <value name="is_global">false</value>
+      <array name="rec_fields" type="record" depth="1">
+      </array>
+      <value name="modifiable">true</value>
+    </record>
+    <record name="sig_out" javaclass="com.wm.util.Values">
+      <value name="node_type">record</value>
+      <value name="node_subtype">unknown</value>
+      <value name="is_public">false</value>
+      <value name="field_type">record</value>
+      <value name="field_dim">0</value>
+      <value name="wrapper_type">IData</value>
+      <value name="nillable">true</value>
+      <value name="form_qualified">false</value>
+      <value name="is_global">false</value>
+      <array name="rec_fields" type="record" depth="1">
+      </array>
+      <value name="modifiable">true</value>
+    </record>
+  </record>
   <value name="node_comment">// please use annotation to define action implementation
 
 // actiontype: service | jira | email | ... - defines the type of your action. You can choose an action type in an event rule
-@actionType(service)
+@actionType(jira)
 
 // actionImplPrio: 0-10 - defines priority of implementation (0 - less priority, 10 - high priority)
 @actionImplPrio(1)
 
-This is just a sample action. It logs a message.</value>
+This action invokes another service with provided parameters(in JSON format).</value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

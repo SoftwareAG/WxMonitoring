@@ -48,7 +48,7 @@
 		%endinvoke%
         <tr>
             <td colspan="2">
-                <ul style="none" class="listitems">
+                <ul class="listitems">
 					<li class="listitem"><a href="admin-scheduler.dsp">Refresh</a> </li>
                 </ul>
             </td>
