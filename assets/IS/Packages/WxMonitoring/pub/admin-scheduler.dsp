@@ -7,8 +7,8 @@
   <link rel="stylesheet" TYPE="text/css" href="webMethods_extentions.css">
   <script src="webMethods.js.txt"></script>
   <SCRIPT SRC="common-navigation.js"></SCRIPT>
+      <!--add javascript here-->
   <script language="JavaScript">
-    <!--add javascript here-->
     function submitAction(action, id, param1)
     {
 		var form = document.htmlform;
@@ -20,14 +20,13 @@
   
   </script>
   <body>
-   
     <table width="100%">
         <tr>
             <td class="breadcrumb" colspan="2">Administration &gt; Rules Scheduler</td>
         </tr>
 		
 		%ifvar action%
-			%invoke wx.monitoring.services.gui.events:handleEventRulesAdminDspAction%
+			%invoke wx.monitoring.services.gui.events:handleAdminSchedulerDspAction%
 			%endinvoke%	
 			%ifvar message%
 				<tr><td colspan="2">&nbsp;</td></tr>
@@ -44,7 +43,7 @@
 			%endif%		
 		%endifvar%
 		
-		%invoke wx.monitoring.services.gui.dataAdministration:getRulesScheduler%
+		%invoke wx.monitoring.services.gui.administration:getRulesScheduler%
 		%endinvoke%
         <tr>
             <td colspan="2">

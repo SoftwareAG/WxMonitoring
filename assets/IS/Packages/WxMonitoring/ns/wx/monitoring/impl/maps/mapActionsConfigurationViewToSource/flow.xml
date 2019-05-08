@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
+  <COMMENT></COMMENT>
 
   <!-- nodes -->
 
@@ -43,20 +44,13 @@
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
         <value name="field_name">actionConfigurationSouce</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
         <value name="rec_ref">wx.monitoring.docs.dbo:ActionConfigurationSource</value>
       </record>
@@ -110,25 +104,37 @@
 <MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionType;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_type;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionDisplayName;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_display_name;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/server;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/server;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/port;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/port;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/user;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/user;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/pass;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/pass;1;0">
-</MAPCOPY>
-
 <MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/isActive;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/is_active;1;0">
 </MAPCOPY>
 
 <MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/isDeleted;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/is_deleted;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/mailHost;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/mail_host;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/mailHostPort;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/mail_host_port;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/user;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/user;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/pass;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/pass;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/protocol;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/protocol;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/host;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/host;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/port;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/port;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/user;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/user;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/pass;1;0" TO="/actionConfigurationSouce;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/pass;1;0">
 </MAPCOPY>
 </MAP>
 </FLOW>

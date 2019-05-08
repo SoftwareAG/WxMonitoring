@@ -42,25 +42,32 @@
 			}
 		}
 		
-		/* Validate email input.
-		if(0 < thisform.adminEmail.value.length){
-			var emailsStr = thisform.adminEmail.value;
-			var emailList = emailsStr.split(',');
-			emailList = cleanArray(emailList);
-			for(var i = 0; i < emailList.length; i++) {
-					// Trim the excess whitespace.
-				var email = trimStr(emailList[i]);
-				if(!validateEmail(email)){
-					alert("Invalid email: '" + email + "' in 'Admin Email' field.");
-					thisform.adminEmail.focus();
-					return false;
+		// Validate email input.
+		if(thisform.actionType="email"){
+			if(0 < thisform.actionEmailTo.value.length){
+				var emailsStr = thisform.actionEmailTo.value;
+				var emailList = emailsStr.split(',');
+				emailList = cleanArray(emailList);
+				for(var i = 0; i < emailList.length; i++) {
+						// Trim the excess whitespace.
+					var email = trimStr(emailList[i]);
+					if(!validateEmail(email)){
+						alert("Invalid email: '" + email + "' in 'Send email to' field.");
+						thisform.actionEmailTo.focus();
+						return false;
+					}
 				}
 			}
 		}
 		
-		if(0 < thisform.adminJIRAUsername.value.length){
-			thisform.adminJIRAUsername.value = trimStr(thisform.adminJIRAUsername.value);
-		}*/
+		if(thisform.actionType="jira"){
+			if(0 < thisform.actionJiraAssignTo.value.length){
+				thisform.actionJiraAssignTo.value = trimStr(thisform.actionJiraAssignTo.value);
+			}
+		}
+
+		populateForm(thisform, oper);
+
 		if(oper=="insert"){
 			thisform.action.value= 'insertRule';
 			thisform.operation.value= 'display';
@@ -70,16 +77,37 @@
 			thisform.operation.value= 'display';
 		}
 		
+		
         return true;
     }
 	
-	function populateForm(thisform,ruleID, oper)
+	function populateForm(thisform, oper)
     {
-		thisform.ruleID.value = ruleID;
-		thisform.operation.value = oper; 
-		thisform.submit();
+		if(oper=="insert"||oper=="update"){
+			//create JSON for action properties
+			var actionPropertiesJSONObject = {};
+			if(thisform.actionType.value=="email"){
+				actionPropertiesJSONObject.sendEmailTo = thisform.actionEmailTo.value;
+			}else if(thisform.actionType.value=="jira"){
+				actionPropertiesJSONObject.jiraAssigneeUsername = thisform.actionJiraAssignTo.value;
+				actionPropertiesJSONObject.jiraProjectKey = thisform.actionJiraProjectKey.value;
+				actionPropertiesJSONObject.jiraIssueType = thisform.actionJiraIssueType.value;
+
+			}else if(thisform.actionType.value=="service"){
+				actionPropertiesJSONObject.customServiceToInvoke = thisform.serviceToInvoke.value;
+				actionPropertiesJSONObject.customServiceInputParams = thisform.inputParam.value;
+			}
+			
+			var json = JSON.stringify(actionPropertiesJSONObject);
+			thisform.actionProperties.value = json;
+
+		} else{
+			thisform.ruleID.value = ruleID;
+			thisform.operation.value = oper; 
+			thisform.submit();
+		}
 	}
-	/* Used for validating email input.
+	// Used for validating email input.
     function cleanArray(actual) {
 		var newArray = new Array();
 		for (var i = 0; i < actual.length; i++) {
@@ -94,7 +122,7 @@
 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(String(email).toLowerCase());
 	}
-	*/
+	
 	
     function trimStr(str) {
       return str.replace(/^\s+|\s+$/g, '');
@@ -125,18 +153,86 @@
 	}
 	
 	function handleActionTypeClick(actionTypeRadio) {
-		action_triggerFrequency
-		var actionTypeValue = actionTypeRadio.value;
-		var actionServiceNameRow = document.getElementById("action_serviceNameRow");
-		var actionInputParamRow = document.getElementById("action_inputParam");
+		var actionTypeValue = document.getElementById("selActionType").value;
+
+		//define controls related to action email
+		var actionEmailSendEmailToRow = document.getElementById("action_email_to_row");
+
+		//define controls related to action jira
+		var actionJiraAssignTo = document.getElementById("action_jira_assignTo_row");
+		var actionJiraProjectKey = document.getElementById("action_jira_projectKey_row");
+		var actionJiraIssueType = document.getElementById("action_jira_issueType_row");
+
+		//define controls related to action service
+		var actionServiceNameRow = document.getElementById("action_service_serviceName_row");
+		var actionServiceInputParamRow = document.getElementById("action_service_inputParam_row");
+
+		//define controls common to all action (except ignore action)
 		var actionTriggerFrequencyRow = document.getElementById("action_triggerFrequency");
-		if(actionTypeValue=="none"){
+
+		if(actionTypeValue=="ignore"){
+
+			//hide controls related to action email
+			actionEmailSendEmailToRow.style.display ="none";			
+
+			//hide controls related to action jira
+			actionJiraAssignTo.style.display ="none";			
+			actionJiraProjectKey.style.display ="none";
+			actionJiraIssueType.style.display ="none";
+
+			//hide controls related to action service
 			actionServiceNameRow.style.display ="none";			
-			actionInputParamRow.style.display ="none";
+			actionServiceInputParamRow.style.display ="none";
+
+			//hide controls common to all action (except ignore action)
 			actionTriggerFrequencyRow.style.display ="none";
-		} else{
-			actionServiceNameRow.style.display ="";
-			actionInputParamRow.style.display ="";
+		} else if(actionTypeValue=="email"){
+			//display controls related to action email
+			actionEmailSendEmailToRow.style.display ="";			
+
+			//hide controls related to action jira
+			actionJiraAssignTo.style.display ="none";			
+			actionJiraProjectKey.style.display ="none";
+			actionJiraIssueType.style.display ="none";
+
+			//hide controls related to action service
+			actionServiceNameRow.style.display ="none";			
+			actionServiceInputParamRow.style.display ="none";
+
+			//display controls common to all action (except ignore action)
+			actionTriggerFrequencyRow.style.display ="";
+		} else if (actionTypeValue=="jira"){
+
+			//hide controls related to action email
+			actionEmailSendEmailToRow.style.display ="none";			
+
+			//display controls related to action jira
+			actionJiraAssignTo.style.display ="";			
+			actionJiraProjectKey.style.display ="";
+			actionJiraIssueType.style.display ="";
+
+			//hide controls related to action service
+			actionServiceNameRow.style.display ="none";			
+			actionServiceInputParamRow.style.display ="none";
+
+			//display controls common to all action (except ignore action)
+			actionTriggerFrequencyRow.style.display ="";
+
+		}else if(actionTypeValue=="service"){
+			//hide controls related to action email
+			actionEmailSendEmailToRow.style.display ="none";			
+
+			//hide controls related to action jira
+			actionJiraAssignTo.style.display ="none";			
+			actionJiraProjectKey.style.display ="none";
+			actionJiraIssueType.style.display ="none";
+
+
+			//hide controls related to action service
+			actionServiceNameRow.style.display ="";			
+			actionServiceInputParamRow.style.display ="";
+
+			//display controls common to all action (except ignore action)
 			actionTriggerFrequencyRow.style.display ="";
 		}
 	}
@@ -187,6 +283,21 @@
 					</tr>
 				%endif%	
 		%endifvar%
+		%invoke wx.monitoring.services.gui.events:getEventRuleAddeditDspInfoData%
+		%endinvoke%
+			%ifvar message%
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td class="message" colspan="2">%value message encode(html)%
+			%ifvar errorMessage%
+						: <i>%value errorMessage encode(html)%</i>
+			%endif%
+			%ifvar status%
+						: <i>%value status encode(html)%</i>
+			%endif%
+					</td>
+				</tr>
+			%endif%	
 		<script>
 			var stateJSONObject = createPageState('%value /ruleID encode(javascript)%','%value /ruleRank encode(javascript)%');
 			
@@ -214,6 +325,7 @@
             <td>
             <form name="htmlform_rule_addedit" action="event-rule-addedit.dsp" method="POST">
                 <input type="hidden" name="operation">
+				<input type="hidden" name="actionProperties">
 				%ifvar operation equals('add')%
 					<input type="hidden" name="ruleRank" value = "%value /ruleRank encode(htmlattr)%">
 					<input type="hidden" name="action">
@@ -260,24 +372,58 @@
                             <tr>
                                 <td class="subheading" >Perform Action</td>
                                 <td class="oddrow-l" >
-									<input type="radio" name="actionType" value="none" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')% checked="checked"  %endifvar%  %else% checked="checked" %endifvar% %ifvar operation equals('display')% disabled %else% onclick="handleActionTypeClick(this);" required %endifvar%> Ignore event<br>
-									<input type="radio" name="actionType" value="invokeService" %ifvar rule/action/actionType equals('invokeService')% checked="checked"  %endifvar% %ifvar operation equals('display')% disabled %else% onclick="handleActionTypeClick(this);" required %endifvar%> Invoke action handler service
+									<select id="selActionType" name="actionType" title="Action to perform" required onchange="handleActionTypeClick(this)">
+										%ifvar infoData%
+											%loop infoData/actionsConfiguration%
+												<option value="%value actionType encode(htmlattr)%" %ifvar ../rule/action/actionType vequals(actionType)%selected %endifvar% %ifvar ../operation equals('display')% disabled %else% required %endifvar%>%value actionDisplayName encode(htmlattr)%
+												</option>
+											%endloop%
+										%endifvar%
+									</select> 
                                 </td>
                             </tr>
 							
-							<tr id="action_serviceNameRow" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
-                                <td class="subheading" >Service Name</td>
+							<tr id="action_email_to_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('email')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Send email to</td>
                                 <td class="oddrow-l" >
-									<input type="text" placeholder="for e.g. wx.monitoring.impl.actionHandler:sendEmail" name="serviceToInvoke" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/serviceToInvoke%'>
+									<input type="text" placeholder="use ',' to separate email addresses" name="actionEmailTo" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/sendEmailTo%'>
                                 </td>
                             </tr>
-							<tr id="action_inputParam" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+							
+							<tr id="action_jira_assignTo_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Assign jira ticket to</td>
+                                <td class="oddrow-l" >
+									<input type="text" placeholder="write assignee jira username" name="actionJiraAssignTo" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraAssigneeUsername%'>
+                                </td>
+                            </tr>
+
+							<tr id="action_jira_projectKey_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Jira project key</td>
+                                <td class="oddrow-l" >
+									<input type="text" placeholder="write jira Project key (if available) to create issue in" name="actionJiraProjectKey" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraProjectKey%'>
+                                </td>
+                            </tr>
+
+							<tr id="action_jira_issueType_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Jira issue type</td>
+                                <td class="oddrow-l" >
+									<input type="text" placeholder="write Jira issue type (default is 'bug')" name="actionJiraIssueType" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssueType%'>
+                                </td>
+                            </tr>
+
+							<tr id="action_service_serviceName_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('service')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Service Name</td>
+                                <td class="oddrow-l" >
+									<input type="text" placeholder="for e.g. wx.monitoring.impl.actionHandler:sendEmail" name="serviceToInvoke" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/customServiceToInvoke%'>
+                                </td>
+                            </tr>
+							<tr id="action_service_inputParam_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('service')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Input Parameter</td>
                                 <td class="oddrow-l" >
 									<textarea placeholder="{
   &quot;param1&quot; : &quot;value1&quot;,
   &quot;param2&quot; : &quot;value2&quot;
-}" id="inputParam" rows="2" cols="40" name="inputParam" title="If more than one parameter is required, write parameters as JSON and handle it accordingly in the invoked service" %ifvar operation equals('display')% disabled %endifvar%>%value rule/action/inputParam%</textarea>
+}" id="inputParam" rows="2" cols="40" name="inputParam" title="If more than one parameter is required, write parameters as JSON and handle it accordingly in the invoked service" %ifvar operation equals('display')% disabled %endifvar%>%value rule/action/properties/customServiceInputParams%</textarea>
                                 </td>
                             </tr>
 							

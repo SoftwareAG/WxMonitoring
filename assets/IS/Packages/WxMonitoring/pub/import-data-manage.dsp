@@ -101,7 +101,7 @@
 				</TR>
 		
 		
-		%invoke wx.monitoring.services.gui.dataAdministration:getImportedData%		
+		%invoke wx.monitoring.services.gui.administration:getImportedData%		
 		%endinvoke%
 		
 		%invoke wx.monitoring.services.gui.common:getAllBusinessDomainsNames%

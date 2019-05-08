@@ -76,7 +76,7 @@
 <!-- list page actions -->
 				
 %ifvar action%
-	%invoke wx.monitoring.services.gui.dataAdministration:handleDspAction%
+	%invoke wx.monitoring.services.gui.administration:handleDspAction%
 		%ifvar message%
 				<tr><td colspan="2">&nbsp;</td></tr>
 				<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>

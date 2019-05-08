@@ -206,18 +206,14 @@
 											<tr class="subheading2">
 												<td class="oddrow">Rule ID</td>
 												<td class="oddrow">Action Timestamp</td>
-												<td class="oddrow">Action Type</td>
-												<td class="oddrow">Service Invoked</td>
-												<td class="oddrow">Input Parameter</td>
+												<td class="oddrow">Action</td>
 											</tr>
 											%ifvar event/actions%		
 											%loop event/actions%
 											<tr class="field">
 												<td>%value ruleID%</td>
 												<td >%value actionTimestamp%</td>
-												<td >%value actionType%</td>
-												<td >%ifvar serviceToInvoke -notempty%%value serviceToInvoke% %else% - %endifvar%</td>
-												<td >%ifvar inputParam -notempty%%value inputParam%%else% - %endifvar%</td>
+												<td >%value actionDisplayName%</td>
 											</tr>
 												%endloop%
 											

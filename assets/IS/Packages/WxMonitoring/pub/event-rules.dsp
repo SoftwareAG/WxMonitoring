@@ -7,8 +7,8 @@
   <link rel="stylesheet" TYPE="text/css" href="webMethods_extentions.css">
   <script src="webMethods.js.txt"></script>
   <SCRIPT SRC="common-navigation.js"></SCRIPT>
+      <!--add jscript here-->
   <script language="JavaScript">
-    <!--add jscript here-->
     function populateForm(form , ruleID, eventPattern ,oper,ruleRank)
     {
         if('add' == oper){
@@ -108,7 +108,7 @@
 
 		   //gets cells of current row
 			var oCells = oTable.rows.item(i).cells;
-			var cellVal = oCells.item(7).innerHTML; // 8th column is ruleID
+			var cellVal = oCells.item(6).innerHTML; // 7th column is ruleID
 			cellVal = trimStr(cellVal)+";";
 			ruleIDList +=cellVal;
 		   //gets amount of cells of current row
@@ -204,7 +204,6 @@
 						<td class="subheading">Rule Pattern</td>
 						<td class="subheading">Use Regex</td>
 						<td class="subheading">Severity Threshold</td>
-						<td class="subheading">Action Type</td>
 						<td class="subheading">Action</td>
 						<td class="subheading">Enabled</td>
 						<td class="subheading">%ifvar operation equals('editPriority')%Priority%else%Delete Rule%endifvar%</td>
@@ -223,9 +222,6 @@
 								</td> 
 								<td nowrap class="evenrowdata">
 									%ifvar severity/severityThresholdOperator equals('gte')%&#62;&#61;%else%%ifvar severity/severityThresholdOperator equals('lte')%&#60;&#61;%else% &#61;%endifvar%%endifvar% %value severity/severityThreshold encode(html)%    
-								</td>
-								<td nowrap class="evenrowdata">
-									%value action/type encode(html)%
 								</td>
 								<td nowrap class="evenrowdata">
 									%value action/actionDisplayName encode(html)%

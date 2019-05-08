@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
+  <COMMENT></COMMENT>
 
   <!-- nodes -->
 
@@ -23,40 +24,13 @@
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="is_public">false</value>
-        <value name="field_name">actionConfigurationCanonical</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:ActionConfigurationCanonical</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
         <value name="field_name">actionConfigurationView</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
         <value name="rec_ref">wx.monitoring.docs.view:ActionConfigurationView</value>
       </record>
@@ -113,21 +87,6 @@
 <MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_type;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionType;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_display_name;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionDisplayName;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/server;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/server;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/port;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/port;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/user;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/user;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_config;2;0/pass;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionConfig;2;0/pass;1;0">
-</MAPCOPY>
-
 <MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/is_active;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/isActive;1;0">
 </MAPCOPY>
 
@@ -136,5 +95,200 @@
 
 <MAPDELETE FIELD="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical">
 </MAPDELETE>
+
+<MAPINVOKE SERVICE="wx.monitoring.impl.maps:mapActionTypeToActionDisplayName" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionType</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionConfigurationCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ActionConfigurationCanonical</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_type;1;0" TO="/actionType;1;0">
+</MAPCOPY>
+</MAP>
+
+<MAP MODE="INVOKEOUTPUT">
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">actionConfigurationView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionConfigurationView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionDisplayName</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/actionDisplayName;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionDisplayName;1;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/mail_host;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/mailHost;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/mail_host_port;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/mailHostPort;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/user;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/user;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_email;2;0/pass;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionEmail;2;0/pass;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/protocol;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/protocol;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/host;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/host;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/port;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/port;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/user;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/user;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionConfigurationCanonical;4;0;wx.monitoring.docs.dto:ActionConfigurationCanonical/source;4;0;wx.monitoring.docs.dbo:ActionConfigurationSource/action_jira;2;0/pass;1;0" TO="/actionConfigurationView;4;0;wx.monitoring.docs.view:ActionConfigurationView/actionJira;2;0/pass;1;0">
+</MAPCOPY>
 </MAP>
 </FLOW>
