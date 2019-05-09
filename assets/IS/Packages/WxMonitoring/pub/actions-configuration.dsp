@@ -28,6 +28,7 @@
                 actionConfigurationJSONObject.mailHostPort = document.getElementById("mailHostPort").value;
                 actionConfigurationJSONObject.user = document.getElementById("emailUser").value;
                 actionConfigurationJSONObject.pass = document.getElementById("emailPass").value;
+                actionConfigurationJSONObject.fromEmail = document.getElementById("emailFromEmail").value;
 			}else if(actionTypeValue=="jira"){
 				actionConfigurationJSONObject.protocol = document.getElementById("selProtocol").value;
                 actionConfigurationJSONObject.host = document.getElementById("jiraHost").value;
@@ -52,6 +53,7 @@
         var actionEmailMailhostPortRow = document.getElementById("action_email_mailHostPort_row");
         var actionEmailUserRow = document.getElementById("action_email_user_row");
         var actionEmailPassRow = document.getElementById("action_email_pass_row");
+        var actionEmailFromEmailRow = document.getElementById("action_email_fromEmail_row");
 
 		//define controls related to action jira
 		var actionJiraProtocolRow = document.getElementById("action_jira_protocol_row");
@@ -74,6 +76,7 @@
             actionEmailMailhostPortRow.style.display ="none";
             actionEmailUserRow.style.display ="none";
             actionEmailPassRow.style.display ="none";
+            actionEmailFromEmailRow.style.display ="none";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="none";			
@@ -94,6 +97,7 @@
             actionEmailMailhostPortRow.style.display ="";
             actionEmailUserRow.style.display ="";
             actionEmailPassRow.style.display ="";
+            actionEmailFromEmailRow.style.display ="";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="none";			
@@ -115,6 +119,7 @@
             actionEmailMailhostPortRow.style.display ="none";
             actionEmailUserRow.style.display ="none";
             actionEmailPassRow.style.display ="none";
+            actionEmailFromEmailRow.style.display ="none";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="";			
@@ -135,6 +140,7 @@
             actionEmailMailhostPortRow.style.display ="none";
             actionEmailUserRow.style.display ="none";
             actionEmailPassRow.style.display ="none";
+            actionEmailFromEmailRow.style.display ="none";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="none";			
@@ -224,7 +230,7 @@
                                 </td>
                             </tr>
                             <tr id="action_email_mailHostPort_row" style="display:none;">
-                                <td class="subheading" >SMTP host name</td>
+                                <td class="subheading" >SMTP host port</td>
                                 <td class="oddrow-l" >
                                     <input type="text" placeholder="Leave blank to use default SMTP port" id="mailHostPort" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value actionEmail/mailHostPort%'>
                                 </td>
@@ -239,6 +245,12 @@
                                 <td class="subheading" >Password</td>
                                 <td class="oddrow-l" >
                                     <input type="password" placeholder="Authentication Password" id="emailPass" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value actionEmail/pass%'>
+                                </td>
+                            </tr>
+                            <tr id="action_email_fromEmail_row" style="display:none;">
+                                <td class="subheading" >From email</td>
+                                <td class="oddrow-l" >
+                                    <input type="text" placeholder="Send email from this email id" id="emailFromEmail" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value actionEmail/fromEmail%'>
                                 </td>
                             </tr>
                         %endifvar%
