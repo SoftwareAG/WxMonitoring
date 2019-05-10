@@ -92,6 +92,7 @@
 				actionPropertiesJSONObject.jiraAssigneeUsername = thisform.actionJiraAssignTo.value;
 				actionPropertiesJSONObject.jiraProjectKey = thisform.actionJiraProjectKey.value;
 				actionPropertiesJSONObject.jiraIssueType = thisform.actionJiraIssueType.value;
+				actionPropertiesJSONObject.jiraIssuePriority = thisform.actionJiraIssuePriority.value;
 
 			}else if(thisform.actionType.value=="service"){
 				actionPropertiesJSONObject.customServiceToInvoke = thisform.serviceToInvoke.value;
@@ -162,6 +163,7 @@
 		var actionJiraAssignTo = document.getElementById("action_jira_assignTo_row");
 		var actionJiraProjectKey = document.getElementById("action_jira_projectKey_row");
 		var actionJiraIssueType = document.getElementById("action_jira_issueType_row");
+		var actionJiraIssuePriority = document.getElementById("action_jira_issuePriority_row");
 
 		//define controls related to action service
 		var actionServiceNameRow = document.getElementById("action_service_serviceName_row");
@@ -179,6 +181,7 @@
 			actionJiraAssignTo.style.display ="none";			
 			actionJiraProjectKey.style.display ="none";
 			actionJiraIssueType.style.display ="none";
+			actionJiraIssuePriority.style.display ="none";
 
 			//hide controls related to action service
 			actionServiceNameRow.style.display ="none";			
@@ -194,6 +197,7 @@
 			actionJiraAssignTo.style.display ="none";			
 			actionJiraProjectKey.style.display ="none";
 			actionJiraIssueType.style.display ="none";
+			actionJiraIssuePriority.style.display ="none";
 
 			//hide controls related to action service
 			actionServiceNameRow.style.display ="none";			
@@ -210,6 +214,7 @@
 			actionJiraAssignTo.style.display ="";			
 			actionJiraProjectKey.style.display ="";
 			actionJiraIssueType.style.display ="";
+			actionJiraIssuePriority.style.display ="";
 
 			//hide controls related to action service
 			actionServiceNameRow.style.display ="none";			
@@ -226,7 +231,7 @@
 			actionJiraAssignTo.style.display ="none";			
 			actionJiraProjectKey.style.display ="none";
 			actionJiraIssueType.style.display ="none";
-
+			actionJiraIssuePriority.style.display ="none";
 
 			//hide controls related to action service
 			actionServiceNameRow.style.display ="";			
@@ -408,6 +413,13 @@
                                 <td class="subheading" >Jira issue type</td>
                                 <td class="oddrow-l" >
 									<input type="text" placeholder="write Jira issue type (default is 'bug')" name="actionJiraIssueType" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssueType%'>
+                                </td>
+                            </tr>
+
+							<tr id="action_jira_issuePriority_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading" >Jira issue priority</td>
+                                <td class="oddrow-l" >
+									<input type="text" placeholder="write Jira issue priority" name="actionJiraIssuePriority" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssuePriority%'>
                                 </td>
                             </tr>
 
