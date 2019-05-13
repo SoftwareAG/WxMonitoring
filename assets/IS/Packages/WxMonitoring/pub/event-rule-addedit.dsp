@@ -153,7 +153,7 @@
 		location.href = res;	
 	}
 	
-	function handleActionTypeClick(actionTypeRadio) {
+	function handleActionControls(jiraProjectPropertiesPipelineJSON, currentRuleJSON) {
 		var actionTypeValue = document.getElementById("selActionType").value;
 
 		//define controls related to action email
@@ -206,7 +206,7 @@
 			//display controls common to all action (except ignore action)
 			actionTriggerFrequencyRow.style.display ="";
 		} else if (actionTypeValue=="jira"){
-
+			createJiraProjectKeySelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON);
 			//hide controls related to action email
 			actionEmailSendEmailToRow.style.display ="none";			
 
@@ -240,6 +240,110 @@
 			//display controls common to all action (except ignore action)
 			actionTriggerFrequencyRow.style.display ="";
 		}
+	}
+
+	function createJiraProjectKeySelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON){
+		var jiraProjectPropertiesJSON = JSON.parse(jiraProjectPropertiesPipelineJSON);
+		var jiraProjectKeySelect = document.getElementById("actionJiraProjectKey");
+
+		//remove all options
+		for(var i = jiraProjectKeySelect.options.length - 1 ; i >= 0 ; i--)
+			{
+				jiraProjectKeySelect.remove(i);
+			}
+		
+		// add options relating to current project.
+		for(var i = jiraProjectPropertiesJSON.projects.length - 1 ; i >= 0 ; i--)
+			{
+				var o = document.createElement("option");
+				o.value = jiraProjectPropertiesJSON.projects[i].key;
+				o.text = jiraProjectPropertiesJSON.projects[i].name;
+				o.title = jiraProjectPropertiesJSON.projects[i].name;
+				jiraProjectKeySelect.appendChild(o);
+			}
+		
+		if(currentRuleJSON!=null){
+			var ruleJSON = JSON.parse(currentRuleJSON);
+			jiraProjectKeySelect.value = ruleJSON.action.properties.jiraProjectKey;
+		}
+		createJiraIssueSelectOptions(jiraProjectPropertiesPipelineJSON,currentRuleJSON);
+	}
+
+	function createJiraIssueSelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON){
+		var jiraProjectPropertiesJSON = JSON.parse(jiraProjectPropertiesPipelineJSON);
+		var jiraProjectKeySelect = document.getElementById("actionJiraProjectKey");
+		var jiraIssueSelect = document.getElementById("actionJiraIssueType");
+
+		//remove all options
+		for(var i = jiraIssueSelect.options.length - 1 ; i >= 0 ; i--)
+			{
+				jiraIssueSelect.remove(i);
+			}
+		
+
+		// add options relating to current project.
+		for(var i = jiraProjectPropertiesJSON.projects.length - 1 ; i >= 0 ; i--)
+			{
+				if(jiraProjectPropertiesJSON.projects[i].key==jiraProjectKeySelect.value){
+
+					for(var j = jiraProjectPropertiesJSON.projects[i].issuetypes.length - 1 ; j >= 0 ; j--)
+						{
+							var o = document.createElement("option");
+							o.value = jiraProjectPropertiesJSON.projects[i].issuetypes[j].id;
+							o.text = jiraProjectPropertiesJSON.projects[i].issuetypes[j].name;
+							o.title = jiraProjectPropertiesJSON.projects[i].issuetypes[j].description;
+							jiraIssueSelect.appendChild(o);
+							
+						}
+				}
+			}
+		
+		if(currentRuleJSON!=null){
+			var ruleJSON = JSON.parse(currentRuleJSON);
+			jiraIssueSelect.value = ruleJSON.action.properties.jiraIssueType;
+		}
+		createJiraIssuePrioritySelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON);
+	}
+
+	function createJiraIssuePrioritySelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON){
+		var jiraProjectPropertiesJSON = JSON.parse(jiraProjectPropertiesPipelineJSON);
+		var jiraProjectKeySelect = document.getElementById("actionJiraProjectKey");
+		var jiraIssueSelect = document.getElementById("actionJiraIssueType");
+		var jiraPrioritySelect = document.getElementById("actionJiraIssuePriority");
+
+		//remove all options
+		for(var i = jiraPrioritySelect.options.length - 1 ; i >= 0 ; i--)
+			{
+				jiraPrioritySelect.remove(i);
+			}
+
+		// add options relating to current project.
+		for(var i = jiraProjectPropertiesJSON.projects.length - 1 ; i >= 0 ; i--)
+			{
+				if(jiraProjectPropertiesJSON.projects[i].key==jiraProjectKeySelect.value){
+
+					for(var j = jiraProjectPropertiesJSON.projects[i].issuetypes.length - 1 ; j >= 0 ; j--)
+						{
+							if(jiraProjectPropertiesJSON.projects[i].issuetypes[j].id==jiraIssueSelect.value){
+								for(var k = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues.length - 1 ; k >= 0 ; k--)
+									{
+										var o = document.createElement("option");
+										o.value = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].id;
+										o.text = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].name;
+										o.title = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].name;
+										jiraPrioritySelect.appendChild(o);
+									}
+							}
+							
+						}
+				}
+			}
+
+			if(currentRuleJSON!=null){
+			var ruleJSON = JSON.parse(currentRuleJSON);
+			jiraPrioritySelect.value = ruleJSON.action.properties.jiraIssuePriority;
+		}
+
 	}
 
   </script>
@@ -377,17 +481,16 @@
                             <tr>
                                 <td class="subheading" >Perform Action</td>
                                 <td class="oddrow-l" >
-									<select id="selActionType" name="actionType" title="Action to perform" required onchange="handleActionTypeClick(this)">
+									<select id="selActionType" name="actionType" title="Action to perform" %ifvar operation equals('display')% disabled %else% required %endifvar% onchange="handleActionControls('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
 										%ifvar infoData%
 											%loop infoData/actionsConfiguration%
-												<option value="%value actionType encode(htmlattr)%" %ifvar ../rule/action/actionType vequals(actionType)%selected %endifvar% %ifvar ../operation equals('display')% disabled %else% required %endifvar%>%value actionDisplayName encode(htmlattr)%
+												<option value="%value actionType encode(htmlattr)%" %ifvar ../rule/action/actionType vequals(actionType)%selected %endifvar%>%value actionDisplayName encode(htmlattr)%
 												</option>
 											%endloop%
 										%endifvar%
 									</select> 
                                 </td>
                             </tr>
-							
 							<tr id="action_email_to_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('email')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Send email to</td>
                                 <td class="oddrow-l" >
@@ -401,28 +504,46 @@
 									<input type="text" placeholder="write assignee jira username" name="actionJiraAssignTo" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraAssigneeUsername%'>
                                 </td>
                             </tr>
-
 							<tr id="action_jira_projectKey_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
-                                <td class="subheading" >Jira project key</td>
-                                <td class="oddrow-l" >
-									<input type="text" placeholder="write jira Project key (if available) to create issue in" name="actionJiraProjectKey" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraProjectKey%'>
-                                </td>
+                                <td class="subheading" >Jira project key</td> 
+								%ifvar infoData/jiraInfo/jiraProjectProperties%  
+									<td class="oddrow-l">
+										<select id="actionJiraProjectKey" name="actionJiraProjectKey" title="select jira Project key to create issue in" %ifvar operation equals('display')% disabled %else% required %endifvar% onchange="createJiraIssueSelectOptions('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
+										</select> 
+									</td> 
+								%else%
+									<td class="oddrow-l" >
+										<input type="text" placeholder="write jira Project key (if available) to create issue in" id="actionJiraProjectKey" name="actionJiraProjectKey" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraProjectKey%'>
+									</td>
+								%endIfvar%    
                             </tr>
-
 							<tr id="action_jira_issueType_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
-                                <td class="subheading" >Jira issue type</td>
-                                <td class="oddrow-l" >
-									<input type="text" placeholder="write Jira issue type (default is 'bug')" name="actionJiraIssueType" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssueType%'>
+								<td class="subheading" >Jira issue type</td>
+							%ifvar infoData/jiraInfo/jiraProjectProperties% 
+								<td class="oddrow-l" >
+									<select id="actionJiraIssueType" name="actionJiraIssueType" title="select Jira issue type" %ifvar operation equals('display')% disabled %else% required %endifvar% onchange="createJiraIssuePrioritySelectOptions('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
+									</select> 
                                 </td>
+							%else%	
+								<td class="oddrow-l" >
+									<input type="text" placeholder="write Jira issue type (default is 'bug')"  id="actionJiraIssueType" name="actionJiraIssueType" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssueType%'>
+                                </td>
+							%endifvar%					 
                             </tr>
 
 							<tr id="action_jira_issuePriority_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('jira')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Jira issue priority</td>
-                                <td class="oddrow-l" >
-									<input type="text" placeholder="write Jira issue priority" name="actionJiraIssuePriority" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssuePriority%'>
-                                </td>
+								%ifvar infoData/jiraInfo/jiraProjectProperties% 
+									<td class="oddrow-l" >
+										<select id="actionJiraIssuePriority" name="actionJiraIssueType" title="select Jira issue priority" %ifvar operation equals('display')% disabled %else% required %endifvar%>
+										</select> 
+									</td>
+								%else%	
+									<td class="oddrow-l" >
+										<input type="text" placeholder="write Jira issue priority" id="actionJiraIssuePriority" name="actionJiraIssuePriority" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/action/properties/jiraIssuePriority%'>
+									</td>
+								%endifvar%
                             </tr>
-
 							<tr id="action_service_serviceName_row" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('service')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Service Name</td>
                                 <td class="oddrow-l" >
@@ -438,7 +559,9 @@
 }" id="inputParam" rows="2" cols="40" name="inputParam" title="If more than one parameter is required, write parameters as JSON and handle it accordingly in the invoked service" %ifvar operation equals('display')% disabled %endifvar%>%value rule/action/properties/customServiceInputParams%</textarea>
                                 </td>
                             </tr>
-							
+							<script>
+								handleActionControls('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%', '%value ruleJSON encode(javascript)%');
+							</script>
 							<tr id="action_triggerFrequency" %ifvar rule/action/actionType% %ifvar rule/action/actionType equals('none')%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading" >Action Trigger Frequency</td>
                                 <td class="oddrow-l" >
@@ -446,7 +569,6 @@
 									<input type="radio" name="triggerActionForEachMatchingEvent" value="false" %ifvar rule/triggerActionForEachMatchingEvent% %ifvar rule/triggerActionForEachMatchingEvent equals('false')% checked="checked"  %endifvar%  %else% checked="checked" %endifvar% %ifvar operation equals('display')% disabled %else% required %endifvar%> Trigger common action for all matching events
                                 </td>
                             </tr>
-							
 							<tr>
                                 <td class="subheading" >Enable Rule</td>
                                 <td class="oddrow-l" >
