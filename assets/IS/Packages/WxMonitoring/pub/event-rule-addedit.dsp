@@ -322,20 +322,18 @@
 			{
 				if(jiraProjectPropertiesJSON.projects[i].key==jiraProjectKeySelect.value){
 
-					for(var j = jiraProjectPropertiesJSON.projects[i].issuetypes.length - 1 ; j >= 0 ; j--)
-						{
-							if(jiraProjectPropertiesJSON.projects[i].issuetypes[j].id==jiraIssueSelect.value){
-								for(var k = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues.length - 1 ; k >= 0 ; k--)
-									{
-										var o = document.createElement("option");
-										o.value = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].id;
-										o.text = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].name;
-										o.title = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].name;
-										jiraPrioritySelect.appendChild(o);
-									}
-							}
-							
+					for(var j = jiraProjectPropertiesJSON.projects[i].issuetypes.length - 1 ; j >= 0 ; j--){
+						if(jiraProjectPropertiesJSON.projects[i].issuetypes[j].id==jiraIssueSelect.value){
+							for(var k = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues.length - 1 ; k >= 0 ; k--)
+								{
+									var o = document.createElement("option");
+									o.value = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].id;
+									o.text = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].name;
+									o.title = jiraProjectPropertiesJSON.projects[i].issuetypes[j].priority.allowedValues[k].name;
+									jiraPrioritySelect.appendChild(o);
+								}
 						}
+					}
 				}
 			}
 
@@ -508,7 +506,7 @@
                                 <td class="subheading" >Jira project key</td> 
 								%ifvar infoData/jiraInfo/jiraProjectProperties%  
 									<td class="oddrow-l">
-										<select id="actionJiraProjectKey" name="actionJiraProjectKey" title="select jira Project key to create issue in" %ifvar operation equals('display')% disabled %else% required %endifvar% onchange="createJiraIssueSelectOptions('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
+										<select id="actionJiraProjectKey" name="actionJiraProjectKey" title="select jira Project key to create issue in" %ifvar operation equals('display')% disabled %endifvar% onchange="createJiraIssueSelectOptions('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
 										</select> 
 									</td> 
 								%else%
@@ -521,7 +519,7 @@
 								<td class="subheading" >Jira issue type</td>
 							%ifvar infoData/jiraInfo/jiraProjectProperties% 
 								<td class="oddrow-l" >
-									<select id="actionJiraIssueType" name="actionJiraIssueType" title="select Jira issue type" %ifvar operation equals('display')% disabled %else% required %endifvar% onchange="createJiraIssuePrioritySelectOptions('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
+									<select id="actionJiraIssueType" name="actionJiraIssueType" title="select Jira issue type" %ifvar operation equals('display')% disabled %endifvar% onchange="createJiraIssuePrioritySelectOptions('%value infoData/jiraInfo/jiraProjectPropertiesJSON encode(javascript)%')">
 									</select> 
                                 </td>
 							%else%	
@@ -535,7 +533,7 @@
                                 <td class="subheading" >Jira issue priority</td>
 								%ifvar infoData/jiraInfo/jiraProjectProperties% 
 									<td class="oddrow-l" >
-										<select id="actionJiraIssuePriority" name="actionJiraIssueType" title="select Jira issue priority" %ifvar operation equals('display')% disabled %else% required %endifvar%>
+										<select id="actionJiraIssuePriority" name="actionJiraIssuePriority" title="select Jira issue priority" %ifvar operation equals('display')% disabled %endifvar%>
 										</select> 
 									</td>
 								%else%	
