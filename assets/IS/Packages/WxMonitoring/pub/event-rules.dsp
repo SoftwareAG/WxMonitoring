@@ -108,7 +108,7 @@
 
 		   //gets cells of current row
 			var oCells = oTable.rows.item(i).cells;
-			var cellVal = oCells.item(6).innerHTML; // 7th column is ruleID
+			var cellVal = oCells.item(0).innerHTML; // 1st column is ruleID
 			cellVal = trimStr(cellVal)+";";
 			ruleIDList +=cellVal;
 		   //gets amount of cells of current row
@@ -120,7 +120,7 @@
 		      /* var cellVal = oCells.item(j).innerHTML; */
 		   //}
 		}
-		
+
 		form.ruleIDPriorityList.value=ruleIDList;
 		form.operation.value = "display";
 		return true;
@@ -200,18 +200,20 @@
 						<td class="heading" colspan="10">Monitoring Rules</td>
 					</tr>
 					<tr>
-						
+						<td class="subheading">Rule ID</td>
 						<td class="subheading">Rule Pattern</td>
 						<td class="subheading">Use Regex</td>
 						<td class="subheading">Severity Threshold</td>
 						<td class="subheading">Action</td>
 						<td class="subheading">Enabled</td>
 						<td class="subheading">%ifvar operation equals('editPriority')%Priority%else%Delete Rule%endifvar%</td>
-						<td class="subheading" style="display:none;">Rule ID</td>
 					</tr>
 					%ifvar eventRules%
 						%loop eventRules%
 							<tr class="rowCounter">
+								<td nowrap class="evenrowdata">
+									%value id encode(html)% 
+								</td>
 								<td nowrap class="evenrowdata">
 									<a  href="javascript:document.htmlform_rule_view.submit();" onClick="return populateForm(document.htmlform_rule_view, '%value id encode(javascript)%' ,'','view', '%value ruleRank encode(javascript)%');">
 									   %value eventPattern encode(html)%
@@ -238,9 +240,6 @@
 										<img src="images/delete.gif" border="no">
 									</a> 
 								%endifvar%
-								</td>
-								<td nowrap class="evenrowdata" style="display:none;">
-									%value id encode(html)% 
 								</td>
 							</tr>
 						%endloop%
