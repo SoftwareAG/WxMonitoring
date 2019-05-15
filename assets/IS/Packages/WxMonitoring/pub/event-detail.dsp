@@ -48,7 +48,7 @@
 		var previousPageState =  getPageState(currentPageState.previousPageName);
 		cleanNavigationSequence();
 		if(previousPageState.currentPageName=="events-general.dsp"){
-			var url = "events-general.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&severity=" + previousPageState.severity + "&server=" + previousPageState.server + "&logFile=" + previousPageState.logFile + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
+			var url = "events-general.dsp?eventTimeRange="+previousPageState.eventTimeRange+"&fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&severity=" + previousPageState.severity + "&server=" + previousPageState.server + "&logFile=" + previousPageState.logFile + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
 		} else if(currentPageState.previousPageName == "events-specific.dsp"){
 			var url = "events-specific.dsp?fromDateValue=" + previousPageState.fromDateValue + "&fromTimeValue=" + previousPageState.fromTimeValue + "&toDateValue=" + previousPageState.toDateValue + "&toTimeValue=" + previousPageState.toTimeValue + "&severity=" + previousPageState.severity + "&server=" + previousPageState.server + "&logFile=" + previousPageState.logFile + "&compareSeverityExactly=" + previousPageState.compareSeverityExactly  + "&filterEventsWithNoAction=" + previousPageState.filterEventsWithNoAction + "&displayOrder=" + previousPageState.displayOrder + "&resultsPerPage=" + previousPageState.resultsPerPage + "&requestedPageNumber=" + previousPageState.requestedPageNumber;
 		
@@ -207,6 +207,7 @@
 												<td class="oddrow">Rule ID</td>
 												<td class="oddrow">Action Timestamp</td>
 												<td class="oddrow">Action</td>
+												<td class="oddrow">Action Properties</td>
 											</tr>
 											%ifvar event/actions%		
 											%loop event/actions%
@@ -214,6 +215,7 @@
 												<td>%value ruleID%</td>
 												<td >%value actionTimestamp%</td>
 												<td >%value actionDisplayName%</td>
+												<td >%ifvar actionType equals('email')% sent email to : %value properties/sendEmailTo% %else% %ifvar actionType equals('jira')% assigned jira to : %value properties/jiraAssigneeUsername% %else% %ifvar actionType equals('service')% called service : %value properties/customServiceToInvoke% %else% - %endifvar% %endifvar% %endifvar%</td>
 											</tr>
 												%endloop%
 											
