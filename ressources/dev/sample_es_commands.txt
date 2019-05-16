@@ -1,0 +1,137 @@
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET _cat/indices?v
+
+
+PUT wxmonitoring*/_settings
+    {
+    "index": {
+    "blocks": {
+    "read_only_allow_delete": "false"
+    }
+    }
+    }
+
+GET _cat/templates?v
+
+Get _template/wxmonitoring-events-mapping
+
+DELETE _template/wxmonitoring-event-rules-mapping
+
+DELETE wxmonitoring-event-rules
+
+GET /_security/api_key
+GET /_security/_authenticate
+
+POST _template/wxmonitoring-process-rules-mapping
+{
+  "index_patterns": ["wxmonitoring-process-rules*"],
+  "mappings": {
+    "doc": {
+      "properties": {
+        "created_on_utc": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+	"last_updated_on_utc": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "rule_rank": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
+
+GET wxmonitoring-events-2019.05.15/_doc/T2xfu2oB0K2NXmHFELd5
+
+POST /_license/start_trial
+
+POST wxmonitoring-actions-configuration/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+POST wxmonitoring-event-rules/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+POST _bulk
+{ "update" : {"_id" : "wbMLeGoBl8TrbNxUwU_2", "_type" : "_doc", "_index" : "wxmonitoring-event-rules"} }
+{"doc":{"rule_rank":"3","last_edited_on_utc":"2019-05-02 11:03:41"}}
+
+
+POST wxmonitoring-actions-configuration/_update/RKoEsWoBEtcXwF58BcVR
+{
+  "script": {
+    "source": "ctx._source.action.properties.jira_issue_type='10118'",
+    "lang": "painless"
+  }
+}
+
+
+POST wxmonitoring-actions-configuration/_update/3
+{
+  "script": {
+    "source": "ctx._source.remove('action_jira')",
+    "lang": "painless"
+  }
+}
+
+POST wxmonitoring-actions-configuration/_update/4
+{
+  "script": {
+    "source": "ctx._source.remove('action_email')",
+    "lang": "painless"
+  }
+}
+
+POST wxmonitoring-actions-configuration/_update/3
+{
+  "script": {
+    "source": "ctx._source.action_jira.protocol='https';ctx._source.action_jira.port='';ctx._source.action_jira.pass='UzZ3bTNJWCNKaVk3';ctx._source.action_jira.host='jira.bgetem.de';ctx._source.action_jira.user='local-jira-admin';",
+    "lang": "painless"
+  }
+}
+
+
+Get _template/wxmonitoring-events-mapping
+
+POST wxmonitoring-events-2*/_search
+{
+	"from": 0, 
+	"size": 100, 
+    "query": {
+		"bool": {
+			"must": [ 				{
+					"range": {
+						"event_timestamp_utc": {
+							"gte": "2019-05-01 22:00:00",
+							"lte": "2019-05-02 07:47:59"
+						}
+					}
+				}
+]
+		}
+	},
+  "sort" : [
+        { "event_timestamp_utc" : {"order" : "desc"}},
+    {
+      "offset": {
+        "order": "desc"
+      }
+    }
+    ]
+}

@@ -154,6 +154,7 @@
 	}
 	
 	function handleActionControls(jiraProjectPropertiesPipelineJSON, currentRuleJSON) {
+		
 		var actionTypeValue = document.getElementById("selActionType").value;
 
 		//define controls related to action email
@@ -206,7 +207,12 @@
 			//display controls common to all action (except ignore action)
 			actionTriggerFrequencyRow.style.display ="";
 		} else if (actionTypeValue=="jira"){
-			createJiraProjectKeySelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON);
+			
+			
+			if(jiraProjectPropertiesPipelineJSON){
+				createJiraProjectKeySelectOptions(jiraProjectPropertiesPipelineJSON, currentRuleJSON);
+			}
+			
 			//hide controls related to action email
 			actionEmailSendEmailToRow.style.display ="none";			
 

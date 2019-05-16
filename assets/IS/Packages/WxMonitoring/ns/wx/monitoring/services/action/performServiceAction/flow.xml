@@ -5,7 +5,7 @@
 
   <!-- nodes -->
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -229,7 +229,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">timestamp</value>
+        <value name="field_name">actionTimestamp</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
@@ -340,16 +340,16 @@
 </MAP>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:tracePipeline" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:tracePipeline" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 </INVOKE>
 
-<SEQUENCE NAME="service" TIMEOUT="" EXIT-ON="FAILURE" DISABLED="true">
+<SEQUENCE NAME="service" TIMEOUT="" EXIT-ON="FAILURE">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
 
-<MAP TIMEOUT="" MODE="STANDALONE" DISABLED="true">
+<MAP TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -808,14 +808,14 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/rule(1);2;0/action;2;0/properties;2;0/customServiceToInvoke;1;0" TO="/customServiceToInvoke;1;0" DISABLED="true">
+<MAPCOPY FROM="/rule(1);2;0/action;2;0/properties;2;0/customServiceToInvoke;1;0" TO="/customServiceToInvoke;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/rule(1);2;0/action;2;0/properties;2;0/customServiceInputParams;1;0" TO="/pipeline;2;0/customServiceInputParams;1;0" DISABLED="true">
+<MAPCOPY FROM="/rule(1);2;0/action;2;0/properties;2;0/customServiceInputParams;1;0" TO="/pipeline;2;0/customServiceInputParams;1;0">
 </MAPCOPY>
 </MAP>
 
-<INVOKE TIMEOUT="" SERVICE="pub.string:tokenize" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
+<INVOKE TIMEOUT="" SERVICE="pub.string:tokenize" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -1281,7 +1281,7 @@
 </MAP>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:invokeService" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:invokeService" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
