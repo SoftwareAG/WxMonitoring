@@ -4,8 +4,8 @@ setlocal
 
 rem **** Please edit these settings ****
 
-set SAG_HOME=C:\SoftwareAG
-set FILEBEAT_HOME=C:\SoftwareAG\filebeat-6.2.3
+set SAG_HOME=C:\SAG103
+set FILEBEAT_HOME=C:\work\local\filebeat-7.1.1-windows-x86_64
 set SERVER_ID=dev1
 set LOGSTASH_HOST=localhost
 set LOGSTASH_PORT=5044

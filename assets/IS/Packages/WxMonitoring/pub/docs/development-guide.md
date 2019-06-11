@@ -410,3 +410,8 @@ WxMonitoring uses IS core features and provides some supporting services
 * EHCache
 * Remote Server
 * DSP Pages
+
+## Documentation References
+
+* FileBeat: https://www.elastic.co/guide/en/beats/filebeat/current/index.html
+* Logstash: https://www.elastic.co/guide/en/logstash/current/index.html
