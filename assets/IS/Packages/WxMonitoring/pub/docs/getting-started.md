@@ -50,6 +50,14 @@ Install the Elastic Stack products on your local machine. (Skip this if already 
 ### Install WxMonitoring
 
 1. Download the latest release of WxMonitoring from https://github.com/SoftwareAG/WxMonitoring/tree/master/dist.
+1. Configuration of package WxMonitoring is based on IS _Global Variables_. On package load all global varibales will be created if unset. Changes will     immediatly take place, so you don't need to reload the package.
+
+    | Key | Value (default) | Description |
+    | --- | --------------- | ----------- |
+    | ES_BASE_URL | http://localhost:9200 | connection / URL to elastic search server |
+    | LOGSTASH_BASE_URL | http://localhost:5045 | connnection /URL to logstash http port. Only needed to import data from monitoring UI |
+    | ES_AUTH_USERNAME  | elastic | (optional: if ES authentication enabled) username to access elasticsearch |
+    | ES_AUTH_PASSWORD  | elastic | (optional: if ES authentication enabled) password for elasticsearch username |
 1. Install IS package WxMonitoring
     * copy WxMonitoring.zip to `%SAG_HOME%/IntegrationServer/instances/default/replicate/inbound`
     * open IS Administration http://localhost:5555/
@@ -64,10 +72,13 @@ Install the Elastic Stack products on your local machine. (Skip this if already 
 1. Open http://localhost:9200/_cat/indices?v
     * You should see indexes - `wxmonitoring-processes`, `wxmonitoring-events-original`, `wxmonitoring-events-xxxx.xx.xx`, `wxmonitoring-event-rules` - have been created
 1. Start Logstash
-    * edit `.\bin\setEnv.bat` and update correct paths for following variables
+    * edit `.\bin\logstash\startLogstash.cmd` and update correct paths for following variables
           `SAG_HOME`: path for software ag home folder (e.g. `c:\SoftwareAG`)
           `LOGSTASH_HOME`: path to logstash home folder (for e.g. `C:\local\logstash-7.1.1`)
-    * Run `.\bin\startLogstash.cmd`
+          `ELASTIC_SEARCH_ADDRESS`: base url for elastic search (for e.g. `localhost:9200`)
+          (optional: if ES authentication enabled) `ELASTIC_SEARCH_LOGSTASH_USER`: logstash will access elastic search as this user (for e.g. `WxMonitoring_logstash_user`)
+          (optional: if ES authentication enabled) `ELASTIC_SEARCH_LOGSTASH_PASSWORD`: password for logstash user (for e.g. `C:\local\logstash-7.1.1`)
+    * Run `.\bin\logstash\startLogstash.cmd` or Install logstash as a service
     * View Logstash logs
         * open file `%LOGSTASH_HOME%/logs/logstash-plain`
         * verify following log has been recorded: 
