@@ -10,7 +10,8 @@ set SERVER_ID=dev1
 set LOGSTASH_HOST=localhost
 set LOGSTASH_PORT=5044
 set SERVER_LOGFILE_PATH=C:\LOG_COLLECTION\sample_server_logs.log
-set WRAPPER_LOGFILE_PATH=%SAG_HOME%\profiles\*\*\wrapper.log
+set WRAPPER_LOGFILE_PATH=%SAG_HOME%\profiless\*\*\wrapper.log
+set CUSTOM_LOGFILE_PATH=C:\LOG_COLLECTION\custom.log
 
 rem **** END ****
 
