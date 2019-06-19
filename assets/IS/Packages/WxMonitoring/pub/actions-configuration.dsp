@@ -12,24 +12,108 @@
 
     function validateAndSubmit(thisform,oper)
     {
-        populate(thisform,oper);
-        thisform.submit();       
+        var actionType = document.getElementById("selActionType").value;
+        var isFormValid = validate(thisform,oper,actionType);
+
+        if(isFormValid){
+            var isFormPopulated = populate(thisform,oper,actionType);    
+        }
+
+        if(isFormPopulated){
+            thisform.submit(); 
+        }     
     }
 
-    function populate(thisform,oper){
-        var actionTypeValue = document.getElementById("selActionType").value;
+    function validate(thisform,oper,actionType){
+        if(actionType=='email'){
+            //validate fields related to email action
+            var mailhostPortElement = document.getElementById("mailHostPort");
+            var mailhostPortValue = mailhostPortElement.value;
+
+            if(mailhostPortValue){
+                if(isNumeric(mailhostPortValue)){
+                    if(mailhostPortValue<1 || mailhostPortValue>65535){
+                        alert("'SMTP host port' should be between 1 and 65535.")
+                        mailhostPortElement.focus();
+                        return false;
+                    }
+                }else {
+                    alert("'SMTP host port' should be numeric.")
+                    mailhostPortElement.focus();
+                    return false;
+                }
+            }
+            var fromEmailElement = document.getElementById("emailFromEmail");
+            var fromEmailValue = trimStr(fromEmailElement.value);
+            if(!validateEmail(fromEmailValue)){
+                alert("Invalid email: '" + fromEmailValue + "' in 'From email' field.");
+                fromEmailElement.focus();
+                return false;
+            }
+
+            if(oper=='testConfiguration'){
+                var testEmailToEmailElement = document.getElementById("emailTestEmailToEmail");
+                var testEmailToEmailValue = trimStr(testEmailToEmailElement.value);
+                if(!validateEmail(testEmailToEmailValue)){
+                    alert("Invalid email: '" + testEmailToEmailValue + "' in 'Send test email to' field.");
+                    testEmailToEmailElement.focus();
+                    return false;
+                }
+            }
+        } else if(actionType=='jira'){
+            //validate fields related to jira action
+            var jiraHostPortElement = document.getElementById("jiraHostPort").value;
+            var jiraHostPortValue = jiraHostPortElement.value;
+
+            if(jiraHostPortValue){
+                if(isNumeric(jiraHostPortValue)){
+                    if(jiraHostPortValue<1 || jiraHostPortValue>65535){
+                        alert("'Port' should be between 1 and 65535.")
+                        jiraHostPortElement.focus();
+                        return false;
+                    }
+                }else {
+                    alert("'Port' should be numeric.")
+                    jiraHostPortElement.focus();
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+    }
+
+    function isNumeric(num){
+        return !isNaN(num)
+    }
+
+    function validateEmail(email) {
+		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(String(email).toLowerCase());
+	}
+	
+	
+    function trimStr(str) {
+      return str.replace(/^\s+|\s+$/g, '');
+    }
+
+    function populate(thisform,oper, actionType){
         
-        if(oper=="update"){
+        if(oper=="update" || oper=="testConfiguration"){
              
             //create JSON for action properties
 			var actionConfigurationJSONObject = {};
-			if(actionTypeValue=="email"){
+			if(actionType=="email"){
 				actionConfigurationJSONObject.mailHost = document.getElementById("mailHost").value;
                 actionConfigurationJSONObject.mailHostPort = document.getElementById("mailHostPort").value;
                 actionConfigurationJSONObject.user = document.getElementById("emailUser").value;
                 actionConfigurationJSONObject.pass = document.getElementById("emailPass").value;
                 actionConfigurationJSONObject.fromEmail = document.getElementById("emailFromEmail").value;
-			}else if(actionTypeValue=="jira"){
+                if(oper=="testConfiguration"){
+                    actionConfigurationJSONObject.testEmailToEmail = document.getElementById("emailTestEmailToEmail").value;
+                }
+			}else if(actionType=="jira"){
 				actionConfigurationJSONObject.protocol = document.getElementById("selProtocol").value;
                 actionConfigurationJSONObject.host = document.getElementById("jiraHost").value;
                 actionConfigurationJSONObject.port = document.getElementById("jiraHostPort").value;
@@ -42,11 +126,11 @@
 			thisform.configuration.value = json;
         }
             thisform.operation.value = oper;
-            thisform.actionType.value = actionTypeValue;
+            thisform.actionType.value = actionType;
             return true;
     }
 
-    function handleActionTypeClick(actionTypeRadio) {
+    function handleActionTypeClick(pageOperation) {
 		var actionTypeValue = document.getElementById("selActionType").value;
 		//define controls related to action email
 		var actionEmailMailhostRow = document.getElementById("action_email_mailHost_row");
@@ -54,6 +138,8 @@
         var actionEmailUserRow = document.getElementById("action_email_user_row");
         var actionEmailPassRow = document.getElementById("action_email_pass_row");
         var actionEmailFromEmailRow = document.getElementById("action_email_fromEmail_row");
+        var actionEmailTestEmailToRow = document.getElementById("action_email_testEmailTo_row");
+        
 
 		//define controls related to action jira
 		var actionJiraProtocolRow = document.getElementById("action_jira_protocol_row");
@@ -61,43 +147,22 @@
         var actionJiraHostPortRow = document.getElementById("action_jira_hostPort_row");
         var actionJiraUserRow = document.getElementById("action_jira_user_row");
         var actionJiraPassRow = document.getElementById("action_jira_pass_row");
-
+        
         //define controls common to action email and jira
         var submitButtonRow = document.getElementById("submit_button_row");
-
+        var submitButtonRowButton = document.getElementById("submit_button_row_button");
+        
         //define controls common to action email and jira
         var noConfigurationMessageRow = document.getElementById("noConfigurationMessage_row");
         
-
-		if(actionTypeValue=="ignore"){
-
-			//hide controls related to action email
-			actionEmailMailhostRow.style.display ="none";			
-            actionEmailMailhostPortRow.style.display ="none";
-            actionEmailUserRow.style.display ="none";
-            actionEmailPassRow.style.display ="none";
-            actionEmailFromEmailRow.style.display ="none";
-
-			//hide controls related to action jira
-			actionJiraProtocolRow.style.display ="none";			
-            actionJiraHostRow.style.display ="none";
-            actionJiraHostPortRow.style.display ="none";
-            actionJiraUserRow.style.display ="none";
-            actionJiraPassRow.style.display ="none";
-
-            //hide controls common to action email and jira
-			submitButtonRow.style.display ="none";
-
-            //show controls common to action email and jira
-			noConfigurationMessageRow.style.display ="";
-
-		} else if(actionTypeValue=="email"){
+        if(actionTypeValue=="email"){
 			//show controls related to action email
 			actionEmailMailhostRow.style.display ="";			
             actionEmailMailhostPortRow.style.display ="";
             actionEmailUserRow.style.display ="";
             actionEmailPassRow.style.display ="";
             actionEmailFromEmailRow.style.display ="";
+            actionEmailTestEmailToRow.style.display ="";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="none";			
@@ -106,6 +171,10 @@
             actionJiraUserRow.style.display ="none";
             actionJiraPassRow.style.display ="none";
 
+            //change display name of submit button
+            if(pageOperation=="display"){
+                submitButtonRowButton.value="Send Test Email";
+            }
             //show controls common to action email and jira
 			submitButtonRow.style.display ="";	
 
@@ -120,6 +189,7 @@
             actionEmailUserRow.style.display ="none";
             actionEmailPassRow.style.display ="none";
             actionEmailFromEmailRow.style.display ="none";
+            actionEmailTestEmailToRow.style.display ="none";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="";			
@@ -128,19 +198,25 @@
             actionJiraUserRow.style.display ="";
             actionJiraPassRow.style.display ="";
 
-            //hide controls common to action email and jira
+            //change display name of submit button
+            if(pageOperation=="display"){
+                submitButtonRowButton.value="Test Connection";
+            }
+
+            //show controls common to action email and jira 
 			submitButtonRow.style.display ="";		
 
             //hide controls common to action email and jira
 			noConfigurationMessageRow.style.display ="none";	
 
-		}else if(actionTypeValue=="service"){
+		} else {
 			//hide controls related to action email
 			actionEmailMailhostRow.style.display ="none";			
             actionEmailMailhostPortRow.style.display ="none";
             actionEmailUserRow.style.display ="none";
             actionEmailPassRow.style.display ="none";
             actionEmailFromEmailRow.style.display ="none";
+            actionEmailTestEmailToRow.style.display ="none";
 
 			//hide controls related to action jira
 			actionJiraProtocolRow.style.display ="none";			
@@ -166,6 +242,24 @@
 		
 		%ifvar operation equals('update')%
 			%invoke wx.monitoring.services.gui.administration:updateActionConfiguration%
+			%endinvoke%	
+			%ifvar message%
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td class="message" colspan="2">%value message encode(html)%
+			%ifvar errorMessage%
+						: <i>%value errorMessage encode(html)%</i>
+			%endif%
+			%ifvar status%
+						: <i>%value status encode(html)%</i>
+			%endif%
+					</td>
+				</tr>
+			%endif%		
+        %endifvar%
+        
+        %ifvar operation equals('testConfiguration')%
+			%invoke wx.monitoring.services.gui.administration:verifyActionConfiguration%
 			%endinvoke%	
 			%ifvar message%
 				<tr><td colspan="2">&nbsp;</td></tr>
@@ -206,7 +300,7 @@
 					<tr>
                         <td class="subheading">Action</td>    
                         <td class="oddrow-l">
-                            <select id="selActionType" name="actionType" title="Select action type for which you want to change configuration" required onchange="handleActionTypeClick()" >
+                            <select id="selActionType" name="actionType" title="Select action type for which you want to change configuration" required onchange="handleActionTypeClick('%value operation%')" >
                                 %ifvar actionsConfiguration%
                                     %loop actionsConfiguration%
                                         <option value="%value actionType encode(htmlattr)%" %ifvar actionType vequals(../actionType)% selected %endifvar% >%value actionDisplayName encode(htmlattr)%
@@ -253,6 +347,12 @@
                                     <input type="text" placeholder="Send email from this email id" id="emailFromEmail" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value actionEmail/fromEmail%'>
                                 </td>
                             </tr>
+                            <tr id="action_email_testEmailTo_row" style="display:none;">
+                                <td class="subheading">Send test email to</td>
+                                <td class="oddrow-l" >
+                                    <input type="text" placeholder="Send test email to this email id" id="emailTestEmailToEmail" size="42" %ifvar operation equals('display')% %else% disabled %endifvar%>
+                                </td>
+                            </tr>
                         %endifvar%
                         %ifvar actionType equals('jira')%
                             <tr id="action_jira_protocol_row" style="display:none;">
@@ -295,10 +395,10 @@
         </tr>
         <tr id="submit_button_row" style="display:none;">
             <td class="action" colspan=3>
-                <input type="submit" name="submit" value="Save Changes" %ifvar operation equals('display')% disabled %else% onclick="return validateAndSubmit(document.htmlform_actionConfiguration,'update');" %endifvar%>
+                <input id="submit_button_row_button" type="submit" name="submit" value="Save Changes" %ifvar operation equals('display')% onclick="return validateAndSubmit(document.htmlform_actionConfiguration,'testConfiguration');" %else% onclick="return validateAndSubmit(document.htmlform_actionConfiguration,'update');" %endifvar%>
             </td>
         </tr>
-        <script> handleActionTypeClick();</script>
+        <script> handleActionTypeClick('%value operation%');</script>
     </table>
 	<form name="htmlform_actionConfiguration" action="actions-configuration.dsp" method="POST">
         <input type="hidden" name="operation">
