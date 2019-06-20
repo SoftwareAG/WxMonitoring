@@ -1,257 +1,548 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-body{
-    width:1060px;
-    margin:50px auto;
-}
-path {  stroke: #fff; }
-path:hover {  opacity:0.9; }
-rect:hover {  fill:blue; }
-.axis {  font: 10px sans-serif; }
-.legend tr{    border-bottom:1px solid grey; }
-.legend tr:first-child{    border-top:1px solid grey; }
+<html>
+	<head>
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<meta http-equiv="Expires" content="-1">
+		<title>Dashboard</title>
+		<link rel="stylesheet" type="text/css" href="webMethods.css">
+		<script src="webMethods.js.txt"></script>
+		<script src="common-navigation.js"></script>
+        <script src="dashboard.js"></script>
+        <script src="d3_v3_min.js"></script>
+        <script src="bar_pie_graph.js"></script>
+	</head>
+	
+	<body>
+		<table width="99%">
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
+%invoke wx.monitoring.services.gui.dashboard:getDashboard%
+			%ifvar message%
+			<tr><td colspan="2">&nbsp;</td></tr>
+			<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
+			%endif%
+			%ifvar onerror%
+			<tr><td colspan="2">&nbsp;</td></tr>
+			<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
+			%endif%
+%endinvoke%
 
-.x.axis path {  display: none; }
-.legend{
-    margin-bottom:76px;
-    display:inline-block;
-    border-collapse: collapse;
-    border-spacing: 0px;
-}
-.legend td{
-    padding:4px 5px;
-    vertical-align:bottom;
-}
-.legendFreq, .legendPerc{
-    align:right;
-    width:50px;
-}
+			<script>
+					var stateJSONObject = createPageState('%value /processTimeRange encode(javascript)%','%value /eventTimeRange encode(javascript)%','%value /processBusinessDomain encode(javascript)%','%value /eventServer encode(javascript)%');
+					
+					var startNewNavigationSequence = true;
+					savePageState("dashboard.dsp", stateJSONObject, startNewNavigationSequence);				
+			</script>
+			<form name="htmlform_process_common">
+				<input type="hidden" id="allTotal" name="allTotal" value="0">
+				<input type="hidden" id="allActive" name="allActive" value="0">
+				<input type="hidden" id="allCompleted" name="allCompleted" value="0">
+				<input type="hidden" id="allException" name="allException" value="0">
+				<input type="hidden" id="allFailed" name="allFailed" value="0">
+				<input type="hidden" id="allCancelled" name="allCancelled" value="0">		
+			</form>
+			<form name="htmlform_processes_specific" action="processes-specific.dsp" method="POST">
+				<input type="hidden" name="fromDateValue">
+				<input type="hidden" name="toDateValue">
+				<input type="hidden" name="fromTimeValue">
+				<input type="hidden" name="toTimeValue">
+				<input type="hidden" name="server">
+				<input type="hidden" name="processStatus">
+				<input type="hidden" name="businessDomain">
+			</form>
+			<form name="htmlform_events_specific" action="events-specific.dsp" method="POST">
+				<input type="hidden" name="fromDateValue">
+				<input type="hidden" name="toDateValue">
+				<input type="hidden" name="fromTimeValue">
+				<input type="hidden" name="toTimeValue">
+				<input type="hidden" name="server" value="%value eventServer encode(htmlattr)%">
+				<input type="hidden" name="severity">
+				<input type="hidden" name="logFile">
+				<input type="hidden" name="filterEventsWithNoAction">
+				<input type="hidden" name="compareSeverityExactly" value="true">
+			</form>
+			<form name="htmlform_dashboard_Stats_general" action="dashboard.dsp" method="Post">
+				<input type="hidden" name="processTimeRange">
+				<input type="hidden" name="eventTimeRange">
+				<input type="hidden" name="processBusinessDomain">
+				<input type="hidden" name="eventServer">
+				<input type="hidden" name="refreshSource">
+			</form>
+			<tr>
+				<td class="breadcrumb" colspan="2">
+					<table width="100%">
+						<tr>
+							<td>
+								<div align="left">
+									Dashboard
+								</div>
+							</td>
+							<td>
+								<div align="right">
+									<img src="images/%value serverLight/es encode(html)%-ball.gif">Elastic Search</img>
+									<img src="images/%value serverLight/logstash encode(html)%-ball.gif">Logstash</img>
+								</div>
+							</td>
+						</tr>
+					</table>
+		
+				</td>
+			</tr>
 
-</style>
-<body>
-<div id='dashboard'>
-</div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
-function dashboard(id, fData){
-    var barColor = 'steelblue';
-    function segColor(c){ return {low:"#807dba", mid:"#e08214",high:"#41ab5d"}[c]; }
-    
-    // compute total for each state.
-    fData.forEach(function(d){d.total=d.freq.low+d.freq.mid+d.freq.high;});
-    
-    // function to handle histogram.
-    function histoGram(fD){
-        var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
-        hGDim.w = 500 - hGDim.l - hGDim.r, 
-        hGDim.h = 300 - hGDim.t - hGDim.b;
-            
-        //create svg for histogram.
-        var hGsvg = d3.select(id).append("svg")
-            .attr("width", hGDim.w + hGDim.l + hGDim.r)
-            .attr("height", hGDim.h + hGDim.t + hGDim.b).append("g")
-            .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
+%invoke wx.monitoring.services.gui.common:getAllData%
+%endinvoke%
+			
+%scope dashboard%
+	%rename ../businessDomains businessDomains -copy%
+	%rename ../serverNames serverNames -copy%
+	%rename /processTimeRange processTimeRange -copy%
+	%rename /eventTimeRange eventTimeRange -copy%
+	%rename /processBusinessDomain processBusinessDomain -copy%
+	%rename /eventServer eventServer -copy%
+			<tr>
+				<td>
+					<table class="customTable" width="100%" border="0">
+						<tr>
+							<td valign="top">
+								<table>
+									<tr>
+										<td valign="top">
+											<table width="50%" border="1" class="tableView">
+												
+												<tr>
+													<td nowrap colspan=3 class="heading">
+														Processes Dashboard Controls
+													</td>
+												</tr>
+												<tr>
+													<td nowrap class="oddrow"> 
+														Time Range
+														<select id="selProcessTimeRange" name="processTimeRange">
+															<option value="today" %ifvar processTimeRange% %ifvar processTimeRange equals('today')%selected %endifvar% %else% selected %endifvar%>Today</option>
+															<option value="lastSevenDays" %ifvar processTimeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
+															<option value="lastFifteenDays" %ifvar processTimeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
+															<option value="lastThirtyDays" %ifvar processTimeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
+															<option value="ALL" %ifvar processTimeRange equals('ALL')%selected %endifvar%>All</option>
+														</select>
+													</td>
+													<td nowrap class="oddrow"> 
+														Business Domain
+														<select id="selBusinessDomain" name="processBusinessDomain">	
+%loop businessDomains%
+															<option value="%value key encode(htmlattr)%" %ifvar /businessDomain vequals(key)%selected %endifvar%>%value name encode(html)%</option>
+%endloop%
+															<option value="ALL" %ifvar /businessDomain% %ifvar /businessDomain equals('ALL')% selected %endifvar% %else% selected %endifvar%>All</option>
+														</select>
+													</td>
+													<td nowrap class="oddrow">
+														<input type="submit" VALUE="Refresh" onClick="return manageProcessAndEventRefresh(htmlform_dashboard_Stats_general, 'displayGeneral','%value eventTimeRange encode(htmlattr)%','%value eventServer encode(htmlattr)%', 'process');">
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr><td><img border="0" src="images/blank.gif" width="10" height="20"></td></tr>
 
-        // create function for x-axis mapping.
-        var x = d3.scale.ordinal().rangeRoundBands([0, hGDim.w], 0.1)
-                .domain(fD.map(function(d) { return d[0]; }));
+	%scope processes%
+									<tr>
+										<td valign="top"> 
+											<input type="hidden" id="processFromTime" name="fromTime" value="%value fromTime encode(htmlattr)%">
+											<input type="hidden" id="processToTime" name="toTime" value="%value toTime encode(htmlattr)%">
+											<table width="100%" border="1" class="tableView">
+												<tr>
+													<td colspan="6" class="heading">Processes Summary- By Business Domain | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6" class="keyrowdata"> 
+                                                            <div id='dashboard'></div>
+                                                            <script>
+                                                                    var freqData=[
+                                                                    {Business_Domain:'bd1',freq:{completed:4786, active:1319, failed:249, cancelled:159}}
+                                                                    ,{Business_Domain:'bd2',freq:{completed:1101, active:412, failed:674, cancelled:209}}
+                                                                    ,{Business_Domain:'bd3',freq:{completed:932, active:2149, failed:418, cancelled:312}}
+                                                                    ,{Business_Domain:'bd4',freq:{completed:832, active:1152, failed:1862, cancelled:400}}
+                                                                    ];
+                                                                    
+                                                                    dashboard('#dashboard',freqData);
+                                                            </script>
+                                                    </td>
+                                                </tr>
+					
 
-        // Add x-axis to the histogram svg.
-        hGsvg.append("g").attr("class", "x axis")
-            .attr("transform", "translate(0," + hGDim.h + ")")
-            .call(d3.svg.axis().scale(x).orient("bottom"));
+											</table>
+										</td>
+									</tr>
+									<tr><td><img border="0" src="images/blank.gif" width="10" height="20"></td></tr>		
+									<tr>
+										<td valign="top">
+											<table width="100%" border="1" class="tableView">
+												<tr>
+													<td colspan="6" class="heading">Processes Summary- By Server | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
+												</tr>
+												<tr class="subheading2">
+													<td nowrap class="datacenter">Server ID</td>
+													<td nowrap class="datacenter">Total</td>
+													<td nowrap class="datacenter">Active</td>
+													<td nowrap class="datacenter">Completed</td>
+													<td nowrap class="datacenter">Failed</td>
+													<td nowrap class="datacenter">Cancelled</td>
+												</tr>
+		%ifvar processStatsServerStatus%
+			%loop processStatsServerStatus%
+												<tr>
+													<td class="keyrowdata"> %value key% </td>
+													<td class="evenrowdata">
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', '%value key encode(javascript)%','ALL');">
+															%value count encode(html)%
+														</a> 
+													</td>
+													<td nowrap class="evenrowdata">
+								
+				%ifvar startedBucket/count -notempty%
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', '%value key encode(javascript)%','started');">
+															%value startedBucket/count encode(html)%
+														</a>
+				%else%
+														-
+				%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+								
+				%ifvar completedBucket/count -notempty%
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', '%value key encode(javascript)%','completed');">
+															%value completedBucket/count encode(html)%
+														</a>
+				%else%
+														-
+				%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+				%ifvar exceptionBucket/count -notempty%
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', '%value key encode(javascript)%','failed');">
+															<script> writeFailedProcessesCount('%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%'); </script>
+														</a>
+								
+				%else%
+					%ifvar failedBucket/count -notempty%
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', '%value key encode(javascript)%','failed');">
+															<script> writeFailedProcessesCount('%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%'); </script>
+														</a>
+					%else%
+														-
+					%endifvar%
+				%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+				%ifvar cancelledBucket/count -notempty%
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', '%value key encode(javascript)%','cancelled');">
+															%value cancelledBucket/count encode(html)%
+														</a>
+				%else%
+														-
+				%endifvar%
+													</td>
+						<script>
+							AddProcesses('%value count encode(javascript)%', '%value startedBucket/count encode(javascript)%', '%value completedBucket/count encode(javascript)%', '%value exceptionBucket/count encode(javascript)%', '%value failedBucket/count encode(javascript)%', '%value cancelledBucket/count encode(javascript)%' );
+						</script>
+												</tr>
+			%endloop%
+												<tr>
+													<td nowrap class="keyrowdata-b">ALL</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', 'ALL','ALL');">
+															<script> writeAttributeValue("allTotal"); </script>
+														</a> 
+													</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', 'ALL','started');">
+															<script> writeAttributeValue("allActive"); </script>
+														</a>
+													</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', 'ALL','completed');">
+															<script> writeAttributeValue("allCompleted"); </script>
+														</a>
+													</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', 'ALL','failed');">
+															<script> writeAttributeValue("allFailed"); </script>
+														</a>
+													</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_processes_specific.submit();" onClick="return populateProcessForm(document.htmlform_processes_specific,'%value /processBusinessDomain encode(javascript)%', 'ALL','cancelled');">
+															<script> writeAttributeValue("allCancelled"); </script>
+														</a>
+													</td>
+												</tr>
+		%else%
+												<tr class="field" align="left">
+													<TD colspan=7 class="oddrowdata-l">---------------------------------- no results ----------------------------------</TD>
+												</tr>
+		%endifvar%
+											</table>										
+										</td>
+									</tr>
+	%endscope%								
+								</table>
+							</td>
+							<td valign="top">
+								<table>
+									<tr>
+										<td valign="top">
+											<table width="50%" border="1" class="tableView">	
+												<tr>
+													<td nowrap colspan=3 class="heading">
+														Events Dashboard Controls
+													</td>
+												</tr>
+												<tr>
+														<input type="hidden" name="processTimeRange" value="%ifvar processTimeRange -notempty% %value processTimeRange encode(htmlattr)% %else% today %endifvar%">
+														<input type="hidden" name="processBusinessDomain" value="%ifvar processBusinessDomain -notempty% %value processBusinessDomain encode(htmlattr)% %else% ALL %endifvar%">
+														<td nowrap class="oddrow"> 
+															Time Range
+															<select id="selEventTimeRange" name="eventTimeRange">
+																<option value="today" %ifvar eventTimeRange% %ifvar eventTimeRange equals('today')%selected %endifvar% %else% selected %endifvar%>Today</option>
+																<option value="lastSevenDays" %ifvar eventTimeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
+																<option value="lastFifteenDays" %ifvar eventTimeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
+																<option value="lastThirtyDays" %ifvar eventTimeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
+																<option value="ALL" %ifvar eventTimeRange equals('ALL')%selected %endifvar%>ALL</option>
+															</select>
+														</td>
+														<td nowrap class="oddrow"> 
+															Server
+															<select id="selServer" name="eventServer" >	
+%loop serverNames%
+	%rename key currentServerName -copy%
+	%rename ../eventServer eventServer -copy%
+																<option value="%value currentServerName encode(htmlattr)%" %ifvar eventServer vequals(currentServerName)% selected %endifvar%>%value currentServerName encode(html)%</option>
+																
+		<script> 
+			//var eventServer = '%value eventServer encode(htmlattr)%'
+			//var currentServerName = '%value currentServerName encode(htmlattr)%'
+			//if(eventServer == currentServerName){
+				//document.getElementById('selServer').value=eventServer;
+			//}
+			
+		</script>
 
-        // Create function for y-axis map.
-        var y = d3.scale.linear().range([hGDim.h, 0])
-                .domain([0, d3.max(fD, function(d) { return d[1]; })]);
-
-        // Create bars for histogram to contain rectangles and freq labels.
-        var bars = hGsvg.selectAll(".bar").data(fD).enter()
-                .append("g").attr("class", "bar");
-        
-        //create the rectangles.
-        bars.append("rect")
-            .attr("x", function(d) { return x(d[0]); })
-            .attr("y", function(d) { return y(d[1]); })
-            .attr("width", x.rangeBand())
-            .attr("height", function(d) { return hGDim.h - y(d[1]); })
-            .attr('fill',barColor)
-            .on("mouseover",mouseover)// mouseover is defined below.
-            .on("mouseout",mouseout);// mouseout is defined below.
-            
-        //Create the frequency labels above the rectangles.
-        bars.append("text").text(function(d){ return d3.format(",")(d[1])})
-            .attr("x", function(d) { return x(d[0])+x.rangeBand()/2; })
-            .attr("y", function(d) { return y(d[1])-5; })
-            .attr("text-anchor", "middle");
-        
-        function mouseover(d){  // utility function to be called on mouseover.
-            // filter for selected state.
-            var st = fData.filter(function(s){ return s.State == d[0];})[0],
-                nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
-               
-            // call update functions of pie-chart and legend.    
-            pC.update(nD);
-            leg.update(nD);
-        }
-        
-        function mouseout(d){    // utility function to be called on mouseout.
-            // reset the pie-chart and legend.    
-            pC.update(tF);
-            leg.update(tF);
-        }
-        
-        // create function to update the bars. This will be used by pie-chart.
-        hG.update = function(nD, color){
-            // update the domain of the y-axis map to reflect change in frequencies.
-            y.domain([0, d3.max(nD, function(d) { return d[1]; })]);
-            
-            // Attach the new data to the bars.
-            var bars = hGsvg.selectAll(".bar").data(nD);
-            
-            // transition the height and color of rectangles.
-            bars.select("rect").transition().duration(500)
-                .attr("y", function(d) {return y(d[1]); })
-                .attr("height", function(d) { return hGDim.h - y(d[1]); })
-                .attr("fill", color);
-
-            // transition the frequency labels location and change value.
-            bars.select("text").transition().duration(500)
-                .text(function(d){ return d3.format(",")(d[1])})
-                .attr("y", function(d) {return y(d[1])-5; });            
-        }        
-        return hG;
-    }
-    
-    // function to handle pieChart.
-    function pieChart(pD){
-        var pC ={},    pieDim ={w:250, h: 250};
-        pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
-                
-        // create svg for pie chart.
-        var piesvg = d3.select(id).append("svg")
-            .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
-            .attr("transform", "translate("+pieDim.w/2+","+pieDim.h/2+")");
-        
-        // create function to draw the arcs of the pie slices.
-        var arc = d3.svg.arc().outerRadius(pieDim.r - 10).innerRadius(0);
-
-        // create a function to compute the pie slice angles.
-        var pie = d3.layout.pie().sort(null).value(function(d) { return d.freq; });
-
-        // Draw the pie slices.
-        piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
-            .each(function(d) { this._current = d; })
-            .style("fill", function(d) { return segColor(d.data.type); })
-            .on("mouseover",mouseover).on("mouseout",mouseout);
-
-        // create function to update pie-chart. This will be used by histogram.
-        pC.update = function(nD){
-            piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
-                .attrTween("d", arcTween);
-        }        
-        // Utility function to be called on mouseover a pie slice.
-        function mouseover(d){
-            // call the update function of histogram with new data.
-            hG.update(fData.map(function(v){ 
-                return [v.State,v.freq[d.data.type]];}),segColor(d.data.type));
-        }
-        //Utility function to be called on mouseout a pie slice.
-        function mouseout(d){
-            // call the update function of histogram with all data.
-            hG.update(fData.map(function(v){
-                return [v.State,v.total];}), barColor);
-        }
-        // Animating the pie-slice requiring a custom function which specifies
-        // how the intermediate paths should be drawn.
-        function arcTween(a) {
-            var i = d3.interpolate(this._current, a);
-            this._current = i(0);
-            return function(t) { return arc(i(t));    };
-        }    
-        return pC;
-    }
-    
-    // function to handle legend.
-    function legend(lD){
-        var leg = {};
-            
-        // create table for legend.
-        var legend = d3.select(id).append("table").attr('class','legend');
-        
-        // create one row per segment.
-        var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
-            
-        // create the first column for each segment.
-        tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
-            .attr("width", '16').attr("height", '16')
-			.attr("fill",function(d){ return segColor(d.type); });
-            
-        // create the second column for each segment.
-        tr.append("td").text(function(d){ return d.type;});
-
-        // create the third column for each segment.
-        tr.append("td").attr("class",'legendFreq')
-            .text(function(d){ return d3.format(",")(d.freq);});
-
-        // create the fourth column for each segment.
-        tr.append("td").attr("class",'legendPerc')
-            .text(function(d){ return getLegend(d,lD);});
-
-        // Utility function to be used to update the legend.
-        leg.update = function(nD){
-            // update the data attached to the row elements.
-            var l = legend.select("tbody").selectAll("tr").data(nD);
-
-            // update the frequencies.
-            l.select(".legendFreq").text(function(d){ return d3.format(",")(d.freq);});
-
-            // update the percentage column.
-            l.select(".legendPerc").text(function(d){ return getLegend(d,nD);});        
-        }
-        
-        function getLegend(d,aD){ // Utility function to compute percentage.
-            return d3.format("%")(d.freq/d3.sum(aD.map(function(v){ return v.freq; })));
-        }
-
-        return leg;
-    }
-    
-    // calculate total frequency by segment for all state.
-    var tF = ['low','mid','high'].map(function(d){ 
-        return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
-    });    
-    
-    // calculate total frequency by state for all segment.
-    var sF = fData.map(function(d){return [d.State,d.total];});
-
-    var hG = histoGram(sF), // create the histogram.
-        pC = pieChart(tF), // create the pie-chart.
-        leg= legend(tF);  // create the legend.
-}
-</script>
-
-<script>
-var freqData=[
-{State:'AL',freq:{low:4786, mid:1319, high:249}}
-,{State:'AZ',freq:{low:1101, mid:412, high:674}}
-,{State:'CT',freq:{low:932, mid:2149, high:418}}
-,{State:'DE',freq:{low:832, mid:1152, high:1862}}
-,{State:'FL',freq:{low:4481, mid:3304, high:948}}
-,{State:'GA',freq:{low:1619, mid:167, high:1063}}
-,{State:'IA',freq:{low:1819, mid:247, high:1203}}
-,{State:'IL',freq:{low:4498, mid:3852, high:942}}
-,{State:'IN',freq:{low:797, mid:1849, high:1534}}
-,{State:'KS',freq:{low:162, mid:379, high:471}}
-];
-
-dashboard('#dashboard',freqData);
-</script>
+%endloop%
+																<option value="ALL" %ifvar eventServer% %ifvar eventServer equals('ALL')%selected %endifvar% %else% selected %endifvar%>All</option>
+															</select>
+														</td>
+														<td nowrap class="oddrow">
+															<input type="submit" VALUE="Refresh" onClick="return manageProcessAndEventRefresh(htmlform_dashboard_Stats_general, 'displayGeneral','%value processTimeRange encode(htmlattr)%','%value processBusinessDomain encode(htmlattr)%', 'event');">
+														</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr><td><img border="0" src="images/blank.gif" width="10" height="20"></td></tr>
+	%scope events%
+									<tr>
+										<td valign="top">
+											<input type="hidden" id="eventFromTime" name="fromTime" value="%value fromTime encode(htmlattr)%">
+											<input type="hidden" id="eventToTime" name="toTime" value="%value toTime encode(htmlattr)%">
+											<table width="100%" class="tableView">
+												<tr>
+													<td nowrap colspan="6" class="heading">Events Summary- By Server | From : %value fromTime encode(html)% | To : %value toTime encode(html)%</td>
+												</tr>
+												<tr class="subheading2">
+													<td nowrap class="datacenter">Server ID</td>
+													<td nowrap class="datacenter">Total</td>
+													<td nowrap class="datacenter">Fatal</td>
+													<td nowrap class="datacenter">Error</td>
+													<td nowrap class="datacenter">Warning</td>
+													<td nowrap class="datacenter">Info</td>
+												</tr>
+		%ifvar eventStatsServerSev%
+			%loop eventStatsServerSev%
+												 <tr> 
+													<td nowrap class="keyrowdata">%value key%</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ALL', 'false');">
+															%value count encode(html)%
+														</a> &nbsp;(
+														%ifvar countNoActionTaken -notempty%
+															%ifvar countNoActionTaken equals('0')%
+															0
+															%else%
+																<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ALL', 'true');">
+																	%value countNoActionTaken encode(html)%
+																</a> 
+															%endifvar%
+														%else% 0 %endifvar% )
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar fatalBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'FATAL', 'false');">
+															%value fatalBucket/count encode(html)%
+														</a> &nbsp;(
+														%ifvar fatalBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'FATAL', 'true');">
+															%value fatalBucket/noActionTaken/count encode(html)%
+														</a> %else% 0 %endifvar% )
+		%else%
+															-
+		%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar errorBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ERROR', 'false');">
+															%value errorBucket/count encode(html)%
+														</a>&nbsp;(
+														%ifvar errorBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ERROR', 'true');">
+															%value errorBucket/noActionTaken/count encode(html)%
+														</a> %else% 0 %endifvar% ) 
+		%else%
+															-
+		%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar warningBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'WARNING', 'false');">
+															%value warningBucket/count encode(html)%
+														</a>&nbsp;(
+														%ifvar warningBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'WARNING', 'true');">
+															%value warningBucket/noActionTaken/count encode(html)%
+														</a> %else% 0 %endifvar% )
+		%else%
+															-
+		%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar infoBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'INFO', 'false');">
+															%value infoBucket/count encode(html)%
+														</a>&nbsp;(
+														%ifvar infoBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'INFO', 'true');">
+															%value infoBucket/noActionTaken/count encode(html)%
+														</a> %else% 0 %endifvar% )
+		%else%
+															-
+		%endifvar%
+													</td>
+												</tr>
+			%endloop%
+		%else%
+												<tr class="field" align="left">
+													<TD colspan=6 class="oddrowdata-l">---------------------------------- no results ----------------------------------</TD>
+												</tr>
+		%endifvar%				
+											</table>
+										</td>
+									</tr>
+									<tr><td><img border="0" src="images/blank.gif" width="10" height="20"></td></tr>
+									<tr>
+										<td valign="top">
+											<table width="100%" class="tableView">
+												<tr>
+													<td colspan="6" class="heading">Events Summary- By Log File | From : %value fromTime encode(html)% | To : %value toTime encode(html)%</td>
+												</tr>
+												<tr class="subheading2">
+													<td nowrap class="datacenter">Log File</td>
+													<td nowrap class="datacenter">Total</td>
+													<td nowrap class="datacenter">Fatal</td>
+													<td nowrap class="datacenter">Error</td>
+													<td nowrap class="datacenter">Warning</td>
+													<td nowrap class="datacenter">Info</td>
+												</tr>
+		%ifvar eventStatslogFileSev%
+			%loop eventStatslogFileSev%
+												<tr> 
+													<td nowrap class="keyrowdata">%value key%</td>
+													<td nowrap class="evenrowdata">
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'ALL', 'false');">
+															%value count encode(html)%
+														</a> &nbsp;(
+														%ifvar countNoActionTaken -notempty%
+															%ifvar countNoActionTaken equals('0')%
+															0
+															%else%
+																<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'ALL', 'true');">
+																	%value countNoActionTaken encode(html)%
+																</a>
+															%endifvar%
+														%else% 0 %endifvar%
+														)
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar fatalBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'FATAL', 'false');">
+															%value fatalBucket/count encode(html)%
+														</a> &nbsp;(
+														%ifvar fatalBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'FATAL', 'true');">
+															%value fatalBucket/noActionTaken/count encode(html)%
+														</a>
+														%else% 0 %endifvar%
+														)
+		%else%
+															-
+		%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar errorBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'ERROR', 'false');">
+															%value errorBucket/count encode(html)%
+														</a> &nbsp;(
+														%ifvar errorBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'ERROR', 'true');">
+															%value errorBucket/noActionTaken/count encode(html)%
+														</a>
+														%else% 0 %endifvar%
+														)
+		%else%
+															-
+		%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar warningBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'WARNING', 'false');">
+															%value warningBucket/count encode(html)%
+														</a>  &nbsp;(
+														%ifvar warningBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'WARNING', 'true');">
+															%value warningBucket/noActionTaken/count encode(html)%
+														</a>%else% 0 %endifvar% )
+		%else%
+															-
+		%endifvar%
+													</td>
+													<td nowrap class="evenrowdata">
+		%ifvar infoBucket/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'INFO', 'false');">
+															%value infoBucket/count encode(html)%
+														</a> &nbsp;(
+														%ifvar infoBucket/noActionTaken/count -notempty%
+														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'logFile', '%value key encode(javascript)%', 'INFO', 'true');">
+															%value infoBucket/noActionTaken/count encode(html)%
+														</a>%else% 0 %endifvar% )
+		%else%
+															-
+		%endifvar%
+													</td>
+												</tr>
+			%endloop%
+		%else%
+												<tr class="field" align="left">
+													<TD colspan=6 class="oddrowdata-l">---------------------------------- no results ----------------------------------</TD>
+												</tr>
+		%endifvar%				
+											</table>
+										</td>
+									</tr>
+	%endscope%
+									<tr><td><img border="0" src="images/blank.gif" width="10" height="20"></td></tr>
+%endscope%
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+%endscope%
+		</table>
+	</body>
+</html>
