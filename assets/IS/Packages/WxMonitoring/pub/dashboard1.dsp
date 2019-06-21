@@ -15,7 +15,7 @@
 	<body>
 		<table width="99%">
 
-%invoke wx.monitoring.services.gui.dashboard:getDashboard%
+%invoke wx.monitoring.services.gui.dashboard:getDashboard1%
 			%ifvar message%
 			<tr><td colspan="2">&nbsp;</td></tr>
 			<tr><td class="message" colspan="2">%value message encode(html)%</td></tr>
@@ -25,12 +25,11 @@
 			<tr><td class="message" colspan=2>%value errorMessage encode(html)%</td></tr>
 			%endif%
 %endinvoke%
-
 			<script>
 					var stateJSONObject = createPageState('%value /processTimeRange encode(javascript)%','%value /eventTimeRange encode(javascript)%','%value /processBusinessDomain encode(javascript)%','%value /eventServer encode(javascript)%');
 					
 					var startNewNavigationSequence = true;
-					savePageState("dashboard.dsp", stateJSONObject, startNewNavigationSequence);				
+					savePageState("dashboard1.dsp", stateJSONObject, startNewNavigationSequence);				
 			</script>
 			<form name="htmlform_process_common">
 				<input type="hidden" id="allTotal" name="allTotal" value="0">
@@ -60,7 +59,7 @@
 				<input type="hidden" name="filterEventsWithNoAction">
 				<input type="hidden" name="compareSeverityExactly" value="true">
 			</form>
-			<form name="htmlform_dashboard_Stats_general" action="dashboard.dsp" method="Post">
+			<form name="htmlform_dashboard_Stats_general" action="dashboard1.dsp" method="Post">
 				<input type="hidden" name="processTimeRange">
 				<input type="hidden" name="eventTimeRange">
 				<input type="hidden" name="processBusinessDomain">
@@ -153,21 +152,15 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="6" class="keyrowdata"> 
-                                                            <div id='dashboard'></div>
+                                                            <div id='process_business_domain'></div>
                                                             <script>
-                                                                    var freqData=[
-                                                                    {Business_Domain:'bd1',freq:{completed:4786, active:1319, failed:249, cancelled:159}}
-                                                                    ,{Business_Domain:'bd2',freq:{completed:1101, active:412, failed:674, cancelled:209}}
-                                                                    ,{Business_Domain:'bd3',freq:{completed:932, active:2149, failed:418, cancelled:312}}
-                                                                    ,{Business_Domain:'bd4',freq:{completed:832, active:1152, failed:1862, cancelled:400}}
-                                                                    ];
-                                                                    
-                                                                    dashboard('#dashboard',freqData);
-                                                            </script>
+																var freqDataString = '%value businessDomainFreqData encode(javascript)%' ;
+																var freqData = JSON.parse(freqDataString);
+																//createGraph('process_business_domain',freqData);
+																createGraph("#process_business_domain", freqData,"process")
+															</script>
                                                     </td>
                                                 </tr>
-					
-
 											</table>
 										</td>
 									</tr>
@@ -345,91 +338,17 @@
 												<tr>
 													<td nowrap colspan="6" class="heading">Events Summary- By Server | From : %value fromTime encode(html)% | To : %value toTime encode(html)%</td>
 												</tr>
-												<tr class="subheading2">
-													<td nowrap class="datacenter">Server ID</td>
-													<td nowrap class="datacenter">Total</td>
-													<td nowrap class="datacenter">Fatal</td>
-													<td nowrap class="datacenter">Error</td>
-													<td nowrap class="datacenter">Warning</td>
-													<td nowrap class="datacenter">Info</td>
-												</tr>
-		%ifvar eventStatsServerSev%
-			%loop eventStatsServerSev%
-												 <tr> 
-													<td nowrap class="keyrowdata">%value key%</td>
-													<td nowrap class="evenrowdata">
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ALL', 'false');">
-															%value count encode(html)%
-														</a> &nbsp;(
-														%ifvar countNoActionTaken -notempty%
-															%ifvar countNoActionTaken equals('0')%
-															0
-															%else%
-																<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ALL', 'true');">
-																	%value countNoActionTaken encode(html)%
-																</a> 
-															%endifvar%
-														%else% 0 %endifvar% )
-													</td>
-													<td nowrap class="evenrowdata">
-		%ifvar fatalBucket/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'FATAL', 'false');">
-															%value fatalBucket/count encode(html)%
-														</a> &nbsp;(
-														%ifvar fatalBucket/noActionTaken/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'FATAL', 'true');">
-															%value fatalBucket/noActionTaken/count encode(html)%
-														</a> %else% 0 %endifvar% )
-		%else%
-															-
-		%endifvar%
-													</td>
-													<td nowrap class="evenrowdata">
-		%ifvar errorBucket/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ERROR', 'false');">
-															%value errorBucket/count encode(html)%
-														</a>&nbsp;(
-														%ifvar errorBucket/noActionTaken/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'ERROR', 'true');">
-															%value errorBucket/noActionTaken/count encode(html)%
-														</a> %else% 0 %endifvar% ) 
-		%else%
-															-
-		%endifvar%
-													</td>
-													<td nowrap class="evenrowdata">
-		%ifvar warningBucket/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'WARNING', 'false');">
-															%value warningBucket/count encode(html)%
-														</a>&nbsp;(
-														%ifvar warningBucket/noActionTaken/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'WARNING', 'true');">
-															%value warningBucket/noActionTaken/count encode(html)%
-														</a> %else% 0 %endifvar% )
-		%else%
-															-
-		%endifvar%
-													</td>
-													<td nowrap class="evenrowdata">
-		%ifvar infoBucket/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'INFO', 'false');">
-															%value infoBucket/count encode(html)%
-														</a>&nbsp;(
-														%ifvar infoBucket/noActionTaken/count -notempty%
-														<a href="javascript:document.htmlform_events_specific.submit();" onClick="return populateEventForm(document.htmlform_events_specific, 'server', '%value key encode(javascript)%', 'INFO', 'true');">
-															%value infoBucket/noActionTaken/count encode(html)%
-														</a> %else% 0 %endifvar% )
-		%else%
-															-
-		%endifvar%
-													</td>
-												</tr>
-			%endloop%
-		%else%
-												<tr class="field" align="left">
-													<TD colspan=6 class="oddrowdata-l">---------------------------------- no results ----------------------------------</TD>
-												</tr>
-		%endifvar%				
+												<tr>
+													<td colspan="6" class="keyrowdata"> 
+																<div id='event_server'></div>
+																<script>
+																	var freqDataString = '%value serverFreqData encode(javascript)%' ;
+																	var freqDataa = JSON.parse(freqDataString);
+
+																	createGraph("#event_server", freqDataa,"event")
+																</script>
+														</td>
+													</tr>
 											</table>
 										</td>
 									</tr>

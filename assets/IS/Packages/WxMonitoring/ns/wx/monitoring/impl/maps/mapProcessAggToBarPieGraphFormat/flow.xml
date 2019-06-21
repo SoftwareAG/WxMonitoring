@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FLOW VERSION="3.0" CLEANUP="true">
+
+  <!-- nodes -->
+
+<MAP TIMEOUT="" MODE="STANDALONE">
+  <COMMENT></COMMENT>
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processAggViewList</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processBarPieGraphData</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessBarPieGraph</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processAggViewList</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/processAggViewList;4;0;wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView/key;1;0" TO="/processBarPieGraphData;4;0;wx.monitoring.docs.view:ProcessBarPieGraph/criteria;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/processAggViewList;4;0;wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView/startedBucket;2;0/count;1;0" TO="/processBarPieGraphData;4;0;wx.monitoring.docs.view:ProcessBarPieGraph/freq;2;0/active;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/processAggViewList;4;0;wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView/completedBucket;2;0/count;1;0" TO="/processBarPieGraphData;4;0;wx.monitoring.docs.view:ProcessBarPieGraph/freq;2;0/completed;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/processAggViewList;4;0;wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView/failedAndExceptionBucket;2;0/count;1;0" TO="/processBarPieGraphData;4;0;wx.monitoring.docs.view:ProcessBarPieGraph/freq;2;0/failed;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/processAggViewList;4;0;wx.monitoring.docs.view:ProcessLevelTwoAggWithStatusView/cancelledBucket;2;0/count;1;0" TO="/processBarPieGraphData;4;0;wx.monitoring.docs.view:ProcessBarPieGraph/freq;2;0/cancelled;1;0">
+</MAPCOPY>
+</MAP>
+</FLOW>

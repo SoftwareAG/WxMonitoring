@@ -1,11 +1,58 @@
-function dashboard(id, fData){
+function segColorr(c){ 
+    var color;
+        switch(c) {
+            case info:
+            case completed:
+                color="#41ab5d";
+                break;
+            case warning:
+            case active:
+                color="#e08214";
+                break;
+            case error:
+            case failed:
+                color="#d00000";
+                break;
+            case fatal:
+            case cancelled:
+                color="#807dba";
+                break;
+            default:
+                color="#807dba";
+                // code block
+        }
+    return color;
+}
+function segColor(c) {
+	return {
+		info: "#41ab5d",
+		completed: "#41ab5d",
+		warning: "#e08214",
+		active: "#e08214",
+		error: "#d00000",
+		failed: "#d00000",
+		fatal: "#807dba",
+		cancelled: "#807dba"
+	}
+	[c];
+}    
+
+function total(d,entity){
+        if(entity=="process"){
+            d.total=d.freq.completed+d.freq.active+d.freq.failed+d.freq.cancelled;
+        } else {
+            d.total=d.freq.fatal+d.freq.error+d.freq.warning+d.freq.info;
+        }
+        return d;
+}
+function createGraph(id, fData,entity){
     var barColor = 'steelblue';
-    function segColor(c){ return {completed:"#41ab5d", active:"#e08214",failed:"#d00000",cancelled:"#807dba"}[c]; }
+
+    // compute total for each Criteria.
+    fData.forEach(function(d){
+        total(d,entity);
+    });
     
-    // compute total for each Business_Domain.
-    fData.forEach(function(d){d.total=d.freq.completed+d.freq.active+d.freq.failed+d.freq.cancelled;});
-    
-    // function to handle histogram.
     function histoGram(fD){
         var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
         hGDim.w = 500 - hGDim.l - hGDim.r, 
@@ -51,8 +98,8 @@ function dashboard(id, fData){
             .attr("text-anchor", "middle");
         
         function mouseover(d){  // utility function to be called on mouseover.
-            // filter for selected Business_Domain.
-            var st = fData.filter(function(s){ return s.Business_Domain == d[0];})[0],
+            // filter for selected Criteria.
+            var st = fData.filter(function(s){ return s.Criteria == d[0];})[0],
                 nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
                
             // call update functions of pie-chart and legend.    
@@ -119,13 +166,13 @@ function dashboard(id, fData){
         function mouseover(d){
             // call the update function of histogram with new data.
             hG.update(fData.map(function(v){ 
-                return [v.Business_Domain,v.freq[d.data.type]];}),segColor(d.data.type));
+                return [v.Criteria,v.freq[d.data.type]];}),segColor(d.data.type));
         }
         //Utility function to be called on mouseout a pie slice.
         function mouseout(d){
             // call the update function of histogram with all data.
             hG.update(fData.map(function(v){
-                return [v.Business_Domain,v.total];}), barColor);
+                return [v.Criteria,v.total];}), barColor);
         }
         // Animating the pie-slice requiring a custom function which specifies
         // how the intermediate paths should be drawn.
@@ -182,13 +229,20 @@ function dashboard(id, fData){
         return leg;
     }
     
-    // calculate total frequency by segment for all Business_Domain.
-    var tF = ['completed','active','failed','cancelled'].map(function(d){ 
-        return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
-    });    
+    if(entity=="process"){
+        var tF = ['completed','active','failed','cancelled'].map(function(d){ 
+            return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
+        }); 
+    }else{
+        var tF = ['info','warning','error','fatal'].map(function(d){ 
+            return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
+        });
+    }
+    // calculate total frequency by segment for all Criteria.
+       
     
-    // calculate total frequency by Business_Domain for all segment.
-    var sF = fData.map(function(d){return [d.Business_Domain,d.total];});
+    // calculate total frequency by Criteria for all segment.
+    var sF = fData.map(function(d){return [d.Criteria,d.total];});
 
     var hG = histoGram(sF), // create the histogram.
         pC = pieChart(tF), // create the pie-chart.
