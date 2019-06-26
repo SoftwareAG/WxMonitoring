@@ -8,7 +8,7 @@
 		<script src="webMethods.js.txt"></script>
 		<script SRC="common-navigation.js"></script>
 		<script language="JavaScript">
-    <!--add jscript here-->
+    //<!--add jscript here-->
 			
 		function populateForm(form, operation, searchID, processStatusValue){
 				

@@ -3834,6 +3834,7 @@
 	}
 	function ou(n, t) {
 		function e(e) {
+			//alert(e+u[((i.get(e) || ("range" === t.t ? i.set(e, n.push(e)) : NaN)) - 1) % u.length]);
 			return u[((i.get(e) || ("range" === t.t ? i.set(e, n.push(e)) : NaN)) - 1) % u.length]
 		}
 		function r(t, e) {
@@ -8799,6 +8800,7 @@
 	},
 	ao.svg.axis = function () {
 		function n(n) {
+			//alert(n[0]);
 			n.each(function () {
 				var n,
 				c = ao.select(this),
@@ -8826,6 +8828,7 @@
 				z = v.select("text"),
 				L = y.select("text"),
 				q = "top" === r || "left" === r ? -1 : 1;
+			
 				if ("bottom" === r || "top" === r ? (n = no, w = "x", k = "y", S = "x2", N = "y2", C.attr("dy", 0 > q ? "0em" : ".71em").style("text-anchor", "middle"), _.attr("d", "M" + x[0] + "," + q * u + "V0H" + x[1] + "V" + q * u)) : (n = to, w = "y", k = "x", S = "y2", N = "x2", C.attr("dy", ".32em").style("text-anchor", 0 > q ? "end" : "start"), _.attr("d", "M" + q * u + "," + x[0] + "H0V" + x[1] + "H" + q * u)), E.attr(N, q * i), z.attr(k, q * M), A.attr(S, 0).attr(N, q * i), L.attr(w, 0).attr(k, q * M), s.rangeBand) {
 					var T = s,
 					R = T.rangeBand() / 2;

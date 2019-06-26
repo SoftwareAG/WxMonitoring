@@ -1,28 +1,3 @@
-function segColorr(c){ 
-    var color;
-        switch(c) {
-            case info:
-            case completed:
-                color="#41ab5d";
-                break;
-            case warning:
-            case active:
-                color="#e08214";
-                break;
-            case error:
-            case failed:
-                color="#d00000";
-                break;
-            case fatal:
-            case cancelled:
-                color="#807dba";
-                break;
-            default:
-                color="#807dba";
-                // code block
-        }
-    return color;
-}
 function segColor(c) {
 	return {
 		info: "#41ab5d",
@@ -48,31 +23,40 @@ function total(d,entity){
 function createGraph(id, fData,entity){
     var barColor = 'steelblue';
 
-    // compute total for each Criteria.
+    // compute total for each criteria.
     fData.forEach(function(d){
         total(d,entity);
     });
     
     function histoGram(fD){
         var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
-        hGDim.w = 500 - hGDim.l - hGDim.r, 
+        hGDim.w = 350 - hGDim.l - hGDim.r, 
         hGDim.h = 300 - hGDim.t - hGDim.b;
             
         //create svg for histogram.
-        var hGsvg = d3.select(id).append("svg")
+        // var hGsvg = d3.select(id).append("svg")
+        //     .attr("width", hGDim.w + hGDim.l + hGDim.r)
+        //     .attr("height", 300).append("g")
+        //     .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
+
+            var hGsvg = d3.select(id).append("svg")
             .attr("width", hGDim.w + hGDim.l + hGDim.r)
             .attr("height", hGDim.h + hGDim.t + hGDim.b).append("g")
             .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
-
         // create function for x-axis mapping.
+        
         var x = d3.scale.ordinal().rangeRoundBands([0, hGDim.w], 0.1)
-                .domain(fD.map(function(d) { return d[0]; }));
+                .domain(fD.map(function(d) {return d[0]; }));
 
+               // alert(x);
+                   
         // Add x-axis to the histogram svg.
         hGsvg.append("g").attr("class", "x axis")
             .attr("transform", "translate(0," + hGDim.h + ")")
             .call(d3.svg.axis().scale(x).orient("bottom"));
+            
 
+           // alert(d3.svg.axis().scale(x).orient("bottom"));
         // Create function for y-axis map.
         var y = d3.scale.linear().range([hGDim.h, 0])
                 .domain([0, d3.max(fD, function(d) { return d[1]; })]);
@@ -98,8 +82,8 @@ function createGraph(id, fData,entity){
             .attr("text-anchor", "middle");
         
         function mouseover(d){  // utility function to be called on mouseover.
-            // filter for selected Criteria.
-            var st = fData.filter(function(s){ return s.Criteria == d[0];})[0],
+            // filter for selected criteria.
+            var st = fData.filter(function(s){ return s.criteria == d[0];})[0],
                 nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
                
             // call update functions of pie-chart and legend.    
@@ -166,13 +150,13 @@ function createGraph(id, fData,entity){
         function mouseover(d){
             // call the update function of histogram with new data.
             hG.update(fData.map(function(v){ 
-                return [v.Criteria,v.freq[d.data.type]];}),segColor(d.data.type));
+                return [v.criteria,v.freq[d.data.type]];}),segColor(d.data.type));
         }
         //Utility function to be called on mouseout a pie slice.
         function mouseout(d){
             // call the update function of histogram with all data.
             hG.update(fData.map(function(v){
-                return [v.Criteria,v.total];}), barColor);
+                return [v.criteria,v.total];}), barColor);
         }
         // Animating the pie-slice requiring a custom function which specifies
         // how the intermediate paths should be drawn.
@@ -238,11 +222,11 @@ function createGraph(id, fData,entity){
             return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
         });
     }
-    // calculate total frequency by segment for all Criteria.
+    // calculate total frequency by segment for all criteria.
        
     
-    // calculate total frequency by Criteria for all segment.
-    var sF = fData.map(function(d){return [d.Criteria,d.total];});
+    // calculate total frequency by criteria for all segment.
+    var sF = fData.map(function(d){return [d.criteria,d.total];});
 
     var hG = histoGram(sF), // create the histogram.
         pC = pieChart(tF), // create the pie-chart.
