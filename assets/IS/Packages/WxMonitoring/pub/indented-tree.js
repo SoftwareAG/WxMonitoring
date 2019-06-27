@@ -1,15 +1,16 @@
-var margin = {top: 30, right: 20, bottom: 30, left: 20},
-    width = 360,
+var indentedTreeMargin = {top: 30, right: 20, bottom: 30, left: 20},
+    indentedTreeWidth = 500,
+    //var indentedTreeWidth = document.getElementById(id.substring(1)).offsetWidth
     barHeight = 20,
-    barWidth = (width - margin.left - margin.right) * 0.8;
+    barWidth = (indentedTreeWidth - indentedTreeMargin.left - indentedTreeMargin.right) * 0.8;
 
 // var barWidth = 350,
 //     barHeight = 20,
 
 var i = 0,
     duration = 400,
-    root,
-    svg;
+    indentedTreeRoot,
+    indentedTreeSvg;
 
 var diagonal = d3version4.linkHorizontal()
     .x(function(d) { return d.y; })
@@ -17,10 +18,10 @@ var diagonal = d3version4.linkHorizontal()
 
 function createTree(id,treeData){
   
-    svg = d3version4.select(id).append("svg")
-        .attr("width", width) // + margin.left + margin.right)
+    indentedTreeSvg = d3version4.select(id).append("svg")
+        .attr("width", indentedTreeWidth) // + indentedTreeMargin.left + indentedTreeMargin.right)
     .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + indentedTreeMargin.left + "," + indentedTreeMargin.top + ")");
         
     //
     
@@ -28,23 +29,23 @@ function createTree(id,treeData){
     //var treeDataJSON = JSON.parse(treeDataString);
     // d3version4.json(a, function(error, WxMonitoring) {
     //   if (error) throw error;
-    //   root = d3version4.hierarchy(WxMonitoring);
-    //   root.x0 = 0;
-    //   root.y0 = 0;
-    //   update(root);
+    //   indentedTreeRoot = d3version4.hierarchy(WxMonitoring);
+    //   indentedTreeRoot.x0 = 0;
+    //   indentedTreeRoot.y0 = 0;
+    //   update(indentedTreeRoot);
     // });
-    root = d3version4.hierarchy(treeData);
-    root.x0 = 0;
-    root.y0 = 0;
-    update(root);
+    indentedTreeRoot = d3version4.hierarchy(treeData);
+    indentedTreeRoot.x0 = 0;
+    indentedTreeRoot.y0 = 0;
+    update(indentedTreeRoot);
 }
 
 function update(source) {
   
   // Compute the flattened node list.
-  var nodes = root.descendants();
+  var nodes = indentedTreeRoot.descendants();
   
-  var height = Math.max(500, nodes.length * barHeight + margin.top + margin.bottom);
+  var height = Math.max(500, nodes.length * barHeight + indentedTreeMargin.top + indentedTreeMargin.bottom);
   
   d3version4.select("svg").transition()
       .duration(duration)
@@ -56,13 +57,13 @@ function update(source) {
       
   // Compute the "layout". TODO https://github.com/d3version4/d3version4-hierarchy/issues/67
   var index = -1;
-  root.eachBefore(function(n) {
+  indentedTreeRoot.eachBefore(function(n) {
     n.x = ++index * barHeight;
     n.y = n.depth * 20;
   });
  
   // Update the nodes…
-  var node = svg.selectAll(".node")
+  var node = indentedTreeSvg.selectAll(".node")
     .data(nodes, function(d) { return d.id || (d.id = ++i); });
     
   var nodeEnter = node.enter().append("g")
@@ -104,8 +105,8 @@ function update(source) {
       .remove();
 
   // Update the links…
-  var link = svg.selectAll(".link")
-    .data(root.links(), function(d) { return d.target.id; });
+  var link = indentedTreeSvg.selectAll(".link")
+    .data(indentedTreeRoot.links(), function(d) { return d.target.id; });
 
   // Enter any new links at the parent's previous position.
   link.enter().insert("path", "g")
@@ -133,7 +134,7 @@ function update(source) {
       .remove();
 
   // Stash the old positions for transition.
-  root.each(function(d) {
+  indentedTreeRoot.each(function(d) {
     d.x0 = d.x;
     d.y0 = d.y;
   });

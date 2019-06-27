@@ -1,26 +1,23 @@
-function createTree(id, data)
-{
-    
+function createNodalTree(id, data)
+{   
+  
     var dx = 10;
-    var width = 400;
+    var width = 500;
+    var height = 400;
     var dy= width / 6;
+        
+    var diagonal = d3version4.linkHorizontal().x(d => d.y).y(d => d.x);
     
-    var diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x);
-    
-    var tree = d3.tree().nodeSize([dx, dy]);
+    var tree = d3version4.tree().nodeSize([dx, dy]);
     var margin = {top: 10, right: 120, bottom: 10, left: 40};
 
-//     var svg = d3.select(id).append("svg")
-// .attr("width", width) // + margin.left + margin.right)
-// .append("g")
-// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// var svg = d3version4.select(id).append("svg").attr("width", width).attr("height", height);
+    var svg = d3version4.select(id)
+              .append("svg").attr("viewBox", [-margin.left, -margin.top, width, height])
+              .style("font", "12px sans-serif")
+              .style("user-select", "none");
 
-// var svg = d3.select(id).append("svg")
-// .attr("viewBox", [-margin.left, -margin.top, width, dx])
-// .style("font", "10px sans-serif")
-// .style("user-select", "none");
-
-  const root = d3.hierarchy(data);
+  const root = d3version4.hierarchy(data);
   
   root.x0 = dy / 2;
   root.y0 = 0;
@@ -29,17 +26,8 @@ function createTree(id, data)
     d._children = d.children;
     if (d.depth && d.data.name.length !== 7) d.children = null;
   });
-//   var svg = d3.select(id).append("svg")
-//   .attr("width", width) // + margin.left + margin.right)
-
-  
-
-  const svg = d3.create("svg")
-      .attr("viewBox", [-margin.left, -margin.top, width, dx])
-      .style("font", "10px sans-serif")
-      .style("user-select", "none");
-
-  const gLink = svg.append("g")
+ 
+   const gLink = svg.append("g")
       .attr("fill", "none")
       .attr("stroke", "#555")
       .attr("stroke-opacity", 0.4)
@@ -50,7 +38,7 @@ function createTree(id, data)
       .attr("pointer-events", "all");
       
   function update(source) {
-    const duration = d3.event && d3.event.altKey ? 2500 : 250;
+    const duration = d3version4.event && d3version4.event.altKey ? 2500 : 250;
     const nodes = root.descendants().reverse();
     const links = root.links();
 
@@ -64,11 +52,11 @@ function createTree(id, data)
       if (node.x > right.x) right = node;
     });
 
-    const height = right.x - left.x + margin.top + margin.bottom;
+    const height = right.x - left.x + margin.top + margin.bottom +200;
 
     const transition = svg.transition()
         .duration(duration)
-        .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
+        .attr("viewBox", [-margin.left-50, left.x - margin.top-100, width, height])
         .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
         
     // Update the nodes…
@@ -116,6 +104,7 @@ function createTree(id, data)
     const link = gLink.selectAll("path")
       .data(links, d => d.target.id);
 
+      
     // Enter any new links at the parent's previous position.
     const linkEnter = link.enter().append("path")
         .attr("d", d => {
@@ -141,8 +130,4 @@ function createTree(id, data)
     });
   }
   update(root);
-  
-  //document.getElementById("chart").appendChild(svg.node())
- alert(svg.node().innerHTML);
-  //return svg.node();
 }
