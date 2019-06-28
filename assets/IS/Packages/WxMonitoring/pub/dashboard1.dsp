@@ -5,9 +5,10 @@
 		<meta http-equiv="Expires" content="-1">
 		<title>Dashboard</title>
 		<link rel="stylesheet" type="text/css" href="webMethods.css">
-		<link rel="stylesheet" type="text/css" href="bar-pie-graph.css">
+		<!-- <link rel="stylesheet" type="text/css" href="bar-pie-graph.css">
 		<link rel="stylesheet" type="text/css" href="indented-tree.css">
-		<link rel="stylesheet" type="text/css" href="nodal-Tree.css">
+		<link rel="stylesheet" type="text/css" href="nodal-Tree.css"> -->
+		<link rel="stylesheet" type="text/css" href="dashboard.css">
 		<script src="webMethods.js.txt"></script>
 		<script src="common-navigation.js"></script>
         <script src="dashboard.js"></script>
@@ -23,7 +24,7 @@
 				d3version3 = d3
 				window.d3 = null
 			  </script>
-		<script src="bar-pie-graph3.js"></script>
+		<script src="bar-pie-graph.js"></script>
 		
 		<script src="indented-tree.js"></script>
 		<script src="nodal-tree.js"></script>
@@ -52,24 +53,7 @@
             }
 		</script>
 		<style>
-			.flex-container-content {
-				display: flex;
-				flex-direction: row;
-				
-				}
-			.flex-container-column {
-				display: flex;
-				flex-direction: column;
-				align-items:flex-start;
-				justify-content: space-between
-				}
-			.flex-container-item {
-				display: flex;
-				justify-content: flex-start;
-				flex-wrap: nowrap;
-				flex-basis: auto;
-				align-content: stretch;
-				}
+			
 		</style>
     </head>
     <body>
@@ -85,15 +69,35 @@
 			<div class="flex-container-content">
 				<div class="flex-container-column">
 						
-						<div id="processServerStructure_tree" class="flex-container-item"></div>
+						<table border="0"  width="100%" border="1" class="tableView">
+								<tr>
+									<td colspan="1" class="heading">Processes Summary- By Business Domain | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
+								</tr>
+								<tr>
+									<td style="border: 0px;padding: 0px">
+
+											<div id="processServerStructure_tree" class="flex-container-item"></div>
+									</td>
+
+								</tr>
+							</table>
 						<script>
-								//var processServerStructureString = '{"name":"WxMonitoring","children":[{"name":"Server1","children":[{"name":"BD1","children":[{"name":"Process1","size":3938},{"name":"Process2","size":3812},{"name":"Process3","size":6714}]},{"name":"BD2","children":[{"name":"Process4","size":3534},{"name":"Process1","size":5731}]},{"name":"BD3","children":[{"name":"Process5","size":7074}]}]},{"name":"Server2","children":[{"name":"BD4","children":[{"name":"Process4","size":1983},{"name":"Process1","size":2047},{"name":"Process5","size":1375}]}]},{"name":"Server3","children":[{"name":"BD5","children":[{"name":"Process6","size":721},{"name":"Process7","size":4294},{"name":"Process8","size":9800},{"name":"Process1","size":1314},{"name":"Process9","size":2220}]}]}]}';
 								var processServerStructureString = '%value processServerStructureTreeJson encode(javascript)%' ;
 								//alert(processServerStructureString);
 								var processServerStructureJson = JSON.parse(processServerStructureString);
 								createTree("#processServerStructure_tree",processServerStructureJson);
 							</script>
-					<div id="processStats_barPieGraph" class="flex-container-item"></div>
+					<table border="0"  width="100%" border="1" class="tableView">
+							<tr>
+								<td colspan="1" class="heading">Processes Summary- By Business Domain | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
+							</tr>
+							<tr>
+								<td style="border: 0px;padding: 0px;">
+
+										<div id="processStats_barPieGraph" class="flex-container-item"></div>
+								</td>
+							</tr>
+						</table>
 					<script>
 						var processStatsString = '%value processStatsBarPieJson encode(javascript)%' ;
 						var processStatsBarPieJson = JSON.parse(processStatsString);
@@ -105,14 +109,45 @@
 				</div>
 
 				<div class="flex-container-column">
-					<div id="processStats_barPieGraph1" class="flex-container-item"></div>
+						
+						<table border="0"  width="100%" border="1" class="tableView">
+								<tr>
+									<td colspan="1" class="heading">Event Summary- By Business Domain | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
+								</tr>
+								<tr>
+									<td style="border: 0px;padding: 0px;">
+	
+											<div id="processStats_barPieGraph1" class="flex-container-item"></div>
+									</td>
+	
+								</tr>
+							</table>
+					
 					<script>
-						var processStatsString = '%value processStatsBarPieJson encode(javascript)%' ;
-						var processStatsBarPieJson = JSON.parse(processStatsString);
-						createGraph("#processStats_barPieGraph1", processStatsBarPieJson,"process")
+						var processStatsString1 = '%value eventStatsBarPieJson encode(javascript)%' ;
+						
+						var processStatsBarPieJson1 = JSON.parse(processStatsString1);
+						createGraph("#processStats_barPieGraph1", processStatsBarPieJson1,"event")
 					</script> 
+					
+					<div class="flex-container-item">
+							<div id="processServerStructure_tree1" ></div>
+					</div>
+					<!-- <table border="0"  width="100%" border="1" class="tableView">
+							<tr>
+								<td colspan="1" class="heading">Processes Summary- By Business Domain | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
+							</tr>
+							<tr>
+								<td style="border: 0px;padding: 0px;">
 
-					<div id="processServerStructure_tree1" class="flex-container-item"></div>
+										<div id="processServerStructure_tree" class="flex-container-item"></div>
+								</td>
+
+							</tr>
+						</table> -->
+
+					
+					
 					<script>
 						
 						// var processServerStructureString = '%value processServerStructureTreeJson encode(javascript)%' ;
@@ -121,9 +156,10 @@
 						// createTree("#processServerStructure_tree1",processServerStructureJson);
 
 						var dataString = '{"children":[{"children":[{"children":[{"name":"AgglomerativeCluster","value":3938},{"name":"CommunityStructure","value":3812},{"name":"HierarchicalCluster","value":6714},{"name":"MergeEdge","value":743}],"name":"cluster"},{"children":[{"name":"BetweennessCentrality","value":3534},{"name":"LinkDistance","value":5731},{"name":"MaxFlowMinCut","value":7840},{"name":"ShortestPaths","value":5914},{"name":"SpanningTree","value":3416}],"name":"graph"},{"children":[{"name":"AspectRatioBanker","value":7074}],"name":"optimization"}],"name":"analytics"}],"name":"flare"}';
-                var data = JSON.parse(dataString);
-                createNodalTree("#processServerStructure_tree1",data);
+				var data = JSON.parse(dataString);
+				createNodalTree("#processServerStructure_tree1",data);
 					</script>
+					
 				</div>
 			</div> 
 		%endscope%

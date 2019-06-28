@@ -17365,21 +17365,15 @@
         <value name="node_subtype">unknown</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_usereditable">false</value>
+          <value name="field_usereditable">true</value>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">processTimeRange</value>
+        <value name="field_name">timeRange</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
         <array name="field_options" type="value" depth="1">
-          <value>today</value>
-          <value>lastSevenDays</value>
-          <value>lastFifteenDays</value>
-          <value>lastThirtyDays</value>
-          <value>ALL</value>
         </array>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
@@ -17555,40 +17549,14 @@
         <value name="node_subtype">unknown</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_usereditable">false</value>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="is_public">false</value>
-        <value name="field_name">eventTimeRange</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <array name="field_options" type="value" depth="1">
-          <value>today</value>
-          <value>lastSevenDays</value>
-          <value>lastFifteenDays</value>
-          <value>lastThirtyDays</value>
-          <value>ALL</value>
-        </array>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
           <value name="field_usereditable">true</value>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">processBusinessDomain</value>
+        <value name="field_name">fromCustomDate</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
         <array name="field_options" type="value" depth="1">
         </array>
         <value name="nillable">true</value>
@@ -17605,10 +17573,47 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">eventServer</value>
+        <value name="field_name">fromCustomTime</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">toCustomDate</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">toCustomTime</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
         </array>
         <value name="nillable">true</value>
@@ -17673,34 +17678,6 @@
     </record>
     <value name="is_public">false</value>
     <value name="field_name">processStatsBarPieJson</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <array name="field_options" type="value" depth="1">
-    </array>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/dashboard;2;0/eventStatsBarPieJson;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">[{"Criteria":"server1","freq":{"error":786,"fatal":249,"info":1319,"warning":159}},{"Criteria":"server2","freq":{"error":1101,"fatal":674,"info":412,"warning":209}},{"Criteria":"server3","freq":{"error":932,"fatal":418,"info":2149,"warning":312}},{"Criteria":"server4","freq":{"error":832,"fatal":1862,"info":1152,"warning":400}},{"Criteria":"server5","freq":{"error":786,"fatal":249,"info":1319,"warning":159}},{"Criteria":"server6","freq":{"error":1101,"fatal":674,"info":412,"warning":209}},{"Criteria":"server7","freq":{"error":932,"fatal":418,"info":2149,"warning":312}},{"Criteria":"server8","freq":{"error":832,"fatal":1862,"info":1152,"warning":400}}]</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">record</value>
-    <value name="node_subtype">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="is_public">false</value>
-    <value name="field_name">eventStatsBarPieJson</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <array name="field_options" type="value" depth="1">
@@ -17805,6 +17782,34 @@
     </record>
     <value name="is_public">false</value>
     <value name="field_name">toTime</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <array name="field_options" type="value" depth="1">
+    </array>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/dashboard;2;0/eventStatsBarPieJson;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">[{"criteria":"server1","freq":{"error":786,"fatal":249,"info":1319,"warning":159}},{"criteria":"server2","freq":{"error":1101,"fatal":674,"info":412,"warning":209}},{"criteria":"server3","freq":{"error":932,"fatal":418,"info":2149,"warning":312}},{"criteria":"server4","freq":{"error":832,"fatal":1862,"info":1152,"warning":400}},{"criteria":"server5","freq":{"error":786,"fatal":249,"info":1319,"warning":159}},{"criteria":"server6","freq":{"error":1101,"fatal":674,"info":412,"warning":209}},{"criteria":"server7","freq":{"error":932,"fatal":418,"info":2149,"warning":312}},{"criteria":"server8","freq":{"error":832,"fatal":1862,"info":1152,"warning":400}}]</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="is_public">false</value>
+    <value name="field_name">eventStatsBarPieJson</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <array name="field_options" type="value" depth="1">

@@ -5,6 +5,7 @@ function total(d,entity){
     } else {
         d.total=d.freq.fatal+d.freq.error+d.freq.warning+d.freq.info;
     }
+    alert(d.total);
     return d;
 }
 
@@ -21,7 +22,7 @@ function createGraph(id, fData,entity){
     // function to handle histogram.
     function histoGram(fD){
         var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
-        hGDim.w = 350 - hGDim.l - hGDim.r, 
+        hGDim.w = 330 - hGDim.l - hGDim.r, 
         hGDim.h = 300 - hGDim.t - hGDim.b;
             
         //create svg for histogram.

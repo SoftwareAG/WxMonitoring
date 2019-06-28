@@ -1,5 +1,5 @@
 var indentedTreeMargin = {top: 30, right: 20, bottom: 30, left: 20},
-    indentedTreeWidth = 500,
+    indentedTreeWidth = 800,
     //var indentedTreeWidth = document.getElementById(id.substring(1)).offsetWidth
     barHeight = 20,
     barWidth = (indentedTreeWidth - indentedTreeMargin.left - indentedTreeMargin.right) * 0.8;

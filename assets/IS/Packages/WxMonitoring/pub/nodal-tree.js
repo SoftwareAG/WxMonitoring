@@ -130,4 +130,21 @@ function createNodalTree(id, data)
     });
   }
   update(root);
+
+  var node = document.createElement("h1");                 // Create a <li> node
+  var textnode = document.createTextNode("WxMonitoring collapsible tree"); // Create a text node
+
+  var node1 = document.createElement("h3");
+  var textnode1 = document.createTextNode("Click a black node to view/hide files monitored by WxMonitoring");
+  node.appendChild(textnode); 
+  node1.appendChild(textnode1);
+  
+  
+  document.getElementById(id.substring(1)).appendChild(node); 
+  document.getElementById(id.substring(1)).appendChild(node1);
+  document.getElementById(id.substring(1)).style.textAlign="center";
+  // element.style.backgroundColor = "red"; 
+  // <h1 id="collapsible-tree">Collapsible Tree</h1>
+  // <p>Click a black node to expand or collapse <a href="/@mbostock/d3-tidy-tree">the tree</a>.</p>
+
 }
