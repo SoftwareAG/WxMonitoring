@@ -132,7 +132,7 @@ function createNodalTree(id, data)
   update(root);
 
   var node = document.createElement("h1");                 // Create a <li> node
-  var textnode = document.createTextNode("WxMonitoring collapsible tree"); // Create a text node
+  var textnode = document.createTextNode("WxMonitoring Files Tree"); // Create a text node
 
   var node1 = document.createElement("h3");
   var textnode1 = document.createTextNode("Click a black node to view/hide files monitored by WxMonitoring");
