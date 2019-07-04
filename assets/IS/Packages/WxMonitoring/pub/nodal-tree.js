@@ -82,12 +82,14 @@ function createNodalTree(id, data)
         .attr("dy", "0.31em")
         .attr("x", d => d._children ? -6 : 6)
         .attr("text-anchor", d => d._children ? "end" : "start")
+        .attr("textLength","4em")
+        .attr("lengthAdjust","spacingAndGlyphs")
         .text(d => d.data.name)
       .clone(true).lower()
         .attr("stroke-linejoin", "round")
         .attr("stroke-width", 3)
         .attr("stroke", "white");
-
+        
     // Transition nodes to their new position.
     const nodeUpdate = node.merge(nodeEnter).transition(transition)
         .attr("transform", d => `translate(${d.y},${d.x})`)

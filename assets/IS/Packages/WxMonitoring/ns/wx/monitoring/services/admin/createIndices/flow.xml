@@ -5,8 +5,8 @@
 
   <!-- nodes -->
 
-<SEQUENCE TIMEOUT="" EXIT-ON="DONE">
-  <COMMENT>exit on done</COMMENT>
+<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE">
+  <COMMENT>exit on failure</COMMENT>
 
   <!-- nodes -->
 
@@ -394,6 +394,9 @@
 </MAPCOPY>
 </MAP>
 </MAPINVOKE>
+
+<MAPDELETE FIELD="/dateInIndexName;1;0">
+</MAPDELETE>
 </MAP>
 
 <INVOKE TIMEOUT="" SERVICE="wx.monitoring.services.admin:createEmptyIndex" VALIDATE-IN="$none" VALIDATE-OUT="$none">
@@ -454,17 +457,6 @@
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">dateInIndexName</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
