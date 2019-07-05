@@ -29,6 +29,56 @@
 		<script src="indented-tree.js"></script>
 		<script src="nodal-tree.js"></script>
         <script>
+
+			function createPageState(processTimeUIControlsJson, eventTimeUIControlsJson) {
+				var stateJSONObject = {};
+				stateJSONObject.currentPageName = "dashboard-graphical.dsp";
+				stateJSONObject.previousPageName = "dashboard.dsp";
+				stateJSONObject.processTimeUIControlsJson = processTimeUIControlsJson;
+				stateJSONObject.eventTimeUIControlsJson = eventTimeUIControlsJson;
+				
+				return stateJSONObject;
+			}
+
+			function onSwitchDashboardClick() {
+				
+				var currentPageState = getPageState("dashboard-graphical.dsp");
+				
+				var previousPageState =  getPageState(currentPageState.previousPageName);
+				cleanNavigationSequence();
+				if(previousPageState){
+					var url = "dashboard.dsp?processTimeRange=" + previousPageState.processTimeRange + "&eventTimeRange=" + previousPageState.eventTimeRange + "&processBusinessDomain=" + previousPageState.processBusinessDomain + "&eventServer=" + previousPageState.eventServer ;
+				} else {
+					var url = "dashboard.dsp";
+				}
+				var res = encodeURI(url);
+				
+				location.href = url;
+			}
+
+			function populateForm(form, clickSource){
+				
+				var currentPageState = getPageState("dashboard-graphical.dsp");
+				var processTimeUIControlsJsonString = currentPageState.processTimeUIControlsJson ;
+				var eventTimeUIControlsJsonString = currentPageState.eventTimeUIControlsJson ;
+				//alert(processTimeUIControlsJsonString);
+				
+				if(clickSource=="process"){
+
+					var processTimeUIControlsJson = JSON.parse(processTimeUIControlsJsonString);
+					processTimeUIControlsJson.timeRange = document.getElementById(processTimeRange)
+
+					processTimeUIControlsJsonString = JSON.stringify(processTimeUIControlsJson);
+				} else if(clickSource=="event"){
+
+				}
+
+				form.processTimeUIControlsJson = processTimeUIControlsJsonString;
+				form.eventTimeUIControlsJson = eventTimeUIControlsJsonString;
+				
+				form.submit();
+			}
+
             function toggleCtrl_TimeRange(toggleSource) {
 				var selTimeRange,
 					tdFromDate,
@@ -84,6 +134,15 @@
     <body>
 		%invoke wx.monitoring.services.gui.dashboard:getDashboardGraphical%
 		%endinvoke%
+
+		<script>
+
+			var stateJSONObject = createPageState('%value dashboard/processes/uiTimeControlsInfoJSON encode(javascript)%','%value dashboard/events/uiTimeControlsInfoJSON encode(javascript)%');
+					
+			var startNewNavigationSequence = true;
+			savePageState("dashboard-graphical.dsp", stateJSONObject, startNewNavigationSequence);
+			
+		</script>
 		<table width=100%>
 			<tr>
 				<td class="breadcrumb" colspan="2">
@@ -109,7 +168,7 @@
 			<tr>
 				<td colspan="2">
 					<ul class="listitems">
-						<li class="listitem"><a href="javascript:document.htmlform_event_rules.submit();" onClick="return onReturnClick();">Switch to Non-Graphical View</a></li>
+						<li class="listitem"><a href="#" onclick="onSwitchDashboardClick();">Switch to Non-Graphical View</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -178,7 +237,7 @@
 									value="%value toDate%" />
 								</td>
 								<td style="background: #D3D3D3" rowspan="2">
-									<input type="button" value="Refresh">
+									<input type="button" value="Refresh" onclick="populateForm(document.htmlform_dashboardGraphical,'process');">
 								</td>
 							</tr>
 							<tr>
@@ -217,49 +276,51 @@
 				<div class="flex-container-column">
 						%scope events%
 						<table border="0"  width="100%" class="tableView">
-								<tr>
-									<td colspan="4" class="heading">Events Summary- By Server | From : %value fromTime encode(html)% | To : %value toTime encode(html)% </td>
-								</tr>
-								<tr>
-									<td style="background: #D3D3D3" rowspan="2">
-										<label>Time Range : </label>
-										<select id="eventTimeRange" name="eventTimeRange"
-										onchange="toggleCtrl_TimeRange('event')">
-											<option value="today" %ifvar timeRange% %ifvar timeRange equals('today')%selected %endifvar% %else% selected %endifvar%>Today
-											</option>
-											<option value="lastSevenDays" %ifvar processTimeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
-											<option value="lastFifteenDays" %ifvar processTimeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
-											<option value="lastThirtyDays" %ifvar processTimeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
-											<option value="ALL" %ifvar processTimeRange equals('ALL')%selected %endifvar%>ALL</option>
-											<option value="custom" %ifvar processTimeRange equal ('custom') %selected %endifvar%>Custom</option>
-										</select>
-									</td>
-									<td id="eventCustomFromDateTD" style="display: none; background: #D3D3D3">
-										<label>Start Date : </label>
-										<input id="eventCustomFromDate" type="date" name="eventCustomFromDate"
-										value="%value customFromDate%" />
-									</td>
-									<td id="eventCustomToDateTD" style="display: none;background: #D3D3D3">
-										<label>End Date : </label>
-										<input id="eventCustomToDate" type="date" name="eventCustomToDate"
-										value="%value customToDate%" />
-									</td>
-									<td style="background: #D3D3D3" rowspan="2">
-										<input type="button" value="Refresh">
-									</td>
-								</tr>
-								<tr>
-									<td id="eventCustomFromTimeTD" style="display: none; background: #D3D3D3">
-										<label>Start Time : </label>
-										<input id="eventCustomFromTime" type="time" name="eventCustomToDate"
-										value="%value customFromDate%" />
-									</td>
-									<td id="eventCustomToTimeTD" style="display: none;background: #D3D3D3">
-										<label>End Time : </label>
-										<input id="eventCustomToDate" type="time" name="eventCustomToDate"
-										value="%value customFromDate%" />
-									</td>
-								</tr>
+								%scope uiTimeControlsInfo%
+									<tr>
+										<td colspan="4" class="heading">Events Summary- By Server | From : %value consolidatedFromTime encode(html)% | To : %value consolidatedToTime encode(html)% </td>
+									</tr>
+									<tr>
+										<td style="background: #D3D3D3" rowspan="2">
+											<label>Time Range : </label>
+											<select id="eventTimeRange" name="eventTimeRange"
+											onchange="toggleCtrl_TimeRange('event')">
+												<option value="today" %ifvar timeRange% %ifvar timeRange equals('today')%selected %endifvar% %else% selected %endifvar%>Today
+												</option>
+												<option value="lastSevenDays" %ifvar processTimeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
+												<option value="lastFifteenDays" %ifvar processTimeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
+												<option value="lastThirtyDays" %ifvar processTimeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
+												<option value="ALL" %ifvar processTimeRange equals('ALL')%selected %endifvar%>ALL</option>
+												<option value="custom" %ifvar processTimeRange equal ('custom') %selected %endifvar%>Custom</option>
+											</select>
+										</td>
+										<td id="eventCustomFromDateTD" style="display: none; background: #D3D3D3">
+											<label>Start Date : </label>
+											<input id="eventCustomFromDate" type="date" name="eventCustomFromDate"
+											value="%value customFromDate%" />
+										</td>
+										<td id="eventCustomToDateTD" style="display: none;background: #D3D3D3">
+											<label>End Date : </label>
+											<input id="eventCustomToDate" type="date" name="eventCustomToDate"
+											value="%value customToDate%" />
+										</td>
+										<td style="background: #D3D3D3" rowspan="2">
+											<input type="button" value="Refresh" onclick="populateForm(document.htmlform_dashboardGraphical,'event');">
+										</td>
+									</tr>
+									<tr>
+										<td id="eventCustomFromTimeTD" style="display: none; background: #D3D3D3">
+											<label>Start Time : </label>
+											<input id="eventCustomFromTime" type="time" name="eventCustomToDate"
+											value="%value customFromDate%" />
+										</td>
+										<td id="eventCustomToTimeTD" style="display: none;background: #D3D3D3">
+											<label>End Time : </label>
+											<input id="eventCustomToDate" type="time" name="eventCustomToDate"
+											value="%value customFromDate%" />
+										</td>
+									</tr>
+								%endscope%
 								%ifvar barPieGraphJSON -notempty%
 								<tr>
 									<td colspan="4" style="border: 0px;padding: 0px;">
@@ -299,6 +360,10 @@
 				</div>
 			</div> 
 		%endscope%
+		<form name="htmlform_dashboardGraphical" action="dashboard-graphical.dsp" method="POST">
+				<input type="hidden" name="processTimeUIControlsJson">
+				<input type="hidden" name="eventTimeUIControlsJson">
+		</form>
     </body>
         <!-- POST page load -->
 	<script language="JavaScript">

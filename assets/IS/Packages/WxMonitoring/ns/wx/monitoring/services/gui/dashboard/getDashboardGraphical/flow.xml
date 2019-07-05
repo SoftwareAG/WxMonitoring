@@ -5,7 +5,7 @@
 
   <!-- nodes -->
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:tracePipeline" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:tracePipeline" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 </INVOKE>
 
@@ -10191,7 +10191,7 @@
                 <value name="node_type">unknown</value>
                 <value name="node_subtype">unknown</value>
                 <value name="is_public">false</value>
-                <value name="field_name">monitoredLogfileNodalTreeJSON</value>
+                <value name="field_name">processServerIndentedTreeJSON</value>
                 <value name="field_type">string</value>
                 <value name="field_dim">0</value>
                 <value name="nillable">true</value>
@@ -10977,7 +10977,7 @@
                 <value name="node_type">unknown</value>
                 <value name="node_subtype">unknown</value>
                 <value name="is_public">false</value>
-                <value name="field_name">processServerIndentedTreeJSON</value>
+                <value name="field_name">monitoredLogfileNodalTreeJSON</value>
                 <value name="field_type">string</value>
                 <value name="field_dim">0</value>
                 <value name="nillable">true</value>
@@ -10994,7 +10994,7 @@
                   <value name="field_password">false</value>
                 </record>
                 <value name="is_public">false</value>
-                <value name="field_name">monitoredLogfileNodalTreeJSON</value>
+                <value name="field_name">processServerIndentedTreeJSON</value>
                 <value name="field_type">string</value>
                 <value name="field_dim">0</value>
                 <array name="field_options" type="value" depth="1">
@@ -11141,7 +11141,7 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/graphJSON;1;0" TO="/dashboard;2;0/common;2;0/monitoredLogfileNodalTreeJSON;1;0">
+<MAPCOPY FROM="/graphJSON;1;0" TO="/dashboard;2;0/common;2;0/processServerIndentedTreeJSON;1;0">
 </MAPCOPY>
 </MAP>
 </MAPINVOKE>
@@ -14502,14 +14502,14 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/graphJSON;1;0" TO="/dashboard;2;0/common;2;0/processServerIndentedTreeJSON;1;0">
+<MAPCOPY FROM="/graphJSON;1;0" TO="/dashboard;2;0/common;2;0/monitoredLogfileNodalTreeJSON;1;0">
 </MAPCOPY>
 </MAP>
 </MAPINVOKE>
 </MAP>
 </BRANCH>
 
-<MAP TIMEOUT="" MODE="STANDALONE">
+<MAP TIMEOUT="" MODE="STANDALONE" DISABLED="true">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -14781,7 +14781,7 @@
 
   <!-- nodes -->
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/dashboard;2;0/common;2;0/monitoredLogfileNodalTreeJSON;1;0">
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/dashboard;2;0/common;2;0/monitoredLogfileNodalTreeJSON;1;0" DISABLED="true">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">

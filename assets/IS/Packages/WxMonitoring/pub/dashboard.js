@@ -268,3 +268,19 @@ function createPageState(processTimeRange, eventTimeRange, processBusinessDomain
     return stateJSONObject;
 }
 
+function onSwitchDashboardClick() {
+				
+    var currentPageState = getPageState("dashboard.dsp");
+    
+    var previousPageState =  getPageState(currentPageState.previousPageName);
+    cleanNavigationSequence();
+
+    if(previousPageState){
+        var url = "dashboard-graphical.dsp?processTimeUIControlsJson=" + previousPageState.processTimeUIControlsJson + "&eventTimeUIControlsJson=" + previousPageState.eventTimeUIControlsJson;
+    } else {
+        var url = "dashboard-graphical.dsp";
+    }
+    var res = encodeURI(url);
+    
+    location.href = url;
+}

@@ -21,10 +21,35 @@ function createNodalTree(id, data)
   
   root.x0 = dy / 2;
   root.y0 = 0;
+  var fontSizeMedium="1em";
+  var fontSizeSmall="0.75em";
+  var fontSizeSmaller=".65em";
+  var fontSizeTiny="0.55em";
   root.descendants().forEach((d, i) => {
     d.id = i;
     d._children = d.children;
-    if (d.depth && d.data.name.length !== 7) d.children = null;
+    if(d.data.name.length<7){
+      //alert(d.data.name.length +" "+d.fontSize);
+      d.fontSize = fontSizeMedium;
+    }else if(d.data.name.length>7&&d.data.name.length<15){
+      d.fontSize = fontSizeSmall;
+    }else if(d.data.name.length>15&&d.data.name.length<25){
+      //alert("hi");
+      d.fontSize = fontSizeSmaller;
+    }else{
+      d.fontSize = fontSizeTiny;
+    }
+    if (d.id==0)
+      { 
+        d.fontSize = fontSizeMedium;
+      }
+
+    if (d.depth && d.data.name.length !== 7)
+      { 
+        d.children = null;
+        d.fontSize = fontSizeSmall;
+      }
+      //alert(d.data.name + " " + d.data.name.length + " "+ d.fontSize);
   });
  
    const gLink = svg.append("g")
@@ -79,17 +104,24 @@ function createNodalTree(id, data)
         .attr("stroke-width", 10);
 
     nodeEnter.append("text")
-        .attr("dy", "0.31em")
+        .attr("dy", ".31em")
         .attr("x", d => d._children ? -6 : 6)
         .attr("text-anchor", d => d._children ? "end" : "start")
-        .attr("textLength","4em")
-        .attr("lengthAdjust","spacingAndGlyphs")
+        .attr("font-size",d => d.fontSize)
         .text(d => d.data.name)
       .clone(true).lower()
         .attr("stroke-linejoin", "round")
         .attr("stroke-width", 3)
         .attr("stroke", "white");
         
+        nodeEnter.append("title")
+        .text(d => d.data.name);
+
+        // nodeEnter.append("view")
+        // .attr("viewBox","0 0 1 100");
+        //<view id="halfSizeView" viewBox="0 0 1200 400"/>
+        //        .attr("textLength","4em")
+        //        .attr("lengthAdjust","spacingAndGlyphs")
     // Transition nodes to their new position.
     const nodeUpdate = node.merge(nodeEnter).transition(transition)
         .attr("transform", d => `translate(${d.y},${d.x})`)
@@ -133,18 +165,44 @@ function createNodalTree(id, data)
   }
   update(root);
 
-  var node = document.createElement("h1");                 // Create a <li> node
-  var textnode = document.createTextNode("WxMonitoring Files Tree"); // Create a text node
 
-  var node1 = document.createElement("h3");
-  var textnode1 = document.createTextNode("Click a black node to view/hide files monitored by WxMonitoring");
-  node.appendChild(textnode); 
-  node1.appendChild(textnode1);
+  svg.append("text")
+      .text("WxMonitoring Files Tree")
+      .attr("dy","25%")
+      .attr("x","6")
+      .attr("text-anchor", "start")
+      .attr("font-size","1em");
+  
+      svg.append("text")
+      .text("Click a black node to view/hide files monitored by WxMonitoring")
+      .attr("dy","30%")
+      .attr("x","-15")
+      .attr("text-anchor", "start")
+      .attr("font-size","0.5em");
+
+
+
+      // .attr("dy", "0.31em")
+      //   .attr("x", d => d._children ? -6 : 6)
+      //   .attr("text-anchor", d => d._children ? "end" : "start")
+      //   .attr("font-size",d => d.fontSize)
+      //   .text(d => d.data.name)
+      // .clone(true).lower()
+      //   .attr("stroke-linejoin", "round")
+      //   .attr("stroke-width", 3)
+      //   .attr("stroke", "white");
+  // var node = document.createElement("h1");                 // Create a <li> node
+  // var textnode = document.createTextNode("WxMonitoring Files Tree"); // Create a text node
+
+  // var node1 = document.createElement("h3");
+  // var textnode1 = document.createTextNode("Click a black node to view/hide files monitored by WxMonitoring");
+  // node.appendChild(textnode); 
+  // node1.appendChild(textnode1);
   
   
-  document.getElementById(id.substring(1)).appendChild(node); 
-  document.getElementById(id.substring(1)).appendChild(node1);
-  document.getElementById(id.substring(1)).style.textAlign="center";
+  // document.getElementById(id.substring(1)).appendChild(node); 
+  // document.getElementById(id.substring(1)).appendChild(node1);
+  // document.getElementById(id.substring(1)).style.textAlign="center";
   // element.style.backgroundColor = "red"; 
   // <h1 id="collapsible-tree">Collapsible Tree</h1>
   // <p>Click a black node to expand or collapse <a href="/@mbostock/d3-tidy-tree">the tree</a>.</p>

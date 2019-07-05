@@ -98,6 +98,19 @@
 	%rename /eventServer eventServer -copy%
 			<tr>
 				<td>
+					<table border="0">
+						<tr>
+							<td colspan="2">
+								<ul class="listitems">
+									<li class="listitem"><a href="#" onclick="onSwitchDashboardClick();">Switch to Graphical View</a></li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<table class="customTable" width="100%" border="0">
 						<tr>
 							<td valign="top">
