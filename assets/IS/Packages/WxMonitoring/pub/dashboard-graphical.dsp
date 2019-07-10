@@ -66,15 +66,18 @@
 				if(clickSource=="process"){
 
 					var processTimeUIControlsJson = JSON.parse(processTimeUIControlsJsonString);
-					processTimeUIControlsJson.timeRange = document.getElementById(processTimeRange)
-
+					
+					processTimeUIControlsJson.timeRange = document.getElementById("processTimeRange").value;
 					processTimeUIControlsJsonString = JSON.stringify(processTimeUIControlsJson);
 				} else if(clickSource=="event"){
-
+					var eventTimeUIControlsJson = JSON.parse(eventTimeUIControlsJsonString);
+					
+					eventTimeUIControlsJson.timeRange = document.getElementById("eventTimeRange").value;
+					eventTimeUIControlsJsonString = JSON.stringify(eventTimeUIControlsJson);
 				}
 
-				form.processTimeUIControlsJson = processTimeUIControlsJsonString;
-				form.eventTimeUIControlsJson = eventTimeUIControlsJsonString;
+				form.processTimeUIControlsJson.value = processTimeUIControlsJsonString;
+				form.eventTimeUIControlsJson.value = eventTimeUIControlsJsonString;
 				
 				form.submit();
 			}
@@ -287,11 +290,11 @@
 											onchange="toggleCtrl_TimeRange('event')">
 												<option value="today" %ifvar timeRange% %ifvar timeRange equals('today')%selected %endifvar% %else% selected %endifvar%>Today
 												</option>
-												<option value="lastSevenDays" %ifvar processTimeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
-												<option value="lastFifteenDays" %ifvar processTimeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
-												<option value="lastThirtyDays" %ifvar processTimeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
-												<option value="ALL" %ifvar processTimeRange equals('ALL')%selected %endifvar%>ALL</option>
-												<option value="custom" %ifvar processTimeRange equal ('custom') %selected %endifvar%>Custom</option>
+												<option value="lastSevenDays" %ifvar timeRange equals('lastSevenDays')%selected %endifvar%>Past 7 days</option>
+												<option value="lastFifteenDays" %ifvar timeRange equals('lastFifteenDays')%selected %endifvar%>Past 15 days</option>
+												<option value="lastThirtyDays" %ifvar timeRange equals('lastThirtyDays')%selected %endifvar%>Past 30 days</option>
+												<option value="ALL" %ifvar timeRange equals('ALL')%selected %endifvar%>ALL</option>
+												<option value="custom" %ifvar timeRange equal ('custom') %selected %endifvar%>Custom</option>
 											</select>
 										</td>
 										<td id="eventCustomFromDateTD" style="display: none; background: #D3D3D3">

@@ -113,19 +113,20 @@
 									</TR>
 									<TR class="oddrow">
 										<TD class="oddrow" nowrap>
-									<TR>
-										<TD>
 											<TABLE class="noborders">
-												Process Log Contains:
+												<TR>
+													<TD>
+														
+															Process Log Contains:
+													</TD>
+												</TR>
+												<TR>
+													<TD>
+														<textarea id="processLogText" rows="4" cols="40" placeholder="Can be used to search process with process id" name="processLogText">%value processLogText%</textarea>
+													</TD>
+												</TR>
+											</TABLE>
 										</TD>
-									</TR>
-									<TR>
-										<TD>
-											<textarea id="processLogText" rows="4" cols="40" placeholder="Can be used to search process with process id" name="processLogText">%value processLogText%</textarea>
-										</TD>
-									</TR>
-								</TABLE>
-						</TD>
 						<TD class="oddrow" nowrap>
 							<TABLE class="noborders">
 								<TR>

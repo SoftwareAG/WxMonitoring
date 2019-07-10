@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
-  <COMMENT></COMMENT>
 
   <!-- nodes -->
 
 <MAP TIMEOUT="" MODE="STANDALONE">
-  <COMMENT></COMMENT>
+  <COMMENT>map basic fields</COMMENT>
   <MAPTARGET>
 
 <Values version="2.0">
@@ -30,7 +29,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
+        <value name="field_name">processRuleCanonical</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="wrapper_type">IData</value>
@@ -39,20 +38,20 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
+        <value name="field_name">processRuleView</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -82,7 +81,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
+        <value name="field_name">processRuleCanonical</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="wrapper_type">IData</value>
@@ -91,7 +90,7 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -101,64 +100,40 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/id;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/id;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/id;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/id;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/eventPattern;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/event_pattern;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/business_domain;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/businessDomain;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/useRegex;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/use_regex;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/process_name;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/processName;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/severity;2;0/severityThreshold;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/severity;2;0/severity_threshold;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/use_regex;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/useRegex;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/severity;2;0/severityThresholdOperator;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/severity;2;0/severity_threshold_operator;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/status;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/status;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/actionType;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/action_type;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/max_process_duration;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/maxProcessDuration;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/isActive;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/is_active;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/trigger_action_for_each_matching_process;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/triggerActionForEachMatchingProcess;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/ruleRank;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/rule_rank;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/is_active;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/isActive;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/lastEditedOn;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/last_edited_on_utc;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/rule_rank;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/ruleRank;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/createdOn;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/created_on_utc;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/last_edited_on_utc;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/lastEditedOn;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/isDeleted;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/is_deleted;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/created_on_utc;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/createdOn;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/triggerActionForEachMatchingEvent;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/trigger_action_for_each_matching_event;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/actionID;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/action_id;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/sendEmailTo;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/send_email_to;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraProjectKey;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_project_key;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraIssueType;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_issue_type;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/customServiceToInvoke;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/custom_service_to_invoke;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/customServiceInputParams;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/custom_service_input_params;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraAssigneeUsername;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_assignee_username;1;0">
-</MAPCOPY>
-
-<MAPCOPY FROM="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraIssuePriority;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_issue_priority;1;0">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/is_deleted;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/isDeleted;1;0">
 </MAPCOPY>
 </MAP>
 
@@ -305,7 +280,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
+        <value name="field_name">processRuleCanonical</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="wrapper_type">IData</value>
@@ -314,20 +289,33 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
+        <value name="field_name">processRuleView</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">eventRuleView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -336,6 +324,34 @@
 </MAPSOURCE>
 
   <!-- nodes -->
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentTimezone;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">UTC</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="is_public">false</value>
+    <value name="field_name">currentTimezone</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <array name="field_options" type="value" depth="1">
+    </array>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
 
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentPattern;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
@@ -393,36 +409,8 @@
 </DATA>
 </MAPSET>
 
-<MAPCOPY FROM="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/created_on_utc;1;0" TO="/inString;1;0">
+<MAPCOPY FROM="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/lastEditedOn;1;0" TO="/inString;1;0">
 </MAPCOPY>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/newTimezone;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">UTC</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">record</value>
-    <value name="node_subtype">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="is_public">false</value>
-    <value name="field_name">newTimezone</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <array name="field_options" type="value" depth="1">
-    </array>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
 </MAP>
 
 <MAP MODE="OUTPUT">
@@ -441,10 +429,67 @@
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processRuleCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">processRuleView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">eventRuleView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
         <value name="field_name">inString</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">currentTimezone</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -466,67 +511,12 @@
         <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">currentTimezone</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
         <value name="field_name">newPattern</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">newTimezone</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -608,10 +598,7 @@
 <MAPDELETE FIELD="/newPattern;1;0">
 </MAPDELETE>
 
-<MAPDELETE FIELD="/newTimezone;1;0">
-</MAPDELETE>
-
-<MAPCOPY FROM="/value;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/created_on_utc;1;0">
+<MAPCOPY FROM="/value;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/lastEditedOn;1;0">
 </MAPCOPY>
 </MAP>
 </INVOKE>
@@ -759,7 +746,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
+        <value name="field_name">processRuleCanonical</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="wrapper_type">IData</value>
@@ -768,20 +755,20 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
+        <value name="field_name">processRuleView</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -790,6 +777,34 @@
 </MAPSOURCE>
 
   <!-- nodes -->
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentTimezone;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">UTC</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="is_public">false</value>
+    <value name="field_name">currentTimezone</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <array name="field_options" type="value" depth="1">
+    </array>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
 
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/currentPattern;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
@@ -847,35 +862,7 @@
 </DATA>
 </MAPSET>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" GLOBALVARIABLES="false" FIELD="/newTimezone;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">UTC</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">record</value>
-    <value name="node_subtype">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="is_public">false</value>
-    <value name="field_name">newTimezone</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <array name="field_options" type="value" depth="1">
-    </array>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPCOPY FROM="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/last_edited_on_utc;1;0" TO="/inString;1;0">
+<MAPCOPY FROM="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/createdOn;1;0" TO="/inString;1;0">
 </MAPCOPY>
 </MAP>
 
@@ -917,24 +904,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
+        <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
-        <value name="field_type">recref</value>
+        <value name="field_name">currentTimezone</value>
+        <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="wrapper_type">IData</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_closed">true</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
@@ -948,28 +926,37 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
+        <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
         <value name="is_public">false</value>
-        <value name="field_name">newTimezone</value>
-        <value name="field_type">string</value>
+        <value name="field_name">processRuleCanonical</value>
+        <value name="field_type">recref</value>
         <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
+        <value name="field_name">processRuleView</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -986,17 +973,6 @@
         <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
         </array>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">currentTimezone</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -1062,14 +1038,293 @@
 <MAPDELETE FIELD="/newPattern;1;0">
 </MAPDELETE>
 
-<MAPCOPY FROM="/value;1;0" TO="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/last_edited_on_utc;1;0">
+<MAPCOPY FROM="/value;1;0" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/createdOn;1;0">
 </MAPCOPY>
+</MAP>
+</INVOKE>
 
-<MAPDELETE FIELD="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView">
+<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.maps:mapActionSourceToActionView" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<MAP MODE="INPUT">
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionSource</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dbo:ActionSource</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processRuleCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">eventRuleCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">processRuleView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
+</MAPCOPY>
+</MAP>
+
+<MAP MODE="OUTPUT">
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">actionSource</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dbo:ActionSource</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processRuleCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">eventRuleView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">eventRuleCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">processRuleView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessRuleView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPDELETE FIELD="/actionView;4;0;wx.monitoring.docs.view:ActionView">
 </MAPDELETE>
 
-<MAPDELETE FIELD="/newTimezone;1;0">
+<MAPDELETE FIELD="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
 </MAPDELETE>
+
+<MAPDELETE FIELD="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical">
+</MAPDELETE>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/action;4;0;wx.monitoring.docs.view:ActionView">
+</MAPCOPY>
 </MAP>
 </INVOKE>
 </FLOW>

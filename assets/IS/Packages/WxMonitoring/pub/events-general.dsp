@@ -116,9 +116,24 @@
 							<input type="hidden" name="compareSeverityExactly" value="false">
 						<TABLE class="tableView">
 							<TR>
-								<TD colspan=7 class="heading">Events Display Controls</TD>
+								<TD colspan=8 class="heading">Events Display Controls</TD>
 							</TR>  
 							<TR class="oddrow">
+								<td>
+									<TABLE class="noborders">
+										<TR>
+											<TD>
+												
+													Event Log Contains:
+											</TD>
+										</TR>
+										<TR>
+											<TD>
+												<textarea id="eventLogText" rows="4" cols="40" title="Search events based on string entered. It does not support field name prefixes, wildcard characters, or other 'advanced' features." placeholder="Supports partial, fuzzy search however, no regex allowed." name="eventLogText">%value eventLogText%</textarea>
+											</TD>
+										</TR>
+									</TABLE>
+								</td>
 								<TD class="oddrow" nowrap>
 									<TABLE class="noborders">
 										<TR>
@@ -218,6 +233,31 @@
 										</tbody>
 									</table>
 								</TD> 
+								<TD class="oddrow" nowrap>
+										<TABLE class="noborders">
+											<TR>
+												<TD class="evenrowdata" colspan=2>
+													Sort By
+												</TD>
+											</TR>
+											<TR>
+												<TD>
+													<INPUT TYPE="radio" NAME="sortBy" VALUE="score" %ifvar sortBy equals('score')%checked %endifvar%>
+												</TD>
+												<TD>
+													Most Relevant
+												</TD>
+											</TR>
+											<TR>
+												<TD>
+													<INPUT TYPE="radio" NAME="sortBy" VALUE="timestamp" %ifvar sortBy equals('timestamp')%checked %endifvar%>
+												</TD>
+												<TD>
+													Timestamp
+												</TD>
+											</TR>
+										</TABLE>
+									</TD>
 								<TD class="oddrow" nowrap>
 									<TABLE class="noborders">
 										<TR>

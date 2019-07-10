@@ -1015,7 +1015,7 @@
 </MAP>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.maps:mapEventRuleActionSourceToView" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.maps:mapActionSourceToActionView" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -1053,7 +1053,7 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dbo:EventRuleActionSource</value>
+        <value name="rec_ref">wx.monitoring.docs.dbo:ActionSource</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -1115,7 +1115,7 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:EventRuleActionSource" TO="/actionSource;4;0;wx.monitoring.docs.dbo:EventRuleActionSource">
+<MAPCOPY FROM="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
 </MAPCOPY>
 </MAP>
 
@@ -1145,7 +1145,7 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dbo:EventRuleActionSource</value>
+        <value name="rec_ref">wx.monitoring.docs.dbo:ActionSource</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -1198,7 +1198,7 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleActionView</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionView</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -1237,7 +1237,7 @@
         <value name="is_global">false</value>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleActionView</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionView</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -1247,13 +1247,13 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:EventRuleActionView" TO="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:EventRuleActionView">
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView" TO="/eventRuleView;4;0;wx.monitoring.docs.view:EventRuleView/action;4;0;wx.monitoring.docs.view:ActionView">
 </MAPCOPY>
 
-<MAPDELETE FIELD="/actionView;4;0;wx.monitoring.docs.view:EventRuleActionView">
+<MAPDELETE FIELD="/actionView;4;0;wx.monitoring.docs.view:ActionView">
 </MAPDELETE>
 
-<MAPDELETE FIELD="/actionSource;4;0;wx.monitoring.docs.dbo:EventRuleActionSource">
+<MAPDELETE FIELD="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
 </MAPDELETE>
 
 <MAPDELETE FIELD="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical">

@@ -1,7 +1,7 @@
 function createNodalTree(id, data)
 {   
   
-    var dx = 10;
+    var dx = 15;
     var width = 500;
     var height = 400;
     var dy= width / 6;
@@ -117,11 +117,6 @@ function createNodalTree(id, data)
         nodeEnter.append("title")
         .text(d => d.data.name);
 
-        // nodeEnter.append("view")
-        // .attr("viewBox","0 0 1 100");
-        //<view id="halfSizeView" viewBox="0 0 1200 400"/>
-        //        .attr("textLength","4em")
-        //        .attr("lengthAdjust","spacingAndGlyphs")
     // Transition nodes to their new position.
     const nodeUpdate = node.merge(nodeEnter).transition(transition)
         .attr("transform", d => `translate(${d.y},${d.x})`)
@@ -179,32 +174,4 @@ function createNodalTree(id, data)
       .attr("x","-15")
       .attr("text-anchor", "start")
       .attr("font-size","0.5em");
-
-
-
-      // .attr("dy", "0.31em")
-      //   .attr("x", d => d._children ? -6 : 6)
-      //   .attr("text-anchor", d => d._children ? "end" : "start")
-      //   .attr("font-size",d => d.fontSize)
-      //   .text(d => d.data.name)
-      // .clone(true).lower()
-      //   .attr("stroke-linejoin", "round")
-      //   .attr("stroke-width", 3)
-      //   .attr("stroke", "white");
-  // var node = document.createElement("h1");                 // Create a <li> node
-  // var textnode = document.createTextNode("WxMonitoring Files Tree"); // Create a text node
-
-  // var node1 = document.createElement("h3");
-  // var textnode1 = document.createTextNode("Click a black node to view/hide files monitored by WxMonitoring");
-  // node.appendChild(textnode); 
-  // node1.appendChild(textnode1);
-  
-  
-  // document.getElementById(id.substring(1)).appendChild(node); 
-  // document.getElementById(id.substring(1)).appendChild(node1);
-  // document.getElementById(id.substring(1)).style.textAlign="center";
-  // element.style.backgroundColor = "red"; 
-  // <h1 id="collapsible-tree">Collapsible Tree</h1>
-  // <p>Click a black node to expand or collapse <a href="/@mbostock/d3-tidy-tree">the tree</a>.</p>
-
 }
