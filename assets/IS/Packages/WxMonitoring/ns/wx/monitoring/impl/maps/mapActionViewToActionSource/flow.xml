@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FLOW VERSION="3.0" CLEANUP="true">
+
+  <!-- nodes -->
+
+<MAP TIMEOUT="" MODE="STANDALONE">
+  <COMMENT></COMMENT>
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionView</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionSource</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dbo:ActionSource</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">actionView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ActionView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/actionID;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/action_id;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/actionType;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/action_type;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/sendEmailTo;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/send_email_to;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraAssigneeUsername;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_assignee_username;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraProjectKey;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_project_key;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraIssueType;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_issue_type;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/jiraIssuePriority;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/jira_issue_priority;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/customServiceToInvoke;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/custom_service_to_invoke;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView/properties;2;0/customServiceInputParams;1;0" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource/properties;2;0/custom_service_input_params;1;0">
+</MAPCOPY>
+</MAP>
+</FLOW>

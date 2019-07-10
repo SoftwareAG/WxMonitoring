@@ -131,8 +131,8 @@
  	
 	function createPageState(ruleID, ruleRank) {
 		var stateJSONObject = {};
-		stateJSONObject.currentPageName = "event-rule-addedit.dsp";
-		stateJSONObject.previousPageName = getLastPageName("event-rules.dsp");
+		stateJSONObject.currentPageName = "process-rule-addedit.dsp";
+		stateJSONObject.previousPageName = getLastPageName("process-rules.dsp");
 		stateJSONObject.ruleID = ruleID;
 		stateJSONObject.ruleRank = ruleRank;
 	
@@ -141,12 +141,12 @@
 	
 	function onReturnClick() {
 		
-		var currentPageState = getPageState("event-rule-addedit.dsp");
+		var currentPageState = getPageState("process-rule-addedit.dsp");
 		var previousPageState =  getPageState(currentPageState.previousPageName);
 		cleanNavigationSequence();
 		
-		if(previousPageState.currentPageName=="event-rules.dsp"){
-			var url = "event-rules.dsp";
+		if(previousPageState.currentPageName=="process-rules.dsp"){
+			var url = "process-rules.dsp";
 		}
 		var res = encodeURI(url);
 		
@@ -361,7 +361,7 @@
         </tr>
          
 		 %ifvar action%
-			%invoke wx.monitoring.services.gui.events:handleEventRuleAddeditDspAction%
+			%invoke wx.monitoring.services.gui.processes:handleProcessRuleAddeditDspAction%
 			%endinvoke%
 			%ifvar message%
 				<tr><td colspan="2">&nbsp;</td></tr>
@@ -380,7 +380,7 @@
 		
 		%ifvar operation equals('add')%
 		%else%
-			%invoke wx.monitoring.services.gui.events:getEventRuleByID%
+			%invoke wx.monitoring.services.query.process:getProcessRuleByID%
 			%endinvoke%
 				%ifvar message%
 					<tr><td colspan="2">&nbsp;</td></tr>
@@ -396,7 +396,7 @@
 					</tr>
 				%endif%	
 		%endifvar%
-		%invoke wx.monitoring.services.gui.events:getEventRuleAddeditDspInfoData%
+		%invoke wx.monitoring.services.gui.processes:getProcessRuleAddeditDspInfoData%
 		%endinvoke%
 			%ifvar message%
 				<tr><td colspan="2">&nbsp;</td></tr>
@@ -415,20 +415,20 @@
 			var stateJSONObject = createPageState('%value /ruleID encode(javascript)%','%value /ruleRank encode(javascript)%');
 			
 			var startNewNavigationSequence = false;
-			savePageState("event-rule-addedit.dsp", stateJSONObject, startNewNavigationSequence);				
+			savePageState("process-rule-addedit.dsp", stateJSONObject, startNewNavigationSequence);				
 		</script>
         <tr>
             <td colspan="2">
                 <ul class="listitems">
 					%ifvar operation equals('add')%
-						<li class="listitem"><a href="javascript:document.htmlform_event_rules.submit();" onClick="return onReturnClick();">Return to Rules</a></li>
+						<li class="listitem"><a href="javascript:document.htmlform_process_rules.submit();" onClick="return onReturnClick();">Return to Rules</a></li>
 					%else%
 						%ifvar operation equals('edit')%
-							<li class="listitem"><a href="event-rule-addedit.dsp?operation=display&ruleID=%value ruleID encode(url)%">Cancel</a></li>
+							<li class="listitem"><a href="process-rule-addedit.dsp?operation=display&ruleID=%value ruleID encode(url)%">Cancel</a></li>
 							%else%
-								<li class="listitem"><a href="javascript:document.htmlform_event_rules.submit();" onClick="return onReturnClick();">Return to Rules</a></li>
-								<li class="listitem"><a href="event-rule-addedit.dsp?operation=edit&ruleID=%value ruleID encode(url)%&ruleRank=%value ruleRank encode(url)%">Edit Rule</a></li>
-								<li class="listitem"><a href=# onClick="return populateForm(document.htmlform_rule_affected_events_display, '%value ruleID encode(javascript)%', 'show_rule_affected_events');">Show Events Affected By This Rule</a></li>
+								<li class="listitem"><a href="javascript:document.htmlform_process_rules.submit();" onClick="return onReturnClick();">Return to Rules</a></li>
+								<li class="listitem"><a href="process-rule-addedit.dsp?operation=edit&ruleID=%value ruleID encode(url)%&ruleRank=%value ruleRank encode(url)%">Edit Rule</a></li>
+								<li class="listitem"><a href=# onClick="return populateForm(document.htmlform_rule_affected_processes_display, '%value ruleID encode(javascript)%', 'show_rule_affected_processes');">Show Events Affected By This Rule</a></li>
 						%endifvar%
 					%endifvar%
                 </ul>
@@ -453,33 +453,42 @@
                                 <td class="heading" colspan="2">Monitoring Rule</td>
                             </tr>
                             <tr>
-                                <td class="subheading">Event Pattern</td>    
+                                <td class="subheading">Business Domain</td>    
                                 <td class="oddrow-l">
-									<textarea id="eventPattern" rows="4" cols="40" name="eventPattern" %ifvar operation equals('display')% disabled %else% required %endifvar% >%value rule/eventPattern%</textarea>
+                                    %scope infoData%
+                                        <select id="selBusinessDomain" name="businessDomain">
+                                            %loop businessDomains%
+                                            <option value="%value key encode(htmlattr)%" %ifvar ../businessDomain
+                                                vequals(key)%selected %endifvar%>%value name encode(html)%</option>
+                                            %endloop%
+                                            <option value="ALL" %ifvar businessDomain equals('ALL')%selected %endifvar%>Any
+                                            </option>
+                                        </select>
+                                    %endscope%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="subheading">Process Name</td>    
+                                <td class="oddrow-l">
+                                    <input type="text" placeholder="Write name of the Process" name="processName" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/processName%'>
                                 </td>
                             </tr>
 							<tr>
                                 <td class="subheading" >Use Regex</td>
                                 <td class="oddrow-l" >
-									<input type="radio" name="useRegex" value="true" %ifvar rule/useRegex equals('true')%checked="checked" %endifvar% title="Event pattern is matched using regular expression" %ifvar operation equals('display')% disabled %else% required %endifvar%> Yes &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://regex101.com/" target="_blank">Regex creator (external link)</a>								<br>
-									<input type="radio" name="useRegex" value="false" %ifvar rule/useRegex% %ifvar rule/useRegex equals('false')%checked="checked" %endifvar% %else% checked="checked" %endifvar% title="Event pattern is not matched using regular expression" %ifvar operation equals('display')% disabled %else% required %endifvar%> No<br>
+									<input type="radio" name="useRegex" value="true" %ifvar rule/useRegex equals('true')%checked="checked" %endifvar% title="Process name is matched using regular expression" %ifvar operation equals('display')% disabled %else% required %endifvar%> Yes &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://regex101.com/" target="_blank">Regex creator (external link)</a>								<br>
+									<input type="radio" name="useRegex" value="false" %ifvar rule/useRegex% %ifvar rule/useRegex equals('false')%checked="checked" %endifvar% %else% checked="checked" %endifvar% title="Process name is not matched using regular expression" %ifvar operation equals('display')% disabled %else% required %endifvar%> No<br>
                                 </td>
                             </tr>
 							<tr>
-                                <td class="subheading">Severity Threshold</td>    
+                                <td class="subheading">Status</td>    
                                 <td class="oddrow-l">
-									<select id="selSeverityOperator" name="severityThresholdOperator" title="Trigger rule if event severity matches severity threshold limit" required>
-										<option %ifvar rule/severity/severityThresholdOperator equals('gte')%selected %endifvar% value="gte" %ifvar operation equals('display')% disabled %else% required %endifvar%> >= </option> 
-										<option %ifvar rule/severity/severityThresholdOperator% %ifvar rule/severity/severityThresholdOperator equals('eq')%selected %endifvar% %else% selected %endifvar% value="eq" %ifvar operation equals('display')% disabled %else% required %endifvar%> = </option> 
-										<option %ifvar rule/severity/severityThresholdOperator equals('lte')%selected %endifvar% value="lte" %ifvar operation equals('display')% disabled %else% required %endifvar%> <= </option> 
-									</select>  
-									
-									<select id="selSeverity" name="severityThreshold" required>
-										<option %ifvar rule/severity/severityThreshold equals('FATAL')%selected %endifvar% value="FATAL" %ifvar operation equals('display')% disabled %else% required %endifvar% >FATAL </option>
-										<option %ifvar rule/severity/severityThreshold equals('ERROR')%selected %endifvar% value="ERROR" %ifvar operation equals('display')% disabled %else% required %endifvar%>ERROR</option>
-										<option %ifvar rule/severity/severityThreshold equals('WARNING')%selected %endifvar% value="WARNING" %ifvar operation equals('display')% disabled %else% required %endifvar%>WARNING</option>
-										<option %ifvar rule/severity/severityThreshold% %ifvar rule/severity/severityThreshold equals('INFO')%selected %endifvar% %else% selected %endifvar% value="INFO" %ifvar operation equals('display')% disabled %else% required %endifvar%>INFO</option>
-									</select>                                 
+									<select id="selStatus" name="status" required>
+										<option %ifvar rule/status equals('active')%selected %endifvar% value="active" %ifvar operation equals('display')% disabled %else% required %endifvar%>Active</option> 
+										<option %ifvar rule/status% %ifvar rule/status equals('failed')%selected %endifvar% %else% selected %endifvar% value="failed" %ifvar operation equals('display')% disabled %else% required %endifvar%>Failed</option> 
+                                        <option %ifvar rule/status equals('cancelled')%selected %endifvar% value="cancelled" %ifvar operation equals('display')% disabled %else% required %endifvar%>Cancelled</option>
+                                        <option %ifvar rule/status equals('completed')%selected %endifvar% value="completed" %ifvar operation equals('display')% disabled %else% required %endifvar%>Completed</option>
+									</select>                                  
                                 </td>
                             </tr>
                             <tr>
@@ -593,11 +602,11 @@
             </td>
         </tr> 
     </table>
-    <form name="htmlform_rule_affected_events_display" action="event-stats-specific.dsp" method="POST">
+    <form name="htmlform_rule_affected_processes_display" action="process-stats-specific.dsp" method="POST">
         <input type="hidden" name="operation">
         <input type="hidden" name="ruleID">
     </form>
-	<form name="htmlform_event_rules" action="event-rules.dsp" method="POST">
+	<form name="htmlform_process_rules" action="process-rules.dsp" method="POST">
     </form>
   </body>   
 </head>
