@@ -11,6 +11,7 @@
   <script language="JavaScript">
     function populateForm(form , ruleID ,oper,ruleRank)
     {
+		//alert (ruleID + " " + oper + " "+ ruleRank);
         if('add' == oper){
 			form.operation.value = "add";
 			var oTable = document.getElementById('ruleTable');

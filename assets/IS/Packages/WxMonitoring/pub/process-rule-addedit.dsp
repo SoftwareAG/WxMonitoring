@@ -10,16 +10,15 @@
 
     function validate(thisform,oper)
     {	
-		//alert(thisform.ruleRank.value);
-		var rulePattern = thisform.eventPattern.value
-		if(0 == rulePattern.length)
+		var processName = thisform.processName.value
+		if(0 == processName.length)
 		{
-			alert("You must specify a valid value for the field : 'Event Pattern'")
-			thisform.eventPattern.focus();
+			alert("You must specify a valid value for the field : 'Process Name'")
+			thisform.processName.focus();
 			return false;
-		} else if (8000 < rulePattern.length) {
-			alert("'Event Pattern' field cannot exceed 8000 characters.")
-			thisform.eventPattern.focus();
+		} else if (8000 < processName.length) {
+			alert("'Process Name' field cannot exceed 8000 characters.")
+			thisform.processName.focus();
 			return false;
 		} else{	
 			if(thisform.useRegex.value == "true"){
@@ -27,18 +26,19 @@
 				var isValidRegex = true;
 				
 				try {
-					var e = new RegExp(rulePattern);
+					var e = new RegExp(processName);
 				} catch(e) {
 					isValidRegex = false;
 				}
 
 				if(!isValidRegex) {
-					alert("'Event Pattern' : '" + thisform.eventPattern.value +"' is an invalid regular expression.")
-					thisform.eventPattern.focus();
+					alert("'Process Name' : '" + thisform.processName.value +"' is an invalid regular expression.")
+					thisform.processName.focus();
 					return false;
 				}
 			} else {
-				thisform.eventPattern.value = trimStr(thisform.eventPattern.value);
+				//TODO: Allow intentional space characters at the end and beginning of string.
+				thisform.processName.value = trimStr(thisform.processName.value);
 			}
 		}
 		
@@ -103,9 +103,9 @@
 			thisform.actionProperties.value = json;
 
 		} else{
-			thisform.ruleID.value = ruleID;
-			thisform.operation.value = oper; 
-			thisform.submit();
+			// thisform.ruleID.value = ruleID;
+			// thisform.operation.value = oper; 
+			// thisform.submit();
 		}
 	}
 	// Used for validating email input.
@@ -153,6 +153,20 @@
 		location.href = res;	
 	}
 	
+	function handleStatusOptionChange(){
+		var statusValue = document.getElementById("selStatus").value;
+		var maxProcessDurationRow = document.getElementById("maxProcessDuration_row");
+
+		if(statusValue=="active"){
+
+			maxProcessDurationRow.style.display ="";
+
+		}else{
+
+			maxProcessDurationRow.style.display ="none";
+		}
+	}
+
 	function handleActionControls(jiraProjectPropertiesPipelineJSON, currentRuleJSON) {
 		
 		var actionTypeValue = document.getElementById("selActionType").value;
@@ -356,7 +370,7 @@
     <table width="100%">
         <tr>
 			<td class="breadcrumb" colspan="2"> 
-				Events &gt; Rules &gt; %value ruleID%
+				Process &gt; Rules &gt; %value ruleID%
             </td>
         </tr>
          
@@ -380,7 +394,7 @@
 		
 		%ifvar operation equals('add')%
 		%else%
-			%invoke wx.monitoring.services.query.process:getProcessRuleByID%
+			%invoke wx.monitoring.services.gui.processes:getProcessRuleByID%
 			%endinvoke%
 				%ifvar message%
 					<tr><td colspan="2">&nbsp;</td></tr>
@@ -428,7 +442,7 @@
 							%else%
 								<li class="listitem"><a href="javascript:document.htmlform_process_rules.submit();" onClick="return onReturnClick();">Return to Rules</a></li>
 								<li class="listitem"><a href="process-rule-addedit.dsp?operation=edit&ruleID=%value ruleID encode(url)%&ruleRank=%value ruleRank encode(url)%">Edit Rule</a></li>
-								<li class="listitem"><a href=# onClick="return populateForm(document.htmlform_rule_affected_processes_display, '%value ruleID encode(javascript)%', 'show_rule_affected_processes');">Show Events Affected By This Rule</a></li>
+								<!-- <li class="listitem"><a href=# onClick="return populateForm(document.htmlform_rule_affected_processes_display, '%value ruleID encode(javascript)%', 'show_rule_affected_processes');">Show Events Affected By This Rule</a></li> -->
 						%endifvar%
 					%endifvar%
                 </ul>
@@ -436,7 +450,7 @@
         </tr>
         <tr>
             <td>
-            <form name="htmlform_rule_addedit" action="event-rule-addedit.dsp" method="POST">
+            <form name="htmlform_rule_addedit" action="process-rule-addedit.dsp" method="POST">
                 <input type="hidden" name="operation">
 				<input type="hidden" name="actionProperties">
 				%ifvar operation equals('add')%
@@ -455,15 +469,23 @@
                             <tr>
                                 <td class="subheading">Business Domain</td>    
                                 <td class="oddrow-l">
-                                    %scope infoData%
-                                        <select id="selBusinessDomain" name="businessDomain">
+									%scope infoData%
+										%rename ../rule/businessDomain businessDomain -copy%
+										%rename ../operation operation -copy%
+                                        <select id="selBusinessDomain" name="businessDomain" %ifvar operation equals('display')% disabled %endifvar%>
                                             %loop businessDomains%
-                                            <option value="%value key encode(htmlattr)%" %ifvar ../businessDomain
+                                            <option value="%value key encode(htmlattr)%" %ifvar businessDomain
                                                 vequals(key)%selected %endifvar%>%value name encode(html)%</option>
                                             %endloop%
                                             <option value="ALL" %ifvar businessDomain equals('ALL')%selected %endifvar%>Any
                                             </option>
-                                        </select>
+										</select>
+										<script>
+											var businessDomainValue = '%value businessDomain%';
+											if(businessDomainValue){
+												document.getElementById("selBusinessDomain").value = businessDomainValue;
+											}
+										</script>
                                     %endscope%
                                 </td>
                             </tr>
@@ -483,12 +505,18 @@
 							<tr>
                                 <td class="subheading">Status</td>    
                                 <td class="oddrow-l">
-									<select id="selStatus" name="status" required>
+									<select id="selStatus" name="status" required onchange="handleStatusOptionChange()">
 										<option %ifvar rule/status equals('active')%selected %endifvar% value="active" %ifvar operation equals('display')% disabled %else% required %endifvar%>Active</option> 
 										<option %ifvar rule/status% %ifvar rule/status equals('failed')%selected %endifvar% %else% selected %endifvar% value="failed" %ifvar operation equals('display')% disabled %else% required %endifvar%>Failed</option> 
                                         <option %ifvar rule/status equals('cancelled')%selected %endifvar% value="cancelled" %ifvar operation equals('display')% disabled %else% required %endifvar%>Cancelled</option>
                                         <option %ifvar rule/status equals('completed')%selected %endifvar% value="completed" %ifvar operation equals('display')% disabled %else% required %endifvar%>Completed</option>
 									</select>                                  
+                                </td>
+							</tr>
+							<tr id="maxProcessDuration_row" %ifvar rule/status% %ifvar rule/status equals('active')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
+                                <td class="subheading">Maximum Process Duration (in minutes)</td>    
+                                <td class="oddrow-l">
+                                    <input type="number" placeholder="1440"  title="default is 1440 minutes (=24 hours)" name="maxProcessDuration" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/maxProcessDuration%'>
                                 </td>
                             </tr>
                             <tr>

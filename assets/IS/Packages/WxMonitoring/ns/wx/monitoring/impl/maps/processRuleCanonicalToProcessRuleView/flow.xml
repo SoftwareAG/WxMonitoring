@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
+  <COMMENT>map basic fields</COMMENT>
 
   <!-- nodes -->
 
@@ -1126,19 +1127,6 @@
         <value name="node_type">record</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
         <value name="field_name">processRuleView</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
@@ -1156,7 +1144,7 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical/source;4;0;wx.monitoring.docs.dbo:EventRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
+<MAPCOPY FROM="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessRuleSource/action;4;0;wx.monitoring.docs.dbo:ActionSource" TO="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
 </MAPCOPY>
 </MAP>
 
@@ -1207,32 +1195,6 @@
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
         <value name="rec_ref">wx.monitoring.docs.dto:ProcessRuleCanonical</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">eventRuleView</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.view:EventRuleView</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_subtype">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">eventRuleCanonical</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="modifiable">true</value>
-        <value name="rec_ref">wx.monitoring.docs.dto:EventRuleCanonical</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -1320,11 +1282,11 @@
 <MAPDELETE FIELD="/actionSource;4;0;wx.monitoring.docs.dbo:ActionSource">
 </MAPDELETE>
 
-<MAPDELETE FIELD="/eventRuleCanonical;4;0;wx.monitoring.docs.dto:EventRuleCanonical">
-</MAPDELETE>
-
 <MAPCOPY FROM="/actionView;4;0;wx.monitoring.docs.view:ActionView" TO="/processRuleView;4;0;wx.monitoring.docs.view:ProcessRuleView/action;4;0;wx.monitoring.docs.view:ActionView">
 </MAPCOPY>
+
+<MAPDELETE FIELD="/processRuleCanonical;4;0;wx.monitoring.docs.dto:ProcessRuleCanonical">
+</MAPDELETE>
 </MAP>
 </INVOKE>
 </FLOW>
