@@ -1,9 +1,9 @@
-function createNodalTree(id, data)
+function createNodalTree(id, data, nodalTreeWidth, nodalTreeheight)
 {   
   
     var dx = 15;
-    var width = 500;
-    var height = 400;
+    var width = nodalTreeWidth;
+    var height = nodalTreeheight;
     var dy= width / 6;
         
     var diagonal = d3version4.linkHorizontal().x(d => d.y).y(d => d.x);

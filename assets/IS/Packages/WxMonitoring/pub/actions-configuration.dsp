@@ -43,13 +43,13 @@
                     return false;
                 }
             }
-            var fromEmailElement = document.getElementById("emailFromEmail");
-            var fromEmailValue = trimStr(fromEmailElement.value);
-            if(!validateEmail(fromEmailValue)){
-                alert("Invalid email: '" + fromEmailValue + "' in 'From email' field.");
-                fromEmailElement.focus();
-                return false;
-            }
+            // var fromEmailElement = document.getElementById("emailFromEmail");
+            // var fromEmailValue = trimStr(fromEmailElement.value);
+            // if(!validateEmail(fromEmailValue)){
+            //     alert("Invalid email: '" + fromEmailValue + "' in 'From email' field.");
+            //     fromEmailElement.focus();
+            //     return false;
+            // }
 
             if(oper=='testConfiguration'){
                 var testEmailToEmailElement = document.getElementById("emailTestEmailToEmail");
@@ -344,13 +344,13 @@
                             <tr id="action_email_fromEmail_row" style="display:none;">
                                 <td class="subheading" >From email</td>
                                 <td class="oddrow-l" >
-                                    <input type="text" placeholder="Send email from this email id" id="emailFromEmail" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value actionEmail/fromEmail%'>
+                                    <input type="text" placeholder="(optional) Send email from this email id" id="emailFromEmail" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value actionEmail/fromEmail%'>
                                 </td>
                             </tr>
                             <tr id="action_email_testEmailTo_row" style="display:none;">
                                 <td class="subheading">Send test email to</td>
                                 <td class="oddrow-l" >
-                                    <input type="text" placeholder="Send test email to this email id" id="emailTestEmailToEmail" size="42" %ifvar operation equals('display')% %else% disabled %endifvar%>
+                                    <input type="text" title="This email is not saved as part of the configuration" placeholder="Send test email to this email id" id="emailTestEmailToEmail" size="42" %ifvar operation equals('display')% %else% disabled %endifvar%>
                                 </td>
                             </tr>
                         %endifvar%

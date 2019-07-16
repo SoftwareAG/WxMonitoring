@@ -1,11 +1,12 @@
-var indentedTreeMargin = {top: 30, right: 20, bottom: 30, left: 20},
-    indentedTreeWidth = 800,
-    //var indentedTreeWidth = document.getElementById(id.substring(1)).offsetWidth
-    barHeight = 20,
-    barWidth = (indentedTreeWidth - indentedTreeMargin.left - indentedTreeMargin.right) * 0.8;
-
-// var barWidth = 350,
+// var indentedTreeMargin = {top: 30, right: 20, bottom: 30, left: 20},
+//     indentedTreeWidth = 800,
 //     barHeight = 20,
+//     barWidth = (indentedTreeWidth - indentedTreeMargin.left - indentedTreeMargin.right) * 0.8;
+
+var indentedTreeMargin = {top: 30, right: 20, bottom: 30, left: 20},
+    barHeight = 20,
+    barWidth;
+    
 
 var i = 0,
     duration = 400,
@@ -16,24 +17,15 @@ var diagonal = d3version4.linkHorizontal()
     .x(function(d) { return d.y; })
     .y(function(d) { return d.x; });
 
-function createTree(id,treeData){
-  
+function createTree(id,treeData, indentedTreeWidth){
+
+    barWidth = (indentedTreeWidth - indentedTreeMargin.left - indentedTreeMargin.right) * 0.8;
+    
     indentedTreeSvg = d3version4.select(id).append("svg")
         .attr("width", indentedTreeWidth) // + indentedTreeMargin.left + indentedTreeMargin.right)
     .append("g")
         .attr("transform", "translate(" + indentedTreeMargin.left + "," + indentedTreeMargin.top + ")");
-        
-    //
-    
-    //var treeDataString = treeData;
-    //var treeDataJSON = JSON.parse(treeDataString);
-    // d3version4.json(a, function(error, WxMonitoring) {
-    //   if (error) throw error;
-    //   indentedTreeRoot = d3version4.hierarchy(WxMonitoring);
-    //   indentedTreeRoot.x0 = 0;
-    //   indentedTreeRoot.y0 = 0;
-    //   update(indentedTreeRoot);
-    // });
+      
     indentedTreeRoot = d3version4.hierarchy(treeData);
     indentedTreeRoot.x0 = 0;
     indentedTreeRoot.y0 = 0;

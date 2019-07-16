@@ -135,3 +135,38 @@ POST wxmonitoring-events-2*/_search
     }
     ]
 }
+
+POST wxmonitoring-processes/_search
+{
+	"from": 0,
+	"size": 10000,
+	"query": {
+		"bool": {
+			"must": [{
+					"range": {
+						"last_updated_utc": {
+							"gte": "2019-07-11 14:29:28",
+							"lte": "2019-07-12 14:29:28"
+						}
+					}
+				}, {
+					"script": {
+						"script": {
+							"source": "if(doc['last_evaluated_utc'].size()!=0){long lastUpdated=doc['last_updated_utc'].value.toInstant().toEpochMilli();long lastEvaluated=doc['last_evaluated_utc'].value.toInstant().toEpochMilli();if(lastUpdated<lastEvaluated){return false;}else{return true;}}else{return true;}",
+							"lang": "painless"
+						}
+					}
+				}
+			]
+		}
+	},
+	"sort": [{
+			"last_updated_utc": {
+				"order": "asc"
+			},
+			"offset": {
+				"order": "asc"
+			}
+		}
+	]
+}

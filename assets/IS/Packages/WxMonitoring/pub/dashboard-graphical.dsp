@@ -184,9 +184,12 @@
 			%rename /toCustomTime toTime -copy% -->
 
 			%scope common%
-			<div class="flex-container-content">
-				<div width="50%" class="flex-container-column">
-					<table border="0"  width="100%" class="tableView">
+			<div id="mainContentHolder" class="flex-container-content">
+				<!-- <div width="50%" class="flex-container-column"> -->
+          <script>
+            var parentWidth = document.getElementById("mainContentHolder").parentElement.clientWidth;
+            </script>
+					<table id="processServerStructure_indentedTree_table" border="0"  width="50%" class="tableView">
 						<tr>
 							<td colspan="1" class="heading">List of Processes - By Server, Business Domain</td>
 						</tr>
@@ -198,8 +201,15 @@
 							<script>
 								var processServerStructureString = '%value processServerIndentedTreeJSON encode(javascript)%' ;
 								//alert(processServerStructureString);
-								var processServerStructureJson = JSON.parse(processServerStructureString);
-								createTree("#processServerStructure_tree",processServerStructureJson);
+                var processServerStructureJson = JSON.parse(processServerStructureString);
+                
+                var parentWidth = document.getElementById("processServerStructure_indentedTree_table").parentElement.clientWidth;
+                var treeWidth = 700;
+                if(Number(parentWidth)!=NaN){
+                  treeWidth = Number(parentWidth)*.45;
+                }
+
+								createTree("#processServerStructure_tree",processServerStructureJson,treeWidth);
 							</script>
 						</tr>
 						%else%
@@ -208,9 +218,47 @@
 						</tr>
 						%endifvar%
 					</table>
-				%endscope%
+        %endscope%
+        %scope common%
+        <table id="monitoredFiles_nodalTree_table" border="0"  width="50%" class="tableView">
+						<tr>
+							<td colspan="1" class="heading">Files Monitored By WxMonitoring</td>
+						</tr>
+						%ifvar monitoredLogfileNodalTreeJSON -notempty%
+						<tr>
+							<td style="border: 0px;padding: 0px">
+									<div id="processServerStructure_tree1" class="flex-container-item">
+							</td>
+							<script>
+                  //var dataString = '{"children":[{"children":[{"children":[{"name":"AgglomerativeCluster","value":3938},{"name":"CommunityStructure","value":3812},{"name":"HierarchicalCluster","value":6714},{"name":"MergeEdge","value":743}],"name":"cluster"},{"children":[{"name":"BetweennessCentrality","value":3534},{"name":"LinkDistance","value":5731},{"name":"MaxFlowMinCut","value":7840},{"name":"ShortestPaths","value":5914},{"name":"SpanningTree","value":3416}],"name":"graph"},{"children":[{"name":"AspectRatioBanker","value":7074}],"name":"optimization"}],"name":"analytics"}],"name":"flare"}';
+      
+                  var dataString = '%value monitoredLogfileNodalTreeJSON encode(javascript)%' ;
+                  var data = JSON.parse(dataString);
+
+                  var parentWidth = document.getElementById("monitoredFiles_nodalTree_table").parentElement.clientWidth;
+                var treeWidth = 600;
+                if(Number(parentWidth)!=NaN){
+                  treeWidth = Number(parentWidth)*.25;
+                }
+
+                //alert(treeWidth);
+                // var parentHeight = document.getElementById("processStats_barPieGraph_table").parentElement.clientHeight;
+                // var graphheight = 400;
+                // if(Number(parentHeight)!=NaN){
+                //   var graphheight = Number(parentHeight)*.50;
+                // }
+                  createNodalTree("#processServerStructure_tree1",data, treeWidth, 400);
+                </script>
+						</tr>
+						%else%
+						<tr class="field" align="left">
+								<td colspan=7 class="oddrowdata-l">---------------------------------- no results ----------------------------------</td>
+						</tr>
+						%endifvar%
+					</table>
+						%endscope%
 				%scope processes%
-					<table border="0"  width="100%" class="tableView">
+					<table id="processStats_barPieGraph_table" border="0"  width="100%" class="tableView">
 						%scope uiTimeControlsInfo%
 							<tr>
 								<td colspan="4" class="heading">Processes Summary- By Business Domain | From : %value consolidatedFromTime encode(html)% | To : %value consolidatedToTime encode(html)% </td>
@@ -263,9 +311,25 @@
 									<div id="processStats_barPieGraph" class="flex-container-item"></div>
 							</td>
 							<script>
-								var processStatsString = '%value barPieGraphJSON encode(javascript)%' ;
-								var processStatsBarPieJson = JSON.parse(processStatsString);
-								createGraph("#processStats_barPieGraph", processStatsBarPieJson,"process")
+                var processStatsString = '%value barPieGraphJSON encode(javascript)%' ;
+                var numberOfXAxisValues = '%value xAxisValuesCount encode(javascript)%' ;
+                
+                var processStatsBarPieJson = JSON.parse(processStatsString);
+                
+                var parentWidth = document.getElementById("processStats_barPieGraph_table").parentElement.clientWidth;
+                var graphWidth = 600;
+                var widthFactor = Math.min(.75,(numberOfXAxisValues*.07));
+                if(Number(parentWidth)!=NaN){
+                  var graphWidth = Number(parentWidth)*widthFactor;
+                }
+
+                var parentHeight = document.getElementById("processStats_barPieGraph_table").parentElement.clientHeight;
+                var graphheight = 400;
+                if(Number(parentHeight)!=NaN){
+                  graphheight = Number(parentHeight)*.50;
+                }
+
+								createGraph("#processStats_barPieGraph", processStatsBarPieJson,"process",graphWidth,graphheight)
 							</script> 
 						</tr>
 						%else%
@@ -275,10 +339,10 @@
 						%endifvar%
 					</table>
 				%endscope%	
-				</div>
-				<div class="flex-container-column">
+				<!-- </div> -->
+				<!-- <div class="flex-container-column"> -->
 						%scope events%
-						<table border="0"  width="100%" class="tableView">
+						<table id="eventStats_barPieGraph_table" border="0"  width="100%" class="tableView">
 								%scope uiTimeControlsInfo%
 									<tr>
 										<td colspan="4" class="heading">Events Summary- By Server | From : %value consolidatedFromTime encode(html)% | To : %value consolidatedToTime encode(html)% </td>
@@ -331,10 +395,26 @@
 											<div id="processStats_barPieGraph1" class="flex-container-item"></div>
 									</td>
 									<script>
-										var processStatsString1 = '%value barPieGraphJSON encode(javascript)%' ;
-										
-										var processStatsBarPieJson1 = JSON.parse(processStatsString1);
-										createGraph("#processStats_barPieGraph1", processStatsBarPieJson1,"event")
+										var eventStatsString = '%value barPieGraphJSON encode(javascript)%' ;
+                    var numberOfXAxisValues = '%value xAxisValuesCount encode(javascript)%' ;
+                    
+                    var eventStatsBarPieJson = JSON.parse(eventStatsString);
+                    
+                    var parentWidth = document.getElementById("eventStats_barPieGraph_table").parentElement.clientWidth;
+                    var graphWidth = 600;
+                    var widthFactor = Math.min(.75,(numberOfXAxisValues*.07));
+
+                    if(Number(parentWidth)!=NaN){
+                      var graphWidth = Number(parentWidth)*widthFactor;
+                    }
+
+                    var parentHeight = document.getElementById("eventStats_barPieGraph_table").parentElement.clientHeight;
+                    var graphheight = 400;
+                    
+                    if(Number(parentHeight)!=NaN){
+                      var graphheight = Number(parentHeight)*.25;
+                    }
+										createGraph("#processStats_barPieGraph1", eventStatsBarPieJson,"event",graphWidth,graphheight)
 									</script> 
 								</tr>
 								%else%
@@ -344,23 +424,8 @@
 								%endifvar%
 							</table>
 						%endscope%
-						%scope common%
-					<div class="flex-container-item">
-						%ifvar monitoredLogfileNodalTreeJSON -notempty%
-							<div id="processServerStructure_tree1" ></div>	
-							<script>
-								//var dataString = '{"children":[{"children":[{"children":[{"name":"AgglomerativeCluster","value":3938},{"name":"CommunityStructure","value":3812},{"name":"HierarchicalCluster","value":6714},{"name":"MergeEdge","value":743}],"name":"cluster"},{"children":[{"name":"BetweennessCentrality","value":3534},{"name":"LinkDistance","value":5731},{"name":"MaxFlowMinCut","value":7840},{"name":"ShortestPaths","value":5914},{"name":"SpanningTree","value":3416}],"name":"graph"},{"children":[{"name":"AspectRatioBanker","value":7074}],"name":"optimization"}],"name":"analytics"}],"name":"flare"}';
-		
-								var dataString = '%value monitoredLogfileNodalTreeJSON encode(javascript)%' ;
-								var data = JSON.parse(dataString);
-								createNodalTree("#processServerStructure_tree1",data);
-							</script>
-						%else%
-								<div align="left">---------------------------------- no results ----------------------------------</div>
-						%endifvar%	
-					</div>
-						%endscope%
-				</div>
+						
+				<!-- </div> -->
 			</div> 
 		%endscope%
 		<form name="htmlform_dashboardGraphical" action="dashboard-graphical.dsp" method="POST">

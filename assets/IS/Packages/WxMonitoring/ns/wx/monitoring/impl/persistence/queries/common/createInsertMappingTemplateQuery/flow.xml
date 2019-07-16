@@ -597,8 +597,20 @@
           <value>eventAdmins</value>
           <value>evaluationPointer</value>
           <value>processes</value>
+          <value>processRules</value>
         </array>
         <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">query</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
       </record>
@@ -612,7 +624,7 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">query</value>
+        <value name="field_name">versionNumber</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
@@ -658,72 +670,73 @@
   ],
   "mappings": {
       "properties": {
-        "process_id": {
-          "type": "keyword"
-        },
-        "process_instance": {
-          "type": "keyword"
-        },
-        "business_domain": {
-          "type": "keyword"
-        },
-        "process_name": {
-          "type": "keyword"
-        },
-        "MVer": {
-          "type": "keyword"
-        },
-        "current_status": {
-          "type": "keyword"
-        },
-        "started_timestamp_utc": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
-        "last_updated_utc": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
-        "failed_timestamp_utc": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
-        "cancelled_timestamp_utc": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
-        "completed_timestamp_utc": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
-        "exception_timestamp_utc": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
-        "exception_message": {
-          "type": "text"
-        },
-		"offset": {
-          "type": "long"
-        }
-    }
+				"process_id": {
+					"type": "keyword"
+				},
+				"process_instance": {
+					"type": "keyword"
+				},
+				"business_domain": {
+					"type": "keyword"
+				},
+				"process_name": {
+					"type": "keyword"
+				},
+				"current_status": {
+					"type": "keyword"
+				},
+				"started_timestamp_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"last_updated_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"failed_timestamp_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"cancelled_timestamp_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"completed_timestamp_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"exception_timestamp_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"exception_message": {
+					"type": "text"
+				},
+				"offset": {
+					"type": "long"
+				},
+				"last_evaluated_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"actions": {
+					"properties": {
+						"action_timestamp_utc": {
+							"type": "date",
+							"format": "yyyy-MM-dd HH:mm:ss"
+						}
+					}
+				}
+			}
   }
 }</value>
   <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">record</value>
+    <value name="node_type">unknown</value>
     <value name="node_subtype">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
     <value name="is_public">false</value>
     <value name="field_name">query</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
-    <array name="field_options" type="value" depth="1">
-    </array>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1390,6 +1403,7 @@
           <value>eventAdmins</value>
           <value>evaluationPointer</value>
           <value>processes</value>
+          <value>processRules</value>
         </array>
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
@@ -1483,9 +1497,6 @@
 				"process_name": {
 					"type": "keyword"
 				},
-				"MVer": {
-					"type": "keyword"
-				},
 				"current_status": {
 					"type": "keyword"
 				},
@@ -1518,6 +1529,18 @@
 				},
 				"offset": {
 					"type": "long"
+				},
+				"last_evaluated_utc": {
+					"type": "date",
+					"format": "yyyy-MM-dd HH:mm:ss"
+				},
+				"actions": {
+					"properties": {
+						"action_timestamp_utc": {
+							"type": "date",
+							"format": "yyyy-MM-dd HH:mm:ss"
+						}
+					}
 				}
 			}
 		}

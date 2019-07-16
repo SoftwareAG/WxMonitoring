@@ -162,7 +162,8 @@
 			maxProcessDurationRow.style.display ="";
 
 		}else{
-
+			document.getElementById("maxProcessDuration").value = "";
+			maxProcessDuration
 			maxProcessDurationRow.style.display ="none";
 		}
 	}
@@ -516,7 +517,7 @@
 							<tr id="maxProcessDuration_row" %ifvar rule/status% %ifvar rule/status equals('active')% %else%style="display:none;" %endifvar% %else% style="display:none;"%endifvar%>
                                 <td class="subheading">Maximum Process Duration (in minutes)</td>    
                                 <td class="oddrow-l">
-                                    <input type="number" placeholder="1440"  title="default is 1440 minutes (=24 hours)" name="maxProcessDuration" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/maxProcessDuration%'>
+                                    <input id="maxProcessDuration" type="number" placeholder="1440"  title="default is 1440 minutes (=24 hours)" name="maxProcessDuration" size="42" %ifvar operation equals('display')% disabled %endifvar% value = '%value rule/maxProcessDuration%'>
                                 </td>
                             </tr>
                             <tr>

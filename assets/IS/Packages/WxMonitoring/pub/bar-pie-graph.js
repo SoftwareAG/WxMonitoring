@@ -20,7 +20,7 @@ function total(d,entity){
         }
         return d;
 }
-function createGraph(id, fData,entity){
+function createGraph(id, fData,entity,graphWidth,graphHeight){
     var barColor = 'steelblue';
 
     // compute total for each criteria.
@@ -30,8 +30,8 @@ function createGraph(id, fData,entity){
     
     function histoGram(fD){
         var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
-        hGDim.w = 450 - hGDim.l - hGDim.r, 
-        hGDim.h = 300 - hGDim.t - hGDim.b;
+        hGDim.w = graphWidth - hGDim.l - hGDim.r, 
+        hGDim.h = graphHeight - hGDim.t - hGDim.b;
             
         //create svg for histogram.
         // var hGsvg = d3version3.select(id).append("svg")
@@ -45,7 +45,7 @@ function createGraph(id, fData,entity){
             .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
         // create function for x-axis mapping.
         
-        var x = d3version3.scale.ordinal().rangeRoundBands([0, hGDim.w], 0.1)
+        var x = d3version3.scale.ordinal().rangeRoundBands([0, hGDim.w], .1)
                 .domain(fD.map(function(d) {return d[0]; }));
 
                // alert(x);
@@ -80,6 +80,9 @@ function createGraph(id, fData,entity){
             .attr("x", function(d) { return x(d[0])+x.rangeBand()/2; })
             .attr("y", function(d) { return y(d[1])-5; })
             .attr("text-anchor", "middle");
+        
+        bars.append("title")
+        .text(function(d) {return d[0]; });
         
         function mouseover(d){  // utility function to be called on mouseover.
             // filter for selected criteria.
