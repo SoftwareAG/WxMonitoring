@@ -6,7 +6,7 @@
   <!-- nodes -->
 
 <MAP TIMEOUT="" MODE="STANDALONE">
-  <COMMENT>map basic fields</COMMENT>
+  <COMMENT>map process view fields</COMMENT>
   <MAPTARGET>
 
 <Values version="2.0">
@@ -16,6 +16,7 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -67,6 +68,7 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -135,9 +137,6 @@
 <MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessSource/exception_message;1;1" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/exceptions;2;1/exceptionMessage;1;0">
 </MAPCOPY>
 
-<MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessSource/process_instance;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/processInstance;1;0">
-</MAPCOPY>
-
 <MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessSource/business_domain;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/businessDomain;1;0">
 </MAPCOPY>
 
@@ -149,34 +148,366 @@
 
 <MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/id;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/processESID;1;0">
 </MAPCOPY>
+
+<MAPINVOKE SERVICE="wx.monitoring.impl.maps:mapProcessDuration" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processStartDate</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processLastUpdated</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processCurrentStatus</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessCanonical</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessSource/current_status;1;0" TO="/processCurrentStatus;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessSource/last_updated_utc;1;0" TO="/processLastUpdated;1;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/processCanonical;4;0;wx.monitoring.docs.dto:ProcessCanonical/source;4;0;wx.monitoring.docs.dbo:ProcessSource/started_timestamp_utc;1;0" TO="/processStartDate;1;0">
+</MAPCOPY>
 </MAP>
 
-<SEQUENCE TIMEOUT="" EXIT-ON="SUCCESS">
+<MAP MODE="INVOKEOUTPUT">
+  <MAPTARGET>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">processCanonical</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.dto:ProcessCanonical</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">processView</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="modifiable">true</value>
+        <value name="rec_ref">wx.monitoring.docs.view:ProcessView</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPTARGET>
+  <MAPSOURCE>
+
+<Values version="2.0">
+  <record name="xml" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_subtype">unknown</value>
+    <value name="is_public">false</value>
+    <value name="field_type">record</value>
+    <value name="field_dim">0</value>
+    <value name="wrapper_type">IData</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+    <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">duration</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">IData</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="node_subtype">unknown</value>
+            <value name="node_comment"></value>
+            <record name="node_hints" javaclass="com.wm.util.Values">
+              <value name="field_usereditable">true</value>
+              <value name="field_largerEditor">false</value>
+              <value name="field_password">false</value>
+            </record>
+            <value name="is_public">false</value>
+            <value name="field_name">days</value>
+            <value name="field_type">string</value>
+            <value name="field_dim">0</value>
+            <array name="field_options" type="value" depth="1">
+            </array>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="node_subtype">unknown</value>
+            <value name="node_comment"></value>
+            <record name="node_hints" javaclass="com.wm.util.Values">
+              <value name="field_usereditable">true</value>
+              <value name="field_largerEditor">false</value>
+              <value name="field_password">false</value>
+            </record>
+            <value name="is_public">false</value>
+            <value name="field_name">hours</value>
+            <value name="field_type">string</value>
+            <value name="field_dim">0</value>
+            <array name="field_options" type="value" depth="1">
+            </array>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="node_subtype">unknown</value>
+            <value name="node_comment"></value>
+            <record name="node_hints" javaclass="com.wm.util.Values">
+              <value name="field_usereditable">true</value>
+              <value name="field_largerEditor">false</value>
+              <value name="field_password">false</value>
+            </record>
+            <value name="is_public">false</value>
+            <value name="field_name">minutes</value>
+            <value name="field_type">string</value>
+            <value name="field_dim">0</value>
+            <array name="field_options" type="value" depth="1">
+            </array>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="node_subtype">unknown</value>
+            <value name="node_comment"></value>
+            <record name="node_hints" javaclass="com.wm.util.Values">
+              <value name="field_usereditable">true</value>
+              <value name="field_largerEditor">false</value>
+              <value name="field_password">false</value>
+            </record>
+            <value name="is_public">false</value>
+            <value name="field_name">seconds</value>
+            <value name="field_type">string</value>
+            <value name="field_dim">0</value>
+            <array name="field_options" type="value" depth="1">
+            </array>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
+        </array>
+        <value name="rec_closed">true</value>
+        <value name="modifiable">true</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_subtype">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">true</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">durationInMins</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <array name="field_options" type="value" depth="1">
+        </array>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+    </array>
+    <value name="modifiable">true</value>
+  </record>
+</Values>
+</MAPSOURCE>
+
+  <!-- nodes -->
+
+<MAPCOPY FROM="/duration;2;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/duration;2;0">
+</MAPCOPY>
+
+<MAPCOPY FROM="/durationInMins;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/durationInMins;1;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
+</MAP>
+
+<SEQUENCE TIMEOUT="" EXIT-ON="SUCCESS" DISABLED="true">
   <COMMENT>Try-Catch Calculate date difference</COMMENT>
 
   <!-- nodes -->
 
-<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE">
+<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE" DISABLED="true">
   <COMMENT>Try</COMMENT>
 
   <!-- nodes -->
 
-<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE">
+<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE" DISABLED="true">
   <COMMENT>calculate duration</COMMENT>
 
   <!-- nodes -->
 
-<BRANCH TIMEOUT="" SWITCH="/processCanonical/source/current_status">
+<BRANCH TIMEOUT="" SWITCH="/processCanonical/source/current_status" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
 
-<SEQUENCE NAME="started" TIMEOUT="" EXIT-ON="FAILURE">
+<SEQUENCE NAME="started" TIMEOUT="" EXIT-ON="FAILURE" DISABLED="true">
   <COMMENT>started</COMMENT>
 
   <!-- nodes -->
 
-<MAP TIMEOUT="" MODE="STANDALONE">
+<MAP TIMEOUT="" MODE="STANDALONE" DISABLED="true">
   <COMMENT>get current date</COMMENT>
   <MAPTARGET>
 
@@ -261,7 +592,7 @@
 
   <!-- nodes -->
 
-<MAPINVOKE SERVICE="pub.date:getCurrentDateString" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+<MAPINVOKE SERVICE="pub.date:getCurrentDateString" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true" INVOKE-ORDER="0">
 
   <!-- nodes -->
 
@@ -485,7 +816,7 @@
 </MAPINVOKE>
 </MAP>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:calculateDateDifference" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:calculateDateDifference" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -937,7 +1268,7 @@
 </INVOKE>
 </SEQUENCE>
 
-<INVOKE NAME="$default" TIMEOUT="" SERVICE="wx.monitoring.impl.util:calculateDateDifference" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE NAME="$default" TIMEOUT="" SERVICE="wx.monitoring.impl.util:calculateDateDifference" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -1364,12 +1695,12 @@
 </INVOKE>
 </BRANCH>
 
-<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE">
+<SEQUENCE TIMEOUT="" EXIT-ON="FAILURE" DISABLED="true">
   <COMMENT>formulate duration format</COMMENT>
 
   <!-- nodes -->
 
-<MAP TIMEOUT="" MODE="STANDALONE">
+<MAP TIMEOUT="" MODE="STANDALONE" DISABLED="true">
   <COMMENT>map to process duration</COMMENT>
   <MAPTARGET>
 
@@ -1609,17 +1940,17 @@
 
   <!-- nodes -->
 
-<MAPCOPY FROM="/diffInMinutes;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/durationInMins;1;0">
+<MAPCOPY FROM="/diffInMinutes;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/durationInMins;1;0" DISABLED="true">
 </MAPCOPY>
 
-<MAPCOPY FROM="/diffInDays;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/duration;2;0/days;1;0">
+<MAPCOPY FROM="/diffInDays;1;0" TO="/processView;4;0;wx.monitoring.docs.view:ProcessView/duration;2;0/days;1;0" DISABLED="true">
 </MAPCOPY>
 
-<MAPDELETE FIELD="/diffInDays;1;0">
+<MAPDELETE FIELD="/diffInDays;1;0" DISABLED="true">
 </MAPDELETE>
 </MAP>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:modIntegers" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:modIntegers" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -2033,7 +2364,7 @@
 </MAP>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:modIntegers" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:modIntegers" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -2409,7 +2740,7 @@
 </MAP>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:modIntegers" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:modIntegers" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -2764,16 +3095,16 @@
 </SEQUENCE>
 </SEQUENCE>
 
-<SEQUENCE TIMEOUT="" EXIT-ON="DONE">
+<SEQUENCE TIMEOUT="" EXIT-ON="DONE" DISABLED="true">
   <COMMENT>Catch</COMMENT>
 
   <!-- nodes -->
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:getLastError" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:getLastError" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
