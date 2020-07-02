@@ -11,6 +11,6 @@ here is some test again
 
 here is some test again, second time
 
-![](https://www.youtube.com/embed/GM2j8BSjQCc)
+[![My Image Alt](http://img.youtube.com/vi/GM2j8BSjQCc/0.jpg)](http://www.youtube.com/watch?v=GM2j8BSjQCc "webMethods.io Learning Path")
 
 asasdasd
