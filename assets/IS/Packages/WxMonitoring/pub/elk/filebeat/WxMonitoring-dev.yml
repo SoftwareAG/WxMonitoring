@@ -1,0 +1,25 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - ${SERVER_LOGFILE_PATH}
+  exclude_lines: ['D] ','T] ']
+  encoding: Windows1250
+  fields_under_root: true
+  fields:
+    log_identifier: server_log
+  multiline:
+    pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}
+    match: after
+    negate: true
+
+processors:
+- add_locale:
+    format: abbreviation
+
+fields:
+  env: ${SERVER_ID}
+
+output.logstash:
+  # The Logstash hosts
+  hosts: [ "${LOGSTASH_HOST}:${LOGSTASH_PORT}" ]

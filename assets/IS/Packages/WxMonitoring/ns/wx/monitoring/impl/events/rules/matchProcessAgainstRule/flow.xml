@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
+  <COMMENT>init</COMMENT>
 
   <!-- nodes -->
 
@@ -15,7 +16,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -83,7 +83,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -133,7 +132,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -188,22 +186,12 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
+        <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_usereditable">false</value>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
         <value name="field_name">matches</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <array name="field_options" type="value" depth="1">
-          <value>true</value>
-          <value>false</value>
-        </array>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -222,7 +210,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -265,6 +252,19 @@
 </DATA>
 </MAPSET>
 </MAP>
+
+<BRANCH NAME="$default" TIMEOUT="" SWITCH="/process/businessDomain">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<EXIT NAME="$null" FROM="$flow" SIGNAL="SUCCESS" FAILURE-MESSAGE="">
+  <COMMENT></COMMENT>
+</EXIT>
+
+<EXIT NAME="/^$/" FROM="$flow" SIGNAL="SUCCESS" FAILURE-MESSAGE="">
+  <COMMENT></COMMENT>
+</EXIT>
 
 <INVOKE NAME="$default" TIMEOUT="" SERVICE="wx.monitoring.impl.util:matchStrings" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
@@ -359,7 +359,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -468,7 +467,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -614,6 +612,7 @@
 </MAP>
 </INVOKE>
 </BRANCH>
+</BRANCH>
 
 <BRANCH TIMEOUT="" SWITCH="/matches">
   <COMMENT></COMMENT>
@@ -625,7 +624,20 @@
 </EXIT>
 </BRANCH>
 
-<INVOKE TIMEOUT="" SERVICE="wx.monitoring.impl.util:matchStrings" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<BRANCH NAME="$default" TIMEOUT="" SWITCH="/process/processName">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<EXIT NAME="$null" FROM="$flow" SIGNAL="SUCCESS" FAILURE-MESSAGE="">
+  <COMMENT></COMMENT>
+</EXIT>
+
+<EXIT NAME="/^$/" FROM="$flow" SIGNAL="SUCCESS" FAILURE-MESSAGE="">
+  <COMMENT></COMMENT>
+</EXIT>
+
+<INVOKE NAME="$default" TIMEOUT="" SERVICE="wx.monitoring.impl.util:matchStrings" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -718,7 +730,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -811,7 +822,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -946,6 +956,7 @@
 </MAPDELETE>
 </MAP>
 </INVOKE>
+</BRANCH>
 
 <BRANCH TIMEOUT="" SWITCH="/matches">
   <COMMENT></COMMENT>
@@ -957,7 +968,20 @@
 </EXIT>
 </BRANCH>
 
-<BRANCH TIMEOUT="" SWITCH="/rule/status">
+<BRANCH TIMEOUT="" SWITCH="/process/currentStatus">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<EXIT NAME="/^$/" FROM="$flow" SIGNAL="SUCCESS" FAILURE-MESSAGE="">
+  <COMMENT></COMMENT>
+</EXIT>
+
+<EXIT NAME="$null" FROM="$flow" SIGNAL="SUCCESS" FAILURE-MESSAGE="">
+  <COMMENT></COMMENT>
+</EXIT>
+
+<BRANCH NAME="$default" TIMEOUT="" SWITCH="/rule/status">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -983,7 +1007,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1062,7 +1085,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1114,7 +1136,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1169,22 +1190,12 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
+        <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_usereditable">false</value>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
         <value name="field_name">matches</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <array name="field_options" type="value" depth="1">
-          <value>true</value>
-          <value>false</value>
-        </array>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -1203,7 +1214,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1254,7 +1264,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1309,22 +1318,12 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
+        <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_usereditable">false</value>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
         <value name="field_name">matches</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <array name="field_options" type="value" depth="1">
-          <value>true</value>
-          <value>false</value>
-        </array>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -1343,7 +1342,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1378,6 +1376,7 @@
 </MAP>
 </BRANCH>
 </BRANCH>
+</BRANCH>
 
 <MAP TIMEOUT="" MODE="STANDALONE">
   <COMMENT>clean</COMMENT>
@@ -1390,7 +1389,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1409,7 +1407,6 @@
     <value name="is_public">false</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
-    <value name="wrapper_type">IData</value>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
@@ -1464,22 +1461,12 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
+        <value name="node_type">unknown</value>
         <value name="node_subtype">unknown</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_usereditable">false</value>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
         <value name="is_public">false</value>
         <value name="field_name">matches</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <array name="field_options" type="value" depth="1">
-          <value>true</value>
-          <value>false</value>
-        </array>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>

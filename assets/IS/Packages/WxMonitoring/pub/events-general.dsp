@@ -129,7 +129,7 @@
 										</TR>
 										<TR>
 											<TD>
-												<textarea id="eventLogText" rows="4" cols="40" title="Search events based on string entered. It does not support field name prefixes, wildcard characters, or other 'advanced' features." placeholder="Supports partial, fuzzy search however, no regex allowed." name="eventLogText">%value eventLogText%</textarea>
+												<textarea id="eventLogText" rows="4" cols="40" name="eventLogText">%value eventLogText%</textarea>
 											</TD>
 										</TR>
 									</TABLE>

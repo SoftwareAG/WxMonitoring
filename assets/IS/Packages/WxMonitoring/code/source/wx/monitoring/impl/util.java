@@ -67,10 +67,23 @@ public final class util
 		
 		SimpleDateFormat startDateformat = new SimpleDateFormat( startDateFormat );  
 		startDateformat.setLenient(false);  
+		if(startDate.matches("2020-03-29 02(.*)") && TimeZone.getDefault().getDisplayName().matches("Central European Time"))
+		{
+			startDateformat.setTimeZone(TimeZone.getTimeZone("CEST"));
+		} else{
+			startDateformat.setTimeZone(TimeZone.getDefault());
+		}
 		Date dtStartDate = null;  
 		
 		SimpleDateFormat endDateformat = new SimpleDateFormat( endDateFormat );  
 		endDateformat.setLenient(false);  
+		if(endDate.matches("2020-03-29 02(.*)") && TimeZone.getDefault().getDisplayName().matches("Central European Time"))
+		{
+			endDateformat.setTimeZone(TimeZone.getTimeZone("CEST"));
+		} else{
+			endDateformat.setTimeZone(TimeZone.getDefault());
+		}
+		
 		Date dtEndDate = null;
 		
 		String diffInDays, diffInHours, diffInMinutes, diffInSeconds;
@@ -183,7 +196,17 @@ public final class util
 		
 		try  
 		{ 
-			format.setTimeZone(TimeZone.getTimeZone(currentTimezone));
+			if(currentTimezone!=null){
+				format.setTimeZone(TimeZone.getTimeZone(currentTimezone));
+			} else{
+				if(inString.matches("2020-03-29 02(.*)") && TimeZone.getDefault().getDisplayName().matches("Central European Time"))
+				{
+					currentTimezone = "CEST";
+					format.setTimeZone(TimeZone.getTimeZone(currentTimezone));
+				} else{
+					format.setTimeZone(TimeZone.getDefault());
+				}
+			}
 			
 		}  
 		catch( Throwable t )  

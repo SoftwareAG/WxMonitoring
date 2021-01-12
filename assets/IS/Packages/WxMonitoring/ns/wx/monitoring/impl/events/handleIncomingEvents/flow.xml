@@ -15,7 +15,7 @@
 
   <!-- nodes -->
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -501,7 +501,7 @@
 </MAP>
 </INVOKE>
 
-<RETRY NAME="loop5" TIMEOUT="" COUNT="1000" BACK-OFF="0" LOOP-ON="FAILURE">
+<RETRY NAME="loop5" TIMEOUT="" COUNT="10" BACK-OFF="0" LOOP-ON="FAILURE">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -912,7 +912,7 @@
 </BRANCH>
 </RETRY>
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:debugLog" VALIDATE-IN="$none" VALIDATE-OUT="$none" DISABLED="true">
   <COMMENT></COMMENT>
 
   <!-- nodes -->

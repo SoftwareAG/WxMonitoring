@@ -318,7 +318,7 @@
                 
                 var parentWidth = document.getElementById("processStats_barPieGraph_table").parentElement.clientWidth;
                 var graphWidth = 600;
-                var widthFactor = Math.min(.75,(numberOfXAxisValues*.07));
+                var widthFactor = Math.min(.80,(numberOfXAxisValues*.08));
                 if(Number(parentWidth)!=NaN){
                   var graphWidth = Number(parentWidth)*widthFactor;
                 }
@@ -326,7 +326,7 @@
                 var parentHeight = document.getElementById("processStats_barPieGraph_table").parentElement.clientHeight;
                 var graphheight = 400;
                 if(Number(parentHeight)!=NaN){
-                  graphheight = Number(parentHeight)*.50;
+                  //graphheight = Number(parentHeight)*.50;
                 }
 
 								createGraph("#processStats_barPieGraph", processStatsBarPieJson,"process",graphWidth,graphheight)
@@ -402,7 +402,7 @@
                     
                     var parentWidth = document.getElementById("eventStats_barPieGraph_table").parentElement.clientWidth;
                     var graphWidth = 600;
-                    var widthFactor = Math.min(.75,(numberOfXAxisValues*.07));
+                    var widthFactor = Math.min(.80,(numberOfXAxisValues*.08));
 
                     if(Number(parentWidth)!=NaN){
                       var graphWidth = Number(parentWidth)*widthFactor;
@@ -412,7 +412,7 @@
                     var graphheight = 400;
                     
                     if(Number(parentHeight)!=NaN){
-                      var graphheight = Number(parentHeight)*.25;
+                      //var graphheight = Number(parentHeight)*.25;
                     }
 										createGraph("#processStats_barPieGraph1", eventStatsBarPieJson,"event",graphWidth,graphheight)
 									</script> 
