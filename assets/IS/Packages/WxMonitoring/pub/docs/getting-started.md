@@ -19,7 +19,7 @@ You can also (re)use your current local webMethods environment.
 
 Install the Elastic Stack products on your local machine. (Skip this if already installed.)
 
-**Elasticsearch** (current version: 7.1.x)
+**Elasticsearch** (current version: 7.10.1)
 
 * download from https://www.elastic.co/de/downloads/elasticsearch
 * unzip to `%ES_HOME%`
@@ -28,14 +28,14 @@ Install the Elastic Stack products on your local machine. (Skip this if already 
     * open url in browser
     * run `Invoke-RestMethod http://localhost:9200/` in powershell
 
-**Kibana** (current version: 7.1.x)
+**Kibana** (current version: 7.10.1)
 
 * download under https://www.elastic.co/de/downloads/kibana
 * unzip to `%KIBANA_HOME%`
 * run `%KIBANA_HOME%/bin/kibana.bat`
 * check access to http://localhost:5601/
 
-**Logstash** (version: 7.1.x)
+**Logstash** (version: 7.10.1)
 
 * download from https://www.elastic.co/de/downloads/logstash
 * unzip to `%LOGSTASH_HOME%`
@@ -71,14 +71,15 @@ Install the Elastic Stack products on your local machine. (Skip this if already 
     * You should see an empty search result page
 1. Open http://localhost:9200/_cat/indices?v
     * You should see indexes - `wxmonitoring-processes`, `wxmonitoring-events-original`, `wxmonitoring-events-xxxx.xx.xx`, `wxmonitoring-event-rules` - have been created
+    * **HINT**: if you don't, try to reload package to initial index on ES node
 1. Start Logstash
-    * edit `.\bin\logstash\startLogstash.cmd` and update correct paths for following variables
+    * edit `.\packages\WxMonitoring\pub\elk\logstash\startLogstash.cmd` and update correct paths for following variables
           `SAG_HOME`: path for software ag home folder (e.g. `c:\SoftwareAG`)
-          `LOGSTASH_HOME`: path to logstash home folder (for e.g. `C:\local\logstash-7.1.1`)
+          `LOGSTASH_HOME`: path to logstash home folder (for e.g. `C:\local\logstash-7.10.1`)
           `ELASTIC_SEARCH_ADDRESS`: base url for elastic search (for e.g. `localhost:9200`)
           (optional: if ES authentication enabled) `ELASTIC_SEARCH_LOGSTASH_USER`: logstash will access elastic search as this user (for e.g. `WxMonitoring_logstash_user`)
-          (optional: if ES authentication enabled) `ELASTIC_SEARCH_LOGSTASH_PASSWORD`: password for logstash user (for e.g. `C:\local\logstash-7.1.1`)
-    * Run `.\bin\logstash\startLogstash.cmd` or Install logstash as a service
+          (optional: if ES authentication enabled) `ELASTIC_SEARCH_LOGSTASH_PASSWORD`: password for logstash user (for e.g. `C:\local\logstash-7.10.1`)
+    * Run `.\startLogstash.cmd` or Install logstash as a service
     * View Logstash logs
         * open file `%LOGSTASH_HOME%/logs/logstash-plain`
         * verify following log has been recorded: 
@@ -98,7 +99,7 @@ Monitoring environment _should not_ be a log environment. You won't need to run 
 
 Install the following 3rd party products on your local machine. (Skip this if already installed.)
 
-**Filebeat** (version: 7.1.x)
+**Filebeat** (version: 7.10.1)
 
 * download under https://www.elastic.co/de/downloads/beats/filebeat
 * unzip to `%FILEBEAT_HOME%`
@@ -108,7 +109,7 @@ Install the following 3rd party products on your local machine. (Skip this if al
 * Start Filebeat
     * Edit file `startFilebeat.cmd` and update correct paths for following variables
           `SAG_HOME`: path for software ag home folder (e.g. `c:\SoftwareAG`)
-          `FILEBEAT_HOME`: path to filebeat home folder (for e.g. `C:\SoftwareAG\filebeat-7.1.1`)
+          `FILEBEAT_HOME`: path to filebeat home folder (for e.g. `C:\local\filebeat-7.10.1-windows-x86_64`)
           `SERVER_ID`: name of this log environment (e.g. prod1)
           `LOGSTASH_HOST`: address URL of Logstash on monitoring environment (e.g. 127.0.0.1 or localhost)
 * Run `startFilebeat.cmd`

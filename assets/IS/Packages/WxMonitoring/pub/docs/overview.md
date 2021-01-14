@@ -12,7 +12,7 @@ _Log Environment_ refers to your webMethods environment that contain logs that a
 
 For simplification both log and monitoring environment can be installed on the same webMethods installation (e.g. in development). It is recommended to use separate monitoring environment for your Test/QA and Production stages.
 
-WxMonitoring has been developed and tested with 9.10 on Win64. It should work with webMethods 9.10+.
+WxMonitoring has been developed and tested with 9.10 on Win64 and finally with 10.5. It should work with any webMethods release since 9.10.
 
 ### Features
 
